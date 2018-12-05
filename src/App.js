@@ -21,7 +21,7 @@ class App extends Component {
 
         <WebMediaPlayer 
           thumbnail="https://i.ytimg.com/vi_webp/qIM0kucdiGM/sddefault.webp" 
-          imageSequence={
+          slideshow={
           [{
             src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg",
             endTime: 2.0
@@ -41,7 +41,9 @@ class App extends Component {
         />
         
         <WebMediaPlayer 
-          thumbnail="https://i.ytimg.com/vi_webp/qIM0kucdiGM/sddefault.webp" audio="https://nusid.net/audio.flac" imageSequence={
+          thumbnail="https://i.ytimg.com/vi_webp/qIM0kucdiGM/sddefault.webp" 
+          audio="https://nusid.net/audio.flac" 
+          slideshow={
           [{
             src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg",
             endTime: 2.0
