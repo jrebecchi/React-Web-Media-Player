@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import './WebMediaPlayer.css';
 
 const DEFAULT_WIDTH = 560 //560;
@@ -13,7 +15,7 @@ class WebMediaPlayer extends Component {
     if (options === undefined){
       throw new Error("No options given to the player !");
     }
-    this.state = {};
+    var state = {};
 
     if (options.hasOwnProperty("video")){
       if (options.hasOwnProperty("audio")){
@@ -21,43 +23,45 @@ class WebMediaPlayer extends Component {
       } else if (options.hasOwnProperty("imageSequence")){
         throw new Error("Combination impossible");
       }  else {
-        this.state = this.initVideoPlayerState(options);
+        state = this.initVideoPlayerState(options);
       }
     } else if (options.hasOwnProperty("slideshow")){
       if (options.hasOwnProperty("audio")){
-        this.state = this.initAudioSlideshowPlayerState(options);
+        state = this.initAudioSlideshowPlayerState(options);
       } else if (options.hasOwnProperty("video")){
         throw new Error("Combination impossible");
       }  else {
-        this.state = this.initSlideshowPlayerState(options);
+        state = this.initSlideshowPlayerState(options);
       }
     } else {
       throw new Error("Combination impossible");
     }
 
-    this.state.thumbnail= options.thumbnail;
+    state.thumbnail= options.thumbnail;
+    state.title= options.title;
     
     if (options.hasOwnProperty("height")){
-        this.state.height = options.height;
+      state.height = options.height;
     } else {
-        this.state.height = DEFAULT_HEIGHT;
+      state.height = DEFAULT_HEIGHT;
     }
     if (options.hasOwnProperty("width")){
-      this.state.width = options.width;
+      state.width = options.width;
     } else {
-        this.state.width = DEFAULT_WIDTH;
+      state.width = DEFAULT_WIDTH;
     }
     if (options.hasOwnProperty("volume")){
-        this.state.volume = options.volume;
+      state.volume = options.volume;
     } else {
-        this.state.volume = DEFAULT_VOLUME;
+      state.volume = DEFAULT_VOLUME;
     }
     if (options.hasOwnProperty("allowFullFrame")){
-        this.state.allowFullFrame = options.allowFullFrame;
+      state.allowFullFrame = options.allowFullFrame;
     } else {
-        this.state.allowFullFrame = DEFAULT_ALLOW_FULL_FRAME;
+      state.allowFullFrame = DEFAULT_ALLOW_FULL_FRAME;
     }
-    console.log(this.state);
+
+    this.store = createStore(() => state);
   };
 
   initSlideshowPlayerState(options){
@@ -97,12 +101,17 @@ class WebMediaPlayer extends Component {
   }
 
   render() {
+    console.log(this.store.getState())
     return (
-      <iframe width="560" height="315" title="{this.props.name}">
- 
-      </iframe>
+      <Provider store={this.store}>
+        <div>
+          <h1>Future Web Media player here !</h1>
+          <hr/>
+        </div>
+      </Provider>
     );
   }
 }
 
 export default WebMediaPlayer;
+

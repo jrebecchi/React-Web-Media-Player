@@ -8,18 +8,17 @@ class App extends Component {
 
     return (
       <div className="App">
-        
-        <header className="App-header">
-          <h1>React-WebMediaPlayer</h1>
-        </header>
-        <WebMediaPlayer 
+
+        <WebMediaPlayer
+          title="Video Player"
           thumbnail="img/bbb.jpg" 
           video="https://nusid.net/video.mp4"
           width="560"
           height="315"
         />
 
-        <WebMediaPlayer 
+        <WebMediaPlayer
+          title="Slideshow Player"
           thumbnail="https://i.ytimg.com/vi_webp/qIM0kucdiGM/sddefault.webp" 
           slideshow={
           [{
@@ -40,7 +39,8 @@ class App extends Component {
           }]}
         />
         
-        <WebMediaPlayer 
+        <WebMediaPlayer
+          title="Audio Slideshow Player"
           thumbnail="https://i.ytimg.com/vi_webp/qIM0kucdiGM/sddefault.webp" 
           audio="https://nusid.net/audio.flac" 
           slideshow={
