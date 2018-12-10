@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { getInitState } from './service/StateInitiator'
-import './WebMediaPlayer.css';
+import Container from './component/Container'
 
 class WebMediaPlayer extends Component {
 
@@ -12,13 +12,13 @@ class WebMediaPlayer extends Component {
   };
 
   reducer = (state, action) => {
-    if(state === undefined){
-      state =  getInitState(this.props);
+    if (state === undefined) {
+      state = getInitState(this.props);
     }
-    if(action === undefined){
+    if (action === undefined) {
       return state;
     }
-    switch(action.type) {
+    switch (action.type) {
       case 'INCREMENT':
         return {
           count: state.count + 1
@@ -36,14 +36,11 @@ class WebMediaPlayer extends Component {
     console.log(this.store.getState())
     return (
       <Provider store={this.store}>
-        <div>
-          <h1>Future Web Media player here !</h1>
-          <hr/>
-        </div>
+        <Container/>
       </Provider>
-    );
-  }
-}
-
-export default WebMediaPlayer;
-
+          );
+        }
+      }
+      
+      export default WebMediaPlayer;
+      
