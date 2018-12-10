@@ -88,6 +88,7 @@ const getInitState = (options) => {
     }
     state.isLoading = false;
     state.isInitialized = false;
+    state.isLargePlayButtonHighlighted = false;
     return state;
 }
 

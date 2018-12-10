@@ -8,6 +8,7 @@ import Thumbnail from "./Thumbnail"
 import Video from "./Video";
 import Audio from "./Audio";
 import Slideshow from "./Slideshow";
+import LargePlayButton from "./LargePlayButton";
 //cursor: auto
 class Container extends Component {
 
@@ -31,6 +32,7 @@ class Container extends Component {
             <div className="wmp-container" style={style}>
                 <Spinner />
                 {thumbnail}
+                <LargePlayButton />
                 <TitleBar />
                 <MenuBar />
                 {video}
@@ -54,10 +56,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps)(Container);
 /*
-        
-          <div class="salefi-player-large-play-button">
-              <div class="salefi-player-central-play-arrow material-icons md-40">play_arrow</div>
-          </div>
           <div class="salefi-player-menu-bar-container" hidden="">
               <div class="salefi-player-bottom-shading"></div>
               <div class="salefi-player-menu-bar-offset-left"></div>

@@ -1,0 +1,28 @@
+.wmp-large-play-button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 68px;
+    height: 48px;
+    margin-left: -34px;
+    margin-top: -24px;
+    -moz-transition: opacity .25s cubic-bezier(0.0,0.0,0.2,1);
+    -webkit-transition: opacity .25s cubic-bezier(0.0,0.0,0.2,1);
+    transition: opacity .25s cubic-bezier(0.0,0.0,0.2,1);
+    z-index: 63;
+    font-size: 20px;
+    background-color: #212121;
+    opacity: 0.8;
+    border-radius: 28%;
+    cursor: pointer;
+}
+
+.wmp-central-play-arrow{
+    color: white;
+    padding-top: 4px;
+    cursor: pointer;
+}
+
+.material-icons.md-40{ 
+    font-size: 40px;
+}
