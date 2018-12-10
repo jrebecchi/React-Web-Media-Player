@@ -48,7 +48,7 @@ const mapStateToProps = (state) => {
         thumbnail: state.thumbnail,
         hasVideo: state.hasVideo,
         hasAudio: state.hasAudio,
-        hasSlideshow : state.hasSlideshow
+        hasSlideshow: state.hasSlideshow
     };
 };
 

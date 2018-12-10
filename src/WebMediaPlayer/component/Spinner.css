@@ -1,0 +1,67 @@
+.wmp-spinner-container{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 64px;
+    height: 64px;
+    margin-left: -32px;
+    margin-top: -32px;
+    z-index: 18;
+    pointer-events: none;
+}
+
+.wmp-player-animate-loader {
+    border-radius: 60px;
+    margin: -5px auto;
+    width: 64px;
+    height: 64px;
+    transform: scale(1.2);
+    
+}
+ 
+.wmp-animate-loader .wmp-animate-loader-circular {
+    animation: rotate 2s linear infinite;
+    height: 100%;
+    transform-origin: center center;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+ 
+.wmp-animate-loader .wmp-animate-loader-path {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+}
+ 
+@keyframes rotate{
+    100%{
+        transform: rotate(360deg);
+    }
+}
+ 
+@keyframes dash{
+    0%{
+        stroke-dasharray: 1,200;
+        stroke-dashoffset: 0;
+    }
+    50%{
+        stroke-dasharray: 89,200;
+        stroke-dashoffset: -35;
+    }
+    100%{
+        stroke-dasharray: 89,200;
+        stroke-dashoffset: -124;
+    }
+}
+ 
+@keyframes color{
+    100%, 0%{
+        stroke: rgb(211, 211, 211);
+        opacity: 1;
+    }
+}
