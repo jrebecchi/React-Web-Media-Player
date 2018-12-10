@@ -87,6 +87,7 @@ const getInitState = (options) => {
         state.allowFullFrame = DEFAULT_ALLOW_FULL_FRAME;
     }
     state.isLoading = false;
+    state.isInitialized = false;
     return state;
 }
 

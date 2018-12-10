@@ -54,14 +54,7 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps)(Container);
 /*
-        <div class="salefi-player-spinner-container" hidden="">
-              <div class="salefi-player-animate-loader">
-                <svg class="salefi-player-animate-loader-circular" viewBox="25 25 50 50">
-                    <circle class="salefi-player-animate-loader-path" cx="50" cy="50" r="20" fill="none" stroke-width="4"></circle>
-                </svg>
-              </div>
-          </div>
-          <div class="salefi-plater-thumbnail-overlay-image" style="background-image: url(&quot;img/bbb.jpg&quot;);"></div>
+        
           <div class="salefi-player-large-play-button">
               <div class="salefi-player-central-play-arrow material-icons md-40">play_arrow</div>
           </div>

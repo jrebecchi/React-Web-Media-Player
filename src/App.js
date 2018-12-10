@@ -11,7 +11,7 @@ class App extends Component {
 
         <WebMediaPlayer
           title="Video Player"
-          thumbnail="img/bbb.jpg" 
+          thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg" 
           video="https://nusid.net/video.mp4"
           width="560"
           height="315"
@@ -19,7 +19,7 @@ class App extends Component {
 
         <WebMediaPlayer
           title="Slideshow Player"
-          thumbnail="https://i.ytimg.com/vi_webp/qIM0kucdiGM/sddefault.webp" 
+          thumbnail="https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg" 
           slideshow={
           [{
             src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg",
@@ -41,7 +41,7 @@ class App extends Component {
         
         <WebMediaPlayer
           title="Audio Slideshow Player"
-          thumbnail="https://i.ytimg.com/vi_webp/qIM0kucdiGM/sddefault.webp" 
+          thumbnail="https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg" 
           audio="https://nusid.net/audio.flac" 
           slideshow={
           [{
