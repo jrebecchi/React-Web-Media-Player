@@ -93,10 +93,6 @@ export default connect(mapStateToProps)(Container);
                 <div class="salefi-player-scrubber-button hide"></div>
               </div>
           </div>
-          <div class="salefi-player-title-container">
-              <a class="salefi-player-title light-grey-to-white" href="#" target="_blank">Product name - Store name</a>
-              <div class="salefi-player-top-shading"></div>
-          </div>
           <video width="560" height="315">
               <source src="https://nusid.net/video.mp4" />
           </video>

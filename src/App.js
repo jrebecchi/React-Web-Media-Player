@@ -11,6 +11,7 @@ class App extends Component {
 
         <WebMediaPlayer
           title="Video Player"
+          link="https://google.com"
           thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg" 
           video="https://nusid.net/video.mp4"
           width="560"
@@ -19,6 +20,7 @@ class App extends Component {
 
         <WebMediaPlayer
           title="Slideshow Player"
+          link="https://google.com"
           thumbnail="https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg" 
           slideshow={
           [{
@@ -41,6 +43,7 @@ class App extends Component {
         
         <WebMediaPlayer
           title="Audio Slideshow Player"
+          link="https://google.com"
           thumbnail="https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg" 
           audio="https://nusid.net/audio.flac" 
           slideshow={

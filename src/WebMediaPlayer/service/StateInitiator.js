@@ -63,8 +63,6 @@ const getInitState = (options) => {
     } else {
         throw new Error("Combination impossible");
     }
-    state.thumbnail = options.thumbnail;
-    state.title = options.title;
 
     if (options.hasOwnProperty("height")) {
         state.height = options.height;
@@ -86,6 +84,10 @@ const getInitState = (options) => {
     } else {
         state.allowFullFrame = DEFAULT_ALLOW_FULL_FRAME;
     }
+    state.thumbnail = options.thumbnail;
+    state.title = options.title;
+    state.link = options.link;
+
     state.isLoading = false;
     state.isInitialized = false;
     state.isLargePlayButtonHighlighted = false;
