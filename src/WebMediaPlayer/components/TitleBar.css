@@ -1,11 +1,14 @@
 .wmp-title-container{
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 60px;
     top: 0%;
+    text-align: left;
+    cursor: pointer;
 }
 
 .wmp-title{
+    text-shadow: 0 0 2px rgba(0,0,0,.5);
     position: absolute;
     padding-left: 17px;
     padding-top: 12px;

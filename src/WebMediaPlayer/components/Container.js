@@ -11,6 +11,15 @@ import Slideshow from "./Slideshow";
 import LargePlayButton from "./LargePlayButton";
 //cursor: auto
 class Container extends Component {
+    handleMouseEnter = (e) => {
+        e.stopPropagation();
+        this.props.dispatch({ type: 'HIGHLIGHT_PLAYER' });
+    }
+
+    handleMouseLeave = (e) => {
+        e.stopPropagation();
+        this.props.dispatch({ type: 'UNHIGHLIGHT_PLAYER' });
+    }
 
     render = () => {
         const style = {
@@ -29,7 +38,7 @@ class Container extends Component {
             slideshow = <Slideshow />
         }
         return (
-            <div className="wmp-container" style={style}>
+            <div className="wmp-container" style={style} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
                 <Spinner />
                 {thumbnail}
                 <LargePlayButton />

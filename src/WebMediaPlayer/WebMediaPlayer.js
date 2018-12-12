@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import { getInitState } from './service/StateInitiator'
-import Container from './component/Container'
+import { getInitState } from './services/StateInitiator'
+import Container from './components/Container'
 
 class WebMediaPlayer extends Component {
 
@@ -19,14 +19,16 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
-      case 'INCREMENT':
+      case 'HIGHLIGHT_PLAYER':
         return {
-          count: state.count + 1
+          ...state,
+          isPlayerHighlighted: true
         };
-      case 'DECREMENT':
-        return {
-          count: state.count - 1
-        };
+      case 'UNHIGHLIGHT_PLAYER':
+      return {
+        ...state,
+        isPlayerHighlighted: false
+      };
       default:
         return state;
     }

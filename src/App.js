@@ -9,9 +9,11 @@ class App extends Component {
     return (
       <div className="App">
 
+        <iframe title="fsqfdsqf" width="560" height="315" src="https://www.youtube.com/embed/aqz-KE-bpKQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
         <WebMediaPlayer
           title="Video Player"
-          link="https://google.com"
           thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg" 
           video="https://nusid.net/video.mp4"
           width="560"

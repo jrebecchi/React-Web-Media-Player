@@ -87,7 +87,7 @@ const getInitState = (options) => {
     state.thumbnail = options.thumbnail;
     state.title = options.title;
     state.link = options.link;
-
+    state.isPlayerHighlighted = false;
     state.isLoading = false;
     state.isInitialized = false;
     state.isLargePlayButtonHighlighted = false;
