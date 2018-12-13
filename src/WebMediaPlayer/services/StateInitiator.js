@@ -91,6 +91,8 @@ const getInitState = (options) => {
     state.isLoading = false;
     state.isInitialized = false;
     state.isLargePlayButtonHighlighted = false;
+    state.isPlaying = false;
+    state.isReadingTerminated = false;
     return state;
 }
 

@@ -1,0 +1,62 @@
+.wmp-menu-bar-container{
+    position: absolute;
+    bottom:0px;
+    height: 100%;
+    width: 100%;
+}
+
+.wmp-bottom-shading{
+    position: absolute;
+    bottom:0px;
+    width: 100%;
+    height: 60px;
+    background-image: linear-gradient(to top, black, transparent);
+    opacity:0.25;
+    z-index:0;
+}
+
+.wmp-menu-bar-offset-left{
+    display: inline-block;
+    height: 100%;
+    left: 0%;
+    width: 12px;
+    position: absolute;
+}
+
+.wmp-menu-bar-offset-right{
+    display: inline-block;
+    height: 100%;
+    width: 12px;
+    right: 0%;
+    position: absolute;
+}
+
+.wmp-menu-bar{
+    bottom:0px;
+    display: inline-block;
+    left: 12px;
+    right: 12px;
+    position: absolute;
+    z-index:5;
+}
+
+.wmp-tool-constainer{
+    position: relative;
+    height: 36px;
+}
+
+.wmp-tool-constainer-left{
+    text-align: left;
+    cursor: pointer;
+    display: table;
+    position: absolute;
+    padding-left: 3px;
+}
+
+.wmp-tool-constainer-right{
+    text-align: right;
+    cursor: pointer;
+    display: table;
+    position: absolute;
+    right: 0px;
+}

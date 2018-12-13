@@ -11,7 +11,7 @@ class Thumbnail extends Component {
                 backgroundImage: "url(" + this.props.thumbnail + ")"
             }
             return (
-                <div className="wmp-thumbnail-overlay-image" style={style} hidden={this.props.isInitialized}></div>
+                <div className="wmp-thumbnail-overlay-image" style={style}></div>
             );
         }
     }
@@ -20,7 +20,6 @@ class Thumbnail extends Component {
 const mapStateToProps = (state) => {
     return {
         thumbnail: state.thumbnail,
-        isInitialized: state.isInitialized
     };
 };
 
