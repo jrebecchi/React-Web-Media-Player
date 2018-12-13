@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Container.css';
-import TitleBar from "./TitleBar";
-import MenuBar from "./MenuBar";
-import Spinner from "./Spinner"
-import Thumbnail from "./Thumbnail"
-import Video from "./Video";
-import Audio from "./Audio";
-import Slideshow from "./Slideshow";
-import LargePlayButton from "./LargePlayButton";
+import TitleBar from "./TitleBar/TitleBar";
+import MenuBar from "./MenuBar/MenuBar";
+import Spinner from "./Loading/Spinner"
+import Thumbnail from "./Init/Thumbnail"
+import Video from "./Medias/Video";
+import Audio from "./Medias/Audio";
+import Slideshow from "./Medias/Slideshow";
+import LargePlayButton from "./Init/LargePlayButton";
 //cursor: auto
 class Container extends Component {
     handleMouseEnter = (e) => {
@@ -21,14 +21,22 @@ class Container extends Component {
         this.props.dispatch({ type: 'UNHIGHLIGHT_PLAYER' });
     }
 
+    handleClick = (e) => {
+        e.stopPropagation();
+        if(!this.props.isInitialized)
+            this.props.dispatch({ type: 'INITIALIZE_PLAYER' });
+    }
+
     render = () => {
         const style = {
             width: this.props.width + "px",
             height: this.props.height + "px"
         }
-        let thumbnail, video, audio, slideshow;;
-        if (this.props.thumbnail)
+        let thumbnail, video, audio, slideshow, largePlayButton;
+        if (this.props.thumbnail && !this.props.isInitialized)
             thumbnail = <Thumbnail />;
+        if(!this.props.isInitialized)
+            largePlayButton = <LargePlayButton />;
         if (this.props.hasVideo) {
             video = <Video />;
         } else if (this.props.hasAudio) {
@@ -38,10 +46,10 @@ class Container extends Component {
             slideshow = <Slideshow />
         }
         return (
-            <div className="wmp-container" style={style} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
+            <div className="wmp-container" style={style} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onClick={this.handleClick}>
                 <Spinner />
                 {thumbnail}
-                <LargePlayButton />
+                {largePlayButton}
                 <TitleBar />
                 <MenuBar />
                 {video}
@@ -59,7 +67,8 @@ const mapStateToProps = (state) => {
         thumbnail: state.thumbnail,
         hasVideo: state.hasVideo,
         hasAudio: state.hasAudio,
-        hasSlideshow: state.hasSlideshow
+        hasSlideshow: state.hasSlideshow,
+        isInitialized: state.isInitialized
     };
 };
 

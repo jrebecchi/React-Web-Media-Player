@@ -3,8 +3,9 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { getInitState } from './services/StateInitiator';
 import Container from './components/Container';
-import highlightPlayer from './actions/HighlightPlayer'
-import unhighlightPlayer from './actions/UnhighlightPlayer'
+import highlightPlayer from './actions/HighlightPlayer';
+import unhighlightPlayer from './actions/UnhighlightPlayer';
+import initializePlayer from './actions/InitializePlayer'
 
 
 class WebMediaPlayer extends Component {
@@ -26,6 +27,8 @@ class WebMediaPlayer extends Component {
         return highlightPlayer(state);
       case 'UNHIGHLIGHT_PLAYER':
         return unhighlightPlayer(state);
+      case 'INITIALIZE_PLAYER':
+        return initializePlayer(state);
       default:
         return state;
     }
