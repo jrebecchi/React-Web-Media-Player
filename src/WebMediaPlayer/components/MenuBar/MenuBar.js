@@ -2,10 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './MenuBar.css';
 import PlayButton from './PlayButton';
+import VolumeButton from './VolumeButton';
 
 class MenuBar extends Component {
 
     render = () => {
+
+        let volumeButton;
+        if(this.props.hasVideo || this.props.hasAudio)
+            volumeButton = <VolumeButton />;
+
         return (
             <div className="wmp-menu-bar-container">
                 <div className="wmp-bottom-shading"></div>
@@ -15,6 +21,7 @@ class MenuBar extends Component {
                     <div className="wmp-tool-constainer">
                         <div className="wmp-tool-constainer-left">
                             <PlayButton />
+                            {volumeButton}
                         </div>
                         <div className="wmp-tool-constainer-right">
                         </div>
@@ -27,6 +34,9 @@ class MenuBar extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        hasVideo: state.hasVideo,
+        hasAudio: state.hasAudio,
+        hasSlideshow: state.hasSlideshow
     };
 };
   

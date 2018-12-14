@@ -76,8 +76,12 @@ const getInitState = (options) => {
     }
     if (options.hasOwnProperty("volume")) {
         state.volume = options.volume;
+        state.pastVolume = options.volume;
+
     } else {
         state.volume = DEFAULT_VOLUME;
+        state.pastVolume = DEFAULT_VOLUME;
+
     }
     if (options.hasOwnProperty("allowFullFrame")) {
         state.allowFullFrame = options.allowFullFrame;
@@ -93,6 +97,7 @@ const getInitState = (options) => {
     state.isLargePlayButtonHighlighted = false;
     state.isPlaying = false;
     state.isReadingTerminated = false;
+
     return state;
 }
 
