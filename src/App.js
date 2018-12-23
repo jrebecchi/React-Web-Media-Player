@@ -39,7 +39,7 @@ class App extends Component {
             endTime: 8.0
           }, {
             src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide5.jpg",
-            endTime: 120.0
+            endTime: 5000.0
           }]}
         />
         

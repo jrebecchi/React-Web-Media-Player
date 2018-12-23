@@ -11,7 +11,7 @@ const initSlideshowPlayerState = (options) => {
     if (options.slideshow.slice(-1)[0].endTime === undefined) {
         throw new Error("No time specified for slideshow");
     }
-    state.timeLength = options.slideshow.slice(-1)[0].endTime;
+    state.duration = options.slideshow.slice(-1)[0].endTime;
     state.slideshow = options.slideshow;
     return state;
 }
@@ -24,7 +24,7 @@ const initAudioSlideshowPlayerState = (options) => {
     if (options.slideshow.slice(-1)[0].endTime === undefined) {
         throw new Error("No time specified for slideshow");
     }
-    state.timeLength = options.slideshow.slice(-1)[0].endTime;
+    state.duration = options.slideshow.slice(-1)[0].endTime;
     state.slideshow = options.slideshow;
     state.audio = options.audio;
     return state;
@@ -35,6 +35,7 @@ const initVideoPlayerState = (options) => {
     state.hasVideo = true;
     state.hasAudio = false;
     state.hasSlideshow = false;
+    state.duration = 0; 
     state.video = options.video;
     return state;
 }
@@ -81,12 +82,16 @@ const getInitState = (options) => {
     } else {
         state.volume = DEFAULT_VOLUME;
         state.pastVolume = DEFAULT_VOLUME;
-
     }
     if (options.hasOwnProperty("allowFullFrame")) {
         state.allowFullFrame = options.allowFullFrame;
     } else {
         state.allowFullFrame = DEFAULT_ALLOW_FULL_FRAME;
+    }
+    if (options.hasOwnProperty("currentTime")){
+        state.currentTime = options.currentTime;
+    } else {
+        state.currentTime = 0;
     }
     state.thumbnail = options.thumbnail;
     state.title = options.title;
@@ -97,7 +102,6 @@ const getInitState = (options) => {
     state.isLargePlayButtonHighlighted = false;
     state.isPlaying = false;
     state.isReadingTerminated = false;
-
     return state;
 }
 

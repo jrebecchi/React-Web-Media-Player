@@ -5,6 +5,8 @@ import PlayButton from './PlayButton';
 import VolumeButton from './VolumeButton';
 import NextButton from './NextButton';
 import PreviousButton from './PreviousButton';
+import Timer from './Timer';
+import FullscreenButton from './FullscreenButton';
 
 class MenuBar extends Component {
 
@@ -31,8 +33,10 @@ class MenuBar extends Component {
                             {volumeButton}
                             {previousButton}
                             {nextButton}
+                            <Timer />
                         </div>
                         <div className="wmp-tool-constainer-right">
+                            <FullscreenButton />
                         </div>
                     </div>
                 </div>
@@ -69,7 +73,6 @@ export default connect(mapStateToProps)(MenuBar);
                             <div class="salefi-player-volume-slider-scrubber-button"></div>
                           </div>
                       </div>
-                      <div class="salefi-player-tool-button button-time salefi-player-time-display"><span class="salefi-player-time">0:00</span><span class="salefi-player-time"> / </span><span class="salefi-player-time">9:56</span></div>
                     </div>
                     <div class="salefi-player-tool-constainer-right">
                       <div class="salefi-player-tool-button button-description light-grey-to-white">
