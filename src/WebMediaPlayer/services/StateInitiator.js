@@ -97,6 +97,7 @@ const getInitState = (options) => {
     state.isLargePlayButtonHighlighted = false;
     state.isPlaying = false;
     state.isReadingTerminated = false;
+    state.showVolumeSlider = false;
 
     return state;
 }
