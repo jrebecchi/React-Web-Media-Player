@@ -5,7 +5,9 @@ import { getInitState } from './services/StateInitiator';
 import Container from './components/Container';
 import highlightPlayer from './actions/HighlightPlayer';
 import unhighlightPlayer from './actions/UnhighlightPlayer';
-import initializePlayer from './actions/InitializePlayer'
+import initializePlayer from './actions/InitializePlayer';
+import showVolumeSlider from './actions/ShowVolumeSlider';
+import hideVolumeSlider from './actions/HideVolumeSlider';
 
 
 class WebMediaPlayer extends Component {
@@ -23,6 +25,10 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      case 'SHOW_VOLUME_SLIDER':
+        return showVolumeSlider(state);
+      case 'HIDE_VOLUME_SLIDER':
+        return hideVolumeSlider(state);
       case 'HIGHLIGHT_PLAYER':
         return highlightPlayer(state);
       case 'UNHIGHLIGHT_PLAYER':

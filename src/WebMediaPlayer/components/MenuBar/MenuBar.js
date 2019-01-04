@@ -7,20 +7,29 @@ import NextButton from './NextButton';
 import PreviousButton from './PreviousButton';
 import Timer from './Timer';
 import FullscreenButton from './FullscreenButton';
+import VolumeSlider from './VolumeSlider';
 
 class MenuBar extends Component {
 
+    handleMouseLeave = (e) => {
+        e.stopPropagation();
+        this.props.dispatch({ type: 'HIDE_VOLUME_SLIDER' });
+    }
+
     render = () => {
 
-        let volumeButton, previousButton, nextButton;
+        let volumeButton, previousButton, nextButton, volumeSlider;
         if(this.props.hasVideo || this.props.hasAudio)
             volumeButton = <VolumeButton />;
         else {
             previousButton = <PreviousButton />;
             nextButton = <NextButton />;
         }
+        
+        if(this.props.showVolumeSlider){
+            volumeSlider = <VolumeSlider />
+        }
             
-
         return (
             <div className="wmp-menu-bar-container">
                 <div className="wmp-bottom-shading"></div>
@@ -30,7 +39,10 @@ class MenuBar extends Component {
                     <div className="wmp-tool-constainer">
                         <div className="wmp-tool-constainer-left">
                             <PlayButton />
-                            {volumeButton}
+                            <span onMouseLeave={this.handleMouseLeave}>
+                                {volumeButton}
+                                {volumeSlider}
+                            </span> 
                             {previousButton}
                             {nextButton}
                             <Timer />
@@ -49,7 +61,8 @@ const mapStateToProps = (state) => {
     return {
         hasVideo: state.hasVideo,
         hasAudio: state.hasAudio,
-        hasSlideshow: state.hasSlideshow
+        hasSlideshow: state.hasSlideshow,
+        showVolumeSlider: state.showVolumeSlider
     };
 };
   
