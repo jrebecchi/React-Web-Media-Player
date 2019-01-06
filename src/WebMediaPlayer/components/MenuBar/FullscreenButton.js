@@ -3,16 +3,22 @@ import { connect } from 'react-redux';
 import './Button.css';
 
 class FullscreenButton extends Component {
+
+    handleClick = (e) => {
+        e.stopPropagation();
+        this.props.dispatch({ type: 'SWITCH_FULLSCREEN' });      
+    }
+    
     render = () => {
         let button;
-        if (this.props.isFullScreenActivated)
+        if (this.props.isFullscreen)
             button = "fullscreen_exit";
         else
             button = "fullscreen";
 
         return (
-            <div class="wmp-tool-button material-icons light-grey-to-white md-29">
-                fullscreen
+            <div className="wmp-tool-button material-icons light-grey-to-white md-29" onClick={this.handleClick}>
+                {button}
             </div>
         );
     }
@@ -20,7 +26,7 @@ class FullscreenButton extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        isFullScreen: state.isFullScreenActivated
+        isFullscreen: state.isFullscreen
     };
 };
 

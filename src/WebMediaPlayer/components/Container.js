@@ -11,6 +11,42 @@ import Slideshow from "./Medias/Slideshow";
 import LargePlayButton from "./Init/LargePlayButton";
 //cursor: auto
 class Container extends Component {
+
+    goInFullscreen = () => {
+        if (this.view.container.requestFullscreen)
+            this.props.container.requestFullscreen();
+        else if (this.view.container.mozRequestFullScreen)
+            this.container.mozRequestFullScreen();
+        else if (this.view.container.webkitRequestFullscreen)
+            this.container.webkitRequestFullscreen();
+        else if (this.view.container.msRequestFullscreen)
+            this.view.container.msRequestFullscreen();
+    }
+
+    goOutFullscreen = () => {
+        if (document.exitFullscreen)
+            document.exitFullscreen();
+        else if (document.mozCancelFullScreen)
+            document.mozCancelFullScreen();
+        else if (document.webkitExitFullscreen)
+            document.webkitExitFullscreen();
+        else if (document.msExitFullscreen)
+            document.msExitFullscreen();
+    }
+
+    componentDidUpdate(prevProps) {
+        console.log("did");
+        if (prevProps.isFullscreen !== this.props.isFullscreen) {
+            if (this.props.isFullscreen) {
+                console.log("gofullscreen");
+                this.goOutFullscreen();
+            } else {
+                console.log("exitfullscreen");
+                this.goInFullscreen();
+            }
+        }
+    }
+
     handleMouseEnter = (e) => {
         e.stopPropagation();
         this.props.dispatch({ type: 'HIGHLIGHT_PLAYER' });
@@ -23,7 +59,7 @@ class Container extends Component {
 
     handleClick = (e) => {
         e.stopPropagation();
-        if(!this.props.isInitialized)
+        if (!this.props.isInitialized)
             this.props.dispatch({ type: 'INITIALIZE_PLAYER' });
     }
 
@@ -33,13 +69,13 @@ class Container extends Component {
             height: this.props.height + "px"
         }
         let thumbnail, video, audio, slideshow, largePlayButton, menuBar;
-        if (this.props.thumbnail && this.props.isInitialized)
+        if (this.props.thumbnail && !this.props.isInitialized)
             thumbnail = <Thumbnail />;
-        if(this.props.isInitialized){
+        if (this.props.isInitialized) {
             menuBar = <MenuBar />
         } else {
             largePlayButton = <LargePlayButton />;
-        }   
+        }
         if (this.props.hasVideo) {
             video = <Video />;
         } else if (this.props.hasAudio) {
@@ -71,7 +107,8 @@ const mapStateToProps = (state) => {
         hasVideo: state.hasVideo,
         hasAudio: state.hasAudio,
         hasSlideshow: state.hasSlideshow,
-        isInitialized: state.isInitialized
+        isInitialized: state.isInitialized,
+        isFullscreen: state.isFullscreen
     };
 };
 

@@ -103,6 +103,7 @@ const getInitState = (options) => {
     state.isPlaying = false;
     state.isReadingTerminated = false;
     state.showVolumeSlider = false;
+    state.isFullscreen = false;
 
     return state;
 }
