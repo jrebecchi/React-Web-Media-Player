@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Container.css';
+import fscreen from "fscreen";
 import TitleBar from "./TitleBar/TitleBar";
 import MenuBar from "./MenuBar/MenuBar";
 import Spinner from "./Loading/Spinner"
@@ -11,42 +12,57 @@ import Slideshow from "./Medias/Slideshow";
 import LargePlayButton from "./Init/LargePlayButton";
 //cursor: auto
 class Container extends Component {
-
-    goInFullscreen = () => {
-        if (this.view.container.requestFullscreen)
-            this.props.container.requestFullscreen();
-        else if (this.view.container.mozRequestFullScreen)
-            this.container.mozRequestFullScreen();
-        else if (this.view.container.webkitRequestFullscreen)
-            this.container.webkitRequestFullscreen();
-        else if (this.view.container.msRequestFullscreen)
-            this.view.container.msRequestFullscreen();
+    componentDidMount = () => {
+        fscreen.addEventListener("fullscreenchange", this.detectFullScreen.bind(this));
     }
 
-    goOutFullscreen = () => {
-        if (document.exitFullscreen)
-            document.exitFullscreen();
-        else if (document.mozCancelFullScreen)
-            document.mozCancelFullScreen();
-        else if (document.webkitExitFullscreen)
-            document.webkitExitFullscreen();
-        else if (document.msExitFullscreen)
-            document.msExitFullscreen();
+    componentWillUnmount = () => {
+        fscreen.removeEventListener("fullscreenchange", this.detectFullScreen.bind(this));
     }
 
-    componentDidUpdate(prevProps) {
-        console.log("did");
-        if (prevProps.isFullscreen !== this.props.isFullscreen) {
-            if (this.props.isFullscreen) {
-                console.log("gofullscreen");
-                this.goOutFullscreen();
-            } else {
-                console.log("exitfullscreen");
-                this.goInFullscreen();
-            }
+    componentDidUpdate = () => {
+        this.handlePropsChanges(this.props);
+    }
+
+    handlePropsChanges = (props) => {
+        const enabled = fscreen.fullscreenElement;
+        if (enabled && !props.isFullscreen) {
+            this.leaveFullScreen();
+        } else if (!enabled && props.isFullscreen) {
+            this.enterFullScreen();
         }
     }
 
+    detectFullScreen = () => {
+        if (this.props.isFullscreen && !fscreen.fullscreenEnabled) {
+            this.props.dispatch({ type: 'SWITCH_FULLSCREEN' }); 
+        }
+    }
+
+    enterFullScreen = () => {
+        if (fscreen.fullscreenEnabled) {
+            fscreen.requestFullscreen(this.node);
+        }
+    }
+
+    leaveFullScreen = () => {
+        if (fscreen.fullscreenEnabled) {
+            fscreen.exitFullscreen();
+        }
+    }
+    /*
+  componentDidUpdate(prevProps) {
+      console.log("did");
+      if (prevProps.isFullscreen !== this.props.isFullscreen) {
+          if (this.props.isFullscreen) {
+              console.log("gofullscreen");
+              this.goInFullscreen();
+          } else {
+              console.log("exitfullscreen");
+              this.goOutFullscreen();
+          }
+      }
+  }*/
     handleMouseEnter = (e) => {
         e.stopPropagation();
         this.props.dispatch({ type: 'HIGHLIGHT_PLAYER' });
@@ -64,10 +80,18 @@ class Container extends Component {
     }
 
     render = () => {
+        const className = ["wmp-container", "fullscreen"];
         const style = {
             width: this.props.width + "px",
             height: this.props.height + "px"
         }
+        if (this.props.isFullscreen) {
+            className.push("fullscreen-enabled");
+            style.width = "100%";
+            style.height = "100%";
+        }
+
+        
         let thumbnail, video, audio, slideshow, largePlayButton, menuBar;
         if (this.props.thumbnail && !this.props.isInitialized)
             thumbnail = <Thumbnail />;
@@ -85,7 +109,7 @@ class Container extends Component {
             slideshow = <Slideshow />
         }
         return (
-            <div className="wmp-container" style={style} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onClick={this.handleClick}>
+            <div className={className.join(" ")} style={style} ref={node => (this.node = node)} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onClick={this.handleClick}>
                 <Spinner />
                 {thumbnail}
                 {largePlayButton}
