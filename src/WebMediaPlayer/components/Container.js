@@ -10,8 +10,13 @@ import Video from "./Medias/Video";
 import Audio from "./Medias/Audio";
 import Slideshow from "./Medias/Slideshow";
 import LargePlayButton from "./Init/LargePlayButton";
-//cursor: auto
+
 class Container extends Component {
+    constructor(props) {
+        super(props);
+        this.fscreen = fscreen;
+    }
+
     componentDidMount = () => {
         fscreen.addEventListener("fullscreenchange", this.detectFullScreen.bind(this));
     }
@@ -34,8 +39,13 @@ class Container extends Component {
     }
 
     detectFullScreen = () => {
-        if (this.props.isFullscreen && !fscreen.fullscreenEnabled) {
-            this.props.dispatch({ type: 'SWITCH_FULLSCREEN' }); 
+        if (this.fscreen.fullscreenElement == null){
+            if(this.props.isFullscreen){
+                this.props.dispatch({ type: 'SWITCH_FULLSCREEN_STATE' });
+            }
+            this.props.dispatch({ type: 'FULL_SCREEN_DISABLED' });
+        } else {
+            this.props.dispatch({ type: 'FULL_SCREEN_ENABLED' });
         }
     }
 
@@ -85,13 +95,13 @@ class Container extends Component {
             width: this.props.width + "px",
             height: this.props.height + "px"
         }
-        if (this.props.isFullscreen) {
+        if (this.props.isFullScreenActivated) {
             className.push("fullscreen-enabled");
             style.width = "100%";
             style.height = "100%";
         }
 
-        
+
         let thumbnail, video, audio, slideshow, largePlayButton, menuBar;
         if (this.props.thumbnail && !this.props.isInitialized)
             thumbnail = <Thumbnail />;

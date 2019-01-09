@@ -6,7 +6,7 @@ class FullscreenButton extends Component {
 
     handleClick = (e) => {
         e.stopPropagation();
-        this.props.dispatch({ type: 'SWITCH_FULLSCREEN' });      
+        this.props.dispatch({ type: 'SWITCH_FULLSCREEN_STATE' });      
     }
     
     render = () => {
