@@ -26,9 +26,9 @@ class MenuBar extends Component {
             nextButton = <NextButton />;
         }
         
-        if(this.props.showVolumeSlider){
+        //if(this.props.showVolumeSlider){
             volumeSlider = <VolumeSlider />
-        }
+        //}
             
         return (
             <div className="wmp-menu-bar-container">

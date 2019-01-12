@@ -11,6 +11,9 @@ import hideVolumeSlider from './actions/HideVolumeSlider';
 import switchFullscreen from './actions/SwitchFullscreen';
 import adaptPlayerToFullscreen from './actions/AdaptPlayerToFullscreen';
 import adaptPlayerToNonFullscreen from './actions/AdaptPlayerToNonFullscreen';
+import updateVolume from './actions/UpdateVolume';
+import saveActualVolumeAsPastVolume from './actions/SaveActualVolumeAsPastVolume';
+import updateVolumeSliderLeftMargin from './actions/UpdateVolumeSliderLeftMargin';
 
 
 class WebMediaPlayer extends Component {
@@ -28,6 +31,12 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      case 'UPDATE_VOLUME_SLIDER_LEFT_MARGIN':
+        return updateVolumeSliderLeftMargin(state, action);
+      case 'SAVE_ACTUAL_VOLUME_AS_PAST_VOLUME':
+        return saveActualVolumeAsPastVolume(state);
+      case 'UPDATE_VOLUME':
+        return updateVolume(state, action);
       case 'FULL_SCREEN_ENABLED':
         return adaptPlayerToFullscreen(state);
       case 'FULL_SCREEN_DISABLED':

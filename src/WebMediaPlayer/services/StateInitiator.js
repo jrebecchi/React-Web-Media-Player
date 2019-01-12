@@ -93,6 +93,7 @@ const getInitState = (options) => {
     } else {
         state.currentTime = 0;
     }
+    state.leftMarginVolume =  "0%";
     state.thumbnail = options.thumbnail;
     state.title = options.title;
     state.link = options.link;
