@@ -12,23 +12,31 @@ class VolumeSlider extends Component {
 
     handleMouseDownVolumeBar = (e) => {
         e.stopPropagation();
-        let volume = this.calculateVolumeFromXCoord(e.clientX);
-        this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: volume } });
         this.animateVolumeScrubberButton(e);
-
     }
 
-    animateVolumeScrubberButton = () => {
+    animateVolumeScrubberButton = (e) => {
         this.props.dispatch({ type: 'SAVE_ACTUAL_VOLUME_AS_PAST_VOLUME' });
+        this.props.dispatch({ type: 'PREVENT_MOUSE_LEAVE_VOLUME_SLIDER' });
+        let volume = this.calculateVolumeFromXCoord(e.clientX);
+        this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: volume } });
         document.addEventListener('mousemove', this.moveVolumeScrubberButton, true);
         document.addEventListener('mouseup', this.stopVolumeScrubberButton, true);
-        document.addEventListener('mouseleave', this.stopEventPropagation, true);
     };
 
     moveVolumeScrubberButton = (e) => {
         e.stopPropagation();
         let volume = this.calculateVolumeFromXCoord(e.clientX);
         this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: volume } });
+    };
+
+    stopVolumeScrubberButton = (e) => {
+        e.stopPropagation();
+        document.removeEventListener('mousemove', this.moveVolumeScrubberButton, true);
+        document.removeEventListener('mouseup', this.stopVolumeScrubberButton, true);
+        let volume = this.calculateVolumeFromXCoord(e.clientX);
+        this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: volume } });
+        this.props.dispatch({ type: 'ALLOW_MOUSE_LEAVE_VOLUME_SLIDER' });
     };
 
     calculateVolumeSliderLeftMargin = (volume) => {
@@ -50,19 +58,6 @@ class VolumeSlider extends Component {
         }
         return x / maxX;
     }
-
-    stopVolumeScrubberButton = (e) => {
-        e.stopPropagation();
-        document.removeEventListener('mousemove', this.moveVolumeScrubberButton, true);
-        document.removeEventListener('mouseup', this.stopVolumeScrubberButton, true);
-        document.removeEventListener('mouseleave', this.stopEventPropagation, true);
-        let volume = this.calculateVolumeFromXCoord(e.clientX);
-        this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: volume } });
-    };
-
-    stopEventPropagation = (e) => {
-        e.stopPropagation();
-    };
 
     componentDidMount = () => {
         this.props.dispatch({ type: 'UPDATE_VOLUME_SLIDER_LEFT_MARGIN', payload: { volumeSliderLeftMargin: this.calculateVolumeSliderLeftMargin(this.props.volume) } });

@@ -13,7 +13,8 @@ class MenuBar extends Component {
 
     handleMouseLeave = (e) => {
         e.stopPropagation();
-        this.props.dispatch({ type: 'HIDE_VOLUME_SLIDER' });
+        if(this.props.allowMouseLeaveVolumeSlider)
+            this.props.dispatch({ type: 'HIDE_VOLUME_SLIDER' });
     }
 
     render = () => {
@@ -26,9 +27,9 @@ class MenuBar extends Component {
             nextButton = <NextButton />;
         }
         
-        //if(this.props.showVolumeSlider){
+        if(this.props.showVolumeSlider){
             volumeSlider = <VolumeSlider />
-        //}
+        }
             
         return (
             <div className="wmp-menu-bar-container">
@@ -62,7 +63,8 @@ const mapStateToProps = (state) => {
         hasVideo: state.hasVideo,
         hasAudio: state.hasAudio,
         hasSlideshow: state.hasSlideshow,
-        showVolumeSlider: state.showVolumeSlider
+        showVolumeSlider: state.showVolumeSlider,
+        allowMouseLeaveVolumeSlider: state.allowMouseLeaveVolumeSlider,
     };
 };
   
