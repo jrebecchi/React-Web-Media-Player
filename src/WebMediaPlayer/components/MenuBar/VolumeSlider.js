@@ -64,7 +64,7 @@ class VolumeSlider extends Component {
     }
 
     componentDidUpdate = (prevProps) => {
-        if (prevProps.volume != this.props.volume) {
+        if (prevProps.volume !== this.props.volume) {
             this.props.dispatch({ type: 'UPDATE_VOLUME_SLIDER_LEFT_MARGIN', payload: { volumeSliderLeftMargin: this.calculateVolumeSliderLeftMargin(this.props.volume) } });
         }
     }

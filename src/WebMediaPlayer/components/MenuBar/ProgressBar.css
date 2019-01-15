@@ -1,0 +1,63 @@
+.wmp-progress-bar-wrapper{
+    display: inline-block;
+    height: 20px;
+    bottom: 31px;
+    position: absolute;
+    z-index: 74;
+    cursor: pointer;
+    left: 12px;
+    right: 12px;
+}
+.wmp-progress-bar{
+    pointer-events: none;
+    height: 3px;
+    width:100%;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-top: 12px;
+    position: absolute;
+}
+
+.wmp-progress-bar.desired{
+    width:0%;
+    background-color: rgba(255, 255, 255, 0.6);
+    z-index: 2;
+}
+
+.wmp-progress-bar.progression{
+    width:0%;
+    background-color: rgb(108, 233, 6);
+    z-index: 3;
+}
+
+.wmp-progress-bar.loaded{
+    width:0%;
+    background-color: rgba(255, 255, 255, 0.4);
+    z-index: 1;
+}
+
+.wmp-progress-bar-wrapper-highighted{
+    height: 25px;
+    bottom: 30px;
+}
+
+.wmp-progress-bar-highighted{
+    height: 5px;
+    margin-top: 14px;
+}
+/*
+.wmp-progress-bar:hover{
+    height: 5px;
+    margin-bottom: -1px;
+}
+*/
+.wmp-scrubber-button{
+    height: 13px;
+    width: 13px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: 7px;
+    margin-left: -6.5px;
+    z-index: 4;
+}

@@ -8,29 +8,30 @@ import PreviousButton from './PreviousButton';
 import Timer from './Timer';
 import FullscreenButton from './FullscreenButton';
 import VolumeSlider from './VolumeSlider';
+import ProgressBar from "./ProgressBar";
 
 class MenuBar extends Component {
 
     handleMouseLeave = (e) => {
         e.stopPropagation();
-        if(this.props.allowMouseLeaveVolumeSlider)
+        if (this.props.allowMouseLeaveVolumeSlider)
             this.props.dispatch({ type: 'HIDE_VOLUME_SLIDER' });
     }
 
     render = () => {
 
         let volumeButton, previousButton, nextButton, volumeSlider;
-        if(this.props.hasVideo || this.props.hasAudio)
+        if (this.props.hasVideo || this.props.hasAudio)
             volumeButton = <VolumeButton />;
         else {
             previousButton = <PreviousButton />;
             nextButton = <NextButton />;
         }
-        
-        if(this.props.showVolumeSlider){
+
+        if (this.props.showVolumeSlider) {
             volumeSlider = <VolumeSlider />
         }
-            
+
         return (
             <div className="wmp-menu-bar-container">
                 <div className="wmp-bottom-shading"></div>
@@ -43,7 +44,7 @@ class MenuBar extends Component {
                             <span onMouseLeave={this.handleMouseLeave}>
                                 {volumeButton}
                                 {volumeSlider}
-                            </span> 
+                            </span>
                             {previousButton}
                             {nextButton}
                             <Timer />
@@ -53,6 +54,7 @@ class MenuBar extends Component {
                         </div>
                     </div>
                 </div>
+                <ProgressBar/>
             </div>
         );
     }
@@ -67,7 +69,7 @@ const mapStateToProps = (state) => {
         allowMouseLeaveVolumeSlider: state.allowMouseLeaveVolumeSlider,
     };
 };
-  
+
 export default connect(mapStateToProps)(MenuBar);
 
 /*
