@@ -105,8 +105,9 @@ const getInitState = (options) => {
     state.isReadingTerminated = false;
     state.showVolumeSlider = false;
     state.isFullscreen = false;
-    state.isFullscreenActivated = false
-
+    state.isFullscreenActivated = false;
+    state.highlightProgressBar = false;
+    
     return state;
 }
 

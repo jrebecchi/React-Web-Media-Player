@@ -16,7 +16,8 @@ import saveActualVolumeAsPastVolume from './actions/SaveActualVolumeAsPastVolume
 import updateVolumeSliderLeftMargin from './actions/UpdateVolumeSliderLeftMargin';
 import preventMouseLeaveVolumeSlider from './actions/PreventMouseLeaveVolumeSlider';
 import allowMouseLeaveVolumeSlider from './actions/AllowMouseLeaveVolumeSlider';
-
+import hightLightProgressBar from './actions/HighlightProgressBar';
+import unhightLightProgressBar from './actions/UnhighlightProgressBar';
 
 class WebMediaPlayer extends Component {
 
@@ -33,6 +34,10 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      case 'UNHIGHTLIGHT_PROGRESS_BAR':
+        return hightLightProgressBar(state);
+      case 'HIGHTLIGHT_PROGRESS_BAR':
+        return unhightLightProgressBar(state);
       case 'ALLOW_MOUSE_LEAVE_VOLUME_SLIDER':
         return allowMouseLeaveVolumeSlider(state);
       case 'PREVENT_MOUSE_LEAVE_VOLUME_SLIDER':
