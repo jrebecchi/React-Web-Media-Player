@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './VolumeSlider.css';
 import './Button.css';
+import {isInsideElement} from '../../services/Utils';
 
 class VolumeSlider extends Component {
     constructor(props) {
@@ -37,6 +38,8 @@ class VolumeSlider extends Component {
         let volume = this.calculateVolumeFromXCoord(e.clientX);
         this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: volume } });
         this.props.dispatch({ type: 'ALLOW_MOUSE_LEAVE_VOLUME_SLIDER' });
+        if(!isInsideElement(this.nodeSlider ,e))
+            this.props.dispatch({ type: 'HIDE_VOLUME_SLIDER' });
     };
 
     calculateVolumeSliderLeftMargin = (volume) => {
@@ -71,7 +74,7 @@ class VolumeSlider extends Component {
 
     render = () => {
         return (
-            <div className="wmp-tool-button wmp-volume-slider" onMouseDown={this.handleMouseDownVolumeBar}>
+            <div className="wmp-tool-button wmp-volume-slider" onMouseDown={this.handleMouseDownVolumeBar} ref={node => (this.nodeSlider = node)}>
                 <div className="wmp-volume-slider-total-bar" ref={node => (this.nodeTotalBar = node)}>
                     <div className="wmp-volume-slider-level-bar" style={{ width: this.props.volumeSliderLeftMargin }}></div>
                     <div className="wmp-volume-slider-left-bar" style={{ left: this.props.volumeSliderLeftMargin }}></div>

@@ -34,9 +34,9 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
-      case 'UNHIGHTLIGHT_PROGRESS_BAR':
-        return hightLightProgressBar(state);
       case 'HIGHTLIGHT_PROGRESS_BAR':
+        return hightLightProgressBar(state);
+      case 'UNHIGHTLIGHT_PROGRESS_BAR':
         return unhightLightProgressBar(state);
       case 'ALLOW_MOUSE_LEAVE_VOLUME_SLIDER':
         return allowMouseLeaveVolumeSlider(state);
