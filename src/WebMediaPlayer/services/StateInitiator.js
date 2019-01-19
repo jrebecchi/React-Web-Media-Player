@@ -93,7 +93,6 @@ const getInitState = (options) => {
     } else {
         state.currentTime = 0;
     }
-    state.leftMarginVolume =  "0%";
     state.thumbnail = options.thumbnail;
     state.title = options.title;
     state.link = options.link;
@@ -107,7 +106,9 @@ const getInitState = (options) => {
     state.isFullscreen = false;
     state.isFullscreenActivated = false;
     state.highlightProgressBar = false;
-    
+    state.allowUnhighlightProgressBar = true;
+    state.volumeSliderLeftMargin = "0%";
+    state.allowMouseLeaveVolumeSlider = true;
     return state;
 }
 

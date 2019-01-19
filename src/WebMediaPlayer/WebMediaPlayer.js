@@ -18,6 +18,11 @@ import preventMouseLeaveVolumeSlider from './actions/PreventMouseLeaveVolumeSlid
 import allowMouseLeaveVolumeSlider from './actions/AllowMouseLeaveVolumeSlider';
 import hightLightProgressBar from './actions/HighlightProgressBar';
 import unhightLightProgressBar from './actions/UnhighlightProgressBar';
+import readingNotTerminated from './actions/ReadingNotTerminated';
+import readingTerminated from './actions/ReadingTerminated';
+import updateCurrentTime from './actions/UpdateCurrentTime';
+import preventUnhighlightProgressBar from './actions/PreventUnhighlightProgressBar';
+import allowUnhighlightProgressBar from './actions/AllowUnhighlightProgressBar';
 
 class WebMediaPlayer extends Component {
 
@@ -34,6 +39,16 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      case 'ALLOW_UNHIGHLIGHT_PROGRESS_BAR':
+        return allowUnhighlightProgressBar(state);
+      case 'PREVENT_UNHIGHLIGHT_PROGRESS_BAR':
+        return preventUnhighlightProgressBar(state);
+      case 'UPDATE_CURRENT_TIME':
+        return updateCurrentTime(state, action);
+      case 'READING_TERMINATED':
+        return readingTerminated(state);
+      case 'READING_NOT_TERMINATED':
+        return readingNotTerminated(state);
       case 'HIGHTLIGHT_PROGRESS_BAR':
         return hightLightProgressBar(state);
       case 'UNHIGHTLIGHT_PROGRESS_BAR':

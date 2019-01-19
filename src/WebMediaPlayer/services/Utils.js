@@ -3,4 +3,4 @@ const isInsideElement = (element,event) => {
     return element.contains(elementPointed);
 };
 
-export { isInsideElement }
+export {isInsideElement}
