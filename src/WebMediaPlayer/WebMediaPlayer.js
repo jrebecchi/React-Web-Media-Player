@@ -23,6 +23,8 @@ import readingTerminated from './actions/ReadingTerminated';
 import updateCurrentTime from './actions/UpdateCurrentTime';
 import preventUnhighlightProgressBar from './actions/PreventUnhighlightProgressBar';
 import allowUnhighlightProgressBar from './actions/AllowUnhighlightProgressBar';
+import play from './actions/Play';
+import pause from './actions/Pause';
 
 class WebMediaPlayer extends Component {
 
@@ -39,6 +41,10 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      case 'PLAY':
+        return play(state);
+      case 'PAUSE':
+        return pause(state);
       case 'ALLOW_UNHIGHLIGHT_PROGRESS_BAR':
         return allowUnhighlightProgressBar(state);
       case 'PREVENT_UNHIGHLIGHT_PROGRESS_BAR':
@@ -85,7 +91,6 @@ class WebMediaPlayer extends Component {
   };
 
   render() {
-    console.log(this.store.getState())
     return (
       <Provider store={this.store}>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />

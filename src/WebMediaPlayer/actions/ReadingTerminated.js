@@ -1,7 +1,8 @@
 const readingTerminated = (state) => {
     return {
         ...state,
-        isReadingTerminated: true
+        isReadingTerminated: true,
+        isPlaying: false
       };
 }
 

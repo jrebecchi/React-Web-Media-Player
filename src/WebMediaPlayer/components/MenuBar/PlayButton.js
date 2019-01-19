@@ -4,6 +4,20 @@ import './Button.css';
 
 class PlayButton extends Component {
 
+    handleClick = (e) => {
+        if (!this.props.isReadingTerminated){
+            if(this.props.isPlaying){
+                this.props.dispatch({ type: 'PAUSE' });
+            } else {
+                this.props.dispatch({ type: 'PLAY' });
+            }
+        } else {
+            this.props.dispatch({ type: 'PLAY' });
+            this.props.dispatch({ type: 'READING_NOT_TERMINATED' });
+            this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: 0 } });
+        }
+    }
+
     render = () => {
         let action;
         if (!this.props.isReadingTerminated){
@@ -16,7 +30,7 @@ class PlayButton extends Component {
             action = "replay"
         }
         return (
-            <div className="wmp-tool-button material-icons light-grey-to-white md-29">
+            <div className="wmp-tool-button material-icons light-grey-to-white md-29" onClick={this.handleClick}>
                 {action}
             </div>    
         );

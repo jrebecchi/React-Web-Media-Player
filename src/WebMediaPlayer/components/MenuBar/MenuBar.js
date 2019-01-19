@@ -12,7 +12,7 @@ import ProgressBar from "./ProgressBar";
 class MenuBar extends Component {
 
     render = () => {
-        let volumeControl, previousButton, nextButton, volumeSlider;
+        let volumeControl, previousButton, nextButton;
         if (this.props.hasVideo || this.props.hasAudio)
             volumeControl = <VolumeControl />;
         else {
