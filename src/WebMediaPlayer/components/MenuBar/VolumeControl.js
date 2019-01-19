@@ -1,14 +1,36 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './VolumeSlider.css';
+import './VolumeControl.css';
 import './Button.css';
-import {isInsideElement} from '../../services/Utils';
+import { isInsideElement } from '../../services/Utils';
 
-class VolumeSlider extends Component {
+class VolumeControl extends Component {
     constructor(props) {
         super(props);
         this.nodeScrubberButton = React.createRef();
         this.nodeTotalBar = React.createRef();
+    }
+
+    handleMouseLeave = (e) => {
+        e.stopPropagation();
+        if (this.props.allowMouseLeaveVolumeSlider)
+            this.props.dispatch({ type: 'HIDE_VOLUME_SLIDER' });
+    }
+
+    handleMouseEnter = (e) => {
+        e.stopPropagation();
+        this.props.dispatch({ type: 'SHOW_VOLUME_SLIDER' });
+    }
+
+    handleClick = (e) => {
+        e.stopPropagation();
+        if (this.props.volume === 0) {
+            this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: this.props.pastVolume } });
+        } else {
+            this.props.dispatch({ type: 'SAVE_ACTUAL_VOLUME_AS_PAST_VOLUME' });
+            this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: 0 } });
+        }
+        this.props.dispatch({ type: 'SHOW_VOLUME_SLIDER' });
     }
 
     handleMouseDownVolumeBar = (e) => {
@@ -17,7 +39,8 @@ class VolumeSlider extends Component {
     }
 
     animateVolumeScrubberButton = (e) => {
-        this.props.dispatch({ type: 'SAVE_ACTUAL_VOLUME_AS_PAST_VOLUME' });
+        if (this.props.volume !== 0)
+            this.props.dispatch({ type: 'SAVE_ACTUAL_VOLUME_AS_PAST_VOLUME' });
         this.props.dispatch({ type: 'PREVENT_MOUSE_LEAVE_VOLUME_SLIDER' });
         let volume = this.calculateVolumeFromXCoord(e.clientX);
         this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: volume } });
@@ -38,7 +61,7 @@ class VolumeSlider extends Component {
         let volume = this.calculateVolumeFromXCoord(e.clientX);
         this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: volume } });
         this.props.dispatch({ type: 'ALLOW_MOUSE_LEAVE_VOLUME_SLIDER' });
-        if(!isInsideElement(this.nodeSlider ,e))
+        if (!isInsideElement(this.spanContainer, e))
             this.props.dispatch({ type: 'HIDE_VOLUME_SLIDER' });
     };
 
@@ -64,6 +87,7 @@ class VolumeSlider extends Component {
 
     componentDidMount = () => {
         this.props.dispatch({ type: 'UPDATE_VOLUME_SLIDER_LEFT_MARGIN', payload: { volumeSliderLeftMargin: this.calculateVolumeSliderLeftMargin(this.props.volume) } });
+        this.props.dispatch({ type: 'HIDE_VOLUME_SLIDER' });
     }
 
     componentDidUpdate = (prevProps) => {
@@ -73,14 +97,35 @@ class VolumeSlider extends Component {
     }
 
     render = () => {
-        return (
-            <div className="wmp-tool-button wmp-volume-slider" onMouseDown={this.handleMouseDownVolumeBar} ref={node => (this.nodeSlider = node)}>
-                <div className="wmp-volume-slider-total-bar" ref={node => (this.nodeTotalBar = node)}>
-                    <div className="wmp-volume-slider-level-bar" style={{ width: this.props.volumeSliderLeftMargin }}></div>
-                    <div className="wmp-volume-slider-left-bar" style={{ left: this.props.volumeSliderLeftMargin }}></div>
-                    <div className="wmp-volume-slider-scrubber-button" style={{ left: this.props.volumeSliderLeftMargin }} ref={node => (this.nodeScrubberButton = node)}></div>
+        console.log("call");
+        let icon, volumeSlider;
+        if (this.props.volume === 0) {
+            icon = "volume_off";
+        } else if (this.props.volume < 0.5) {
+            icon = "volume_down";
+        } else {
+            icon = "volume_up";
+        }
+        if (this.props.showVolumeSlider) {
+            volumeSlider = (
+                <div className="wmp-tool-button wmp-volume-slider" onMouseDown={this.handleMouseDownVolumeBar} >
+                    <div className="wmp-volume-slider-total-bar" ref={node => (this.nodeTotalBar = node)}>
+                        <div className="wmp-volume-slider-level-bar" style={{ width: this.props.volumeSliderLeftMargin }}></div>
+                        <div className="wmp-volume-slider-left-bar" style={{ left: this.props.volumeSliderLeftMargin }}></div>
+                        <div className="wmp-volume-slider-scrubber-button" style={{ left: this.props.volumeSliderLeftMargin }} ref={node => (this.nodeScrubberButton = node)}></div>
+                    </div>
                 </div>
-            </div>
+            );
+        }
+
+        return (
+            <span onMouseLeave={this.handleMouseLeave} ref={node => (this.spanContainer = node)}>
+                <div className="wmp-tool-button material-icons light-grey-to-white md-26" onMouseEnter={this.handleMouseEnter} onClick={this.handleClick}>
+                    {icon}
+                </div>
+                {volumeSlider}
+
+            </span>
         );
     }
 }
@@ -91,7 +136,9 @@ const mapStateToProps = (state) => {
         pastVolume: state.pastVolume,
         isMuted: state.isMuted,
         volumeSliderLeftMargin: state.volumeSliderLeftMargin,
+        showVolumeSlider: state.showVolumeSlider,
+        allowMouseLeaveVolumeSlider: state.allowMouseLeaveVolumeSlider,
     };
 };
 
-export default connect(mapStateToProps)(VolumeSlider);
+export default connect(mapStateToProps)(VolumeControl);

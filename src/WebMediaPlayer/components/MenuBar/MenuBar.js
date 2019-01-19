@@ -2,36 +2,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './MenuBar.css';
 import PlayButton from './PlayButton';
-import VolumeButton from './VolumeButton';
 import NextButton from './NextButton';
 import PreviousButton from './PreviousButton';
 import Timer from './Timer';
 import FullscreenButton from './FullscreenButton';
-import VolumeSlider from './VolumeSlider';
+import VolumeControl from './VolumeControl';
 import ProgressBar from "./ProgressBar";
 
 class MenuBar extends Component {
 
-    handleMouseLeave = (e) => {
-        e.stopPropagation();
-        if (this.props.allowMouseLeaveVolumeSlider)
-            this.props.dispatch({ type: 'HIDE_VOLUME_SLIDER' });
-    }
-
     render = () => {
-
-        let volumeButton, previousButton, nextButton, volumeSlider;
+        let volumeControl, previousButton, nextButton, volumeSlider;
         if (this.props.hasVideo || this.props.hasAudio)
-            volumeButton = <VolumeButton />;
+            volumeControl = <VolumeControl />;
         else {
             previousButton = <PreviousButton />;
             nextButton = <NextButton />;
         }
-
-        if (this.props.showVolumeSlider) {
-            volumeSlider = <VolumeSlider />
-        }
-
         return (
             <div className="wmp-menu-bar-container">
                 <div className="wmp-bottom-shading"></div>
@@ -41,10 +28,7 @@ class MenuBar extends Component {
                     <div className="wmp-tool-constainer">
                         <div className="wmp-tool-constainer-left">
                             <PlayButton />
-                            <span onMouseLeave={this.handleMouseLeave}>
-                                {volumeButton}
-                                {volumeSlider}
-                            </span>
+                            {volumeControl}
                             {previousButton}
                             {nextButton}
                             <Timer />
@@ -65,7 +49,6 @@ const mapStateToProps = (state) => {
         hasVideo: state.hasVideo,
         hasAudio: state.hasAudio,
         hasSlideshow: state.hasSlideshow,
-        showVolumeSlider: state.showVolumeSlider,
         allowMouseLeaveVolumeSlider: state.allowMouseLeaveVolumeSlider,
     };
 };

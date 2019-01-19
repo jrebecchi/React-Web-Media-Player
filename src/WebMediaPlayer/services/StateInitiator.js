@@ -102,7 +102,7 @@ const getInitState = (options) => {
     state.isLargePlayButtonHighlighted = false;
     state.isPlaying = false;
     state.isReadingTerminated = false;
-    state.showVolumeSlider = false;
+    state.showVolumeSlider = true;
     state.isFullscreen = false;
     state.isFullscreenActivated = false;
     state.highlightProgressBar = false;
