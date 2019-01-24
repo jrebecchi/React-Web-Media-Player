@@ -109,6 +109,7 @@ const getInitState = (options) => {
     state.allowUnhighlightProgressBar = true;
     state.volumeSliderLeftMargin = "0%";
     state.allowMouseLeaveVolumeSlider = true;
+    state.showMenus = true;
     return state;
 }
 

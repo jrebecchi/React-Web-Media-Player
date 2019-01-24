@@ -25,6 +25,8 @@ import preventUnhighlightProgressBar from './actions/PreventUnhighlightProgressB
 import allowUnhighlightProgressBar from './actions/AllowUnhighlightProgressBar';
 import play from './actions/Play';
 import pause from './actions/Pause';
+import showMenus from './actions/ShowMenus';
+import hideMenus from './actions/HideMenus';
 
 class WebMediaPlayer extends Component {
 
@@ -41,6 +43,12 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      case 'USER_ACTIVE':
+        return state;
+      case 'SHOW_MENUS':
+        return showMenus(state);
+      case 'HIDE_MENUS':
+        return hideMenus(state);
       case 'PLAY':
         return play(state);
       case 'PAUSE':
@@ -94,11 +102,11 @@ class WebMediaPlayer extends Component {
     return (
       <Provider store={this.store}>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-        <Container/>
+        <Container />
       </Provider>
-          );
-        }
-      }
-      
-      export default WebMediaPlayer;
-      
+    );
+  }
+}
+
+export default WebMediaPlayer;
+

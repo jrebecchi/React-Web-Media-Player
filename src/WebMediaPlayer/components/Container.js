@@ -39,8 +39,8 @@ class Container extends Component {
     }
 
     detectFullScreen = () => {
-        if (this.fscreen.fullscreenElement == null){
-            if(this.props.isFullscreen){
+        if (this.fscreen.fullscreenElement == null) {
+            if (this.props.isFullscreen) {
                 this.props.dispatch({ type: 'SWITCH_FULLSCREEN_STATE' });
             }
             this.props.dispatch({ type: 'FULL_SCREEN_DISABLED' });
@@ -60,33 +60,38 @@ class Container extends Component {
             fscreen.exitFullscreen();
         }
     }
-    /*
-  componentDidUpdate(prevProps) {
-      console.log("did");
-      if (prevProps.isFullscreen !== this.props.isFullscreen) {
-          if (this.props.isFullscreen) {
-              console.log("gofullscreen");
-              this.goInFullscreen();
-          } else {
-              console.log("exitfullscreen");
-              this.goOutFullscreen();
-          }
-      }
-  }*/
+
     handleMouseEnter = (e) => {
         e.stopPropagation();
-        this.props.dispatch({ type: 'HIGHLIGHT_PLAYER' });
+        if (!this.props.isInitialized) {
+            this.props.dispatch({ type: 'HIGHLIGHT_PLAYER' });
+        } else if (this.props.isPlaying) {
+            this.props.dispatch({ type: 'SHOW_MENUS' });
+        }
     }
 
     handleMouseLeave = (e) => {
         e.stopPropagation();
-        this.props.dispatch({ type: 'UNHIGHLIGHT_PLAYER' });
+        if (!this.props.isInitialized) {
+            this.props.dispatch({ type: 'UNHIGHLIGHT_PLAYER' });
+        } else if (this.props.isPlaying) {
+            this.props.dispatch({ type: 'HIDE_MENUS' });
+        }
+    }
+
+    handleMouseMove = (e) => {
+        e.stopPropagation();
+        if (!this.props.isInitialized) {
+            this.props.dispatch({ type: 'USER_ACTIVE' });
+        }
     }
 
     handleClick = (e) => {
         e.stopPropagation();
-        if (!this.props.isInitialized)
+        if (!this.props.isInitialized){
             this.props.dispatch({ type: 'INITIALIZE_PLAYER' });
+            this.props.dispatch({ type: 'PLAY' });
+        }
     }
 
     render = () => {
@@ -102,13 +107,17 @@ class Container extends Component {
         }
 
 
-        let thumbnail, video, audio, slideshow, largePlayButton, menuBar;
+        let thumbnail, video, audio, slideshow, largePlayButton, menuBar, titleBar;
         if (this.props.thumbnail && !this.props.isInitialized)
             thumbnail = <Thumbnail />;
-        if (this.props.isInitialized) {
+        if (this.props.isInitialized && this.props.showMenus) {
             menuBar = <MenuBar />
-        } else {
+        }
+        if (!this.props.isInitialized){
             largePlayButton = <LargePlayButton />;
+        }
+        if (!this.props.isInitialized || this.props.showMenus) {
+            titleBar = <TitleBar />
         }
         if (this.props.hasVideo) {
             video = <Video />;
@@ -119,11 +128,11 @@ class Container extends Component {
             slideshow = <Slideshow />
         }
         return (
-            <div className={className.join(" ")} style={style} ref={node => (this.node = node)} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onClick={this.handleClick}>
+            <div className={className.join(" ")} style={style} ref={node => (this.node = node)} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onMouseMove={this.handleMouseMove} onClick={this.handleClick}>
                 <Spinner />
                 {thumbnail}
                 {largePlayButton}
-                <TitleBar />
+                {titleBar}
                 {menuBar}
                 {video}
                 {audio}
@@ -142,7 +151,9 @@ const mapStateToProps = (state) => {
         hasAudio: state.hasAudio,
         hasSlideshow: state.hasSlideshow,
         isInitialized: state.isInitialized,
-        isFullscreen: state.isFullscreen
+        isFullscreen: state.isFullscreen,
+        showMenus: state.showMenus,
+        isPlaying: state.isPlaying,
     };
 };
 
