@@ -107,7 +107,7 @@ const getInitState = (options) => {
     state.isFullscreenActivated = false;
     state.highlightProgressBar = false;
     state.allowUnhighlightProgressBar = true;
-    state.volumeSliderLeftMargin = "0%";
+    state.volumeSliderLeftMargin = "calculateMe!";
     state.allowMouseLeaveVolumeSlider = true;
     state.showMenus = true;
     state.allowMenuHiding = true;

@@ -88,8 +88,10 @@ class VolumeControl extends Component {
     }
 
     componentDidMount = () => {
-        this.props.dispatch({ type: 'UPDATE_VOLUME_SLIDER_LEFT_MARGIN', payload: { volumeSliderLeftMargin: this.calculateVolumeSliderLeftMargin(this.props.volume) } });
-        this.props.dispatch({ type: 'HIDE_VOLUME_SLIDER' });
+        if (this.props.volumeSliderLeftMargin === "calculateMe!") {
+            this.props.dispatch({ type: 'UPDATE_VOLUME_SLIDER_LEFT_MARGIN', payload: { volumeSliderLeftMargin: this.calculateVolumeSliderLeftMargin(this.props.volume) } });
+            this.props.dispatch({ type: 'HIDE_VOLUME_SLIDER' });
+        }
     }
 
     componentDidUpdate = (prevProps) => {
@@ -135,6 +137,7 @@ class VolumeControl extends Component {
 const mapStateToProps = (state) => {
     return {
         volume: state.volume,
+        isInitialized: state.isInitialized,
         pastVolume: state.pastVolume,
         isMuted: state.isMuted,
         volumeSliderLeftMargin: state.volumeSliderLeftMargin,

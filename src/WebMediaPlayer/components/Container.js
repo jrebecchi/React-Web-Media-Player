@@ -72,7 +72,6 @@ class Container extends Component {
         if (!this.props.isInitialized) {
             this.props.dispatch({ type: 'HIGHLIGHT_PLAYER' });
         } else if (this.props.isPlaying) {
-            //console.log("jfdsjfoijdsifjdsoifjdsoijfds");
             //this.props.dispatch({ type: 'SHOW_MENUS' });
         }
     }
@@ -81,7 +80,7 @@ class Container extends Component {
         e.stopPropagation();
         if (!this.props.isInitialized) {
             this.props.dispatch({ type: 'UNHIGHLIGHT_PLAYER' });
-        } else if (this.props.allowMenuHiding) {
+        } else if (this.props.allowMenuHiding && this.props.isPlaying) {
             this.props.dispatch({ type: 'HIDE_MENUS' });
         }
     }
@@ -104,14 +103,11 @@ class Container extends Component {
     waitUserToBeInactive = () => {
         //this.props.dispatch({ type: 'SHOW_CURSOR' });
         this.props.dispatch({ type: 'SHOW_MENUS' });
-        //console.log(this.props);
-        console.log(this.mouseStopTimer);
         if (this.mouseStopTimer) {
             window.clearTimeout(this.mouseStopTimer);
         }
         this.mouseStopTimer = window.setTimeout(() => {
-            if (this.props.allowMenuHiding) {
-                console.log("stops");
+            if (this.props.allowMenuHiding && this.props.isPlaying) {
                 this.props.dispatch({ type: 'HIDE_MENUS' });
             }
             /*if (this.props.isFullScreen) {
