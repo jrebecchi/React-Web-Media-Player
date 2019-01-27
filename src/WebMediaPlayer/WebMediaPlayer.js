@@ -27,6 +27,10 @@ import play from './actions/Play';
 import pause from './actions/Pause';
 import showMenus from './actions/ShowMenus';
 import hideMenus from './actions/HideMenus';
+import updateTimeLastUserAction from './actions/UpdateTimeLastUserAction';
+import showCursor from './actions/ShowCursor';
+import hideCursor from './actions/HideCursor';
+
 
 class WebMediaPlayer extends Component {
 
@@ -36,6 +40,7 @@ class WebMediaPlayer extends Component {
   };
 
   reducer = (state, action) => {
+    console.log(action.type);
     if (state === undefined) {
       state = getInitState(this.props);
     }
@@ -43,12 +48,18 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
-      case 'USER_ACTIVE':
-        return state;
+      case 'SHOW_CURSOR':
+        return showCursor(state);
+      case 'HIDE_CURSOR':
+        return hideCursor(state);
+      case 'UPDATE_CURRENT_TIME':
+        return updateCurrentTime(state, action);
       case 'SHOW_MENUS':
         return showMenus(state);
       case 'HIDE_MENUS':
         return hideMenus(state);
+      case 'USER_ACTIVE':
+        return updateTimeLastUserAction(state);
       case 'PLAY':
         return play(state);
       case 'PAUSE':
@@ -57,8 +68,6 @@ class WebMediaPlayer extends Component {
         return allowUnhighlightProgressBar(state);
       case 'PREVENT_UNHIGHLIGHT_PROGRESS_BAR':
         return preventUnhighlightProgressBar(state);
-      case 'UPDATE_CURRENT_TIME':
-        return updateCurrentTime(state, action);
       case 'READING_TERMINATED':
         return readingTerminated(state);
       case 'READING_NOT_TERMINATED':
@@ -110,3 +119,23 @@ class WebMediaPlayer extends Component {
 
 export default WebMediaPlayer;
 
+
+/*
+  waitForUserInactive = () => {
+    this.view.container.style.cursor = "auto";
+    this.showMenuBar();
+    this.showTitleContainer();
+    if (this.mouseStopTimer) {
+      window.clearTimeout(this.mouseStopTimer);
+    }
+    this.mouseStopTimer = window.setTimeout(() => {
+      if (this.allowWaitForMouseStopMechanism) {
+        this.hideMenuBar();
+        this.hideTitleContainer();
+        if (this.state.isFullScreenActivated) {
+          this.view.container.style.cursor = "none";
+        }
+      }
+    }, TIME_TO_HIDE_MENU_IN_MILLISECONDS);
+  }
+  */

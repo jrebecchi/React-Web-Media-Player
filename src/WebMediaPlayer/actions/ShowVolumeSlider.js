@@ -1,7 +1,7 @@
 const showVolumeSlider = (state) => {
     return {
         ...state,
-        showVolumeSlider: true
+        showVolumeSlider: true,
       };
 }
 

@@ -2,7 +2,7 @@ const switchFullscreen = (state) => {
     const isFullscreen = !state.isFullscreen;
     return {
         ...state,
-        isFullscreen: isFullscreen
+        isFullscreen: isFullscreen,
       };
 }
 

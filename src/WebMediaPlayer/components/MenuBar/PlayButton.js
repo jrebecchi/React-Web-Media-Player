@@ -8,8 +8,10 @@ class PlayButton extends Component {
         if (!this.props.isReadingTerminated){
             if(this.props.isPlaying){
                 this.props.dispatch({ type: 'PAUSE' });
+                this.props.dispatch({ type: 'USER_ACTIVE' });
             } else {
                 this.props.dispatch({ type: 'PLAY' });
+                this.props.dispatch({ type: 'USER_ACTIVE' });
             }
         } else {
             this.props.dispatch({ type: 'PLAY' });

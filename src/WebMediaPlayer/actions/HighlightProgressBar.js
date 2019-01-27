@@ -1,7 +1,7 @@
 const hightLightProgressBar = (state) => {
     return {
         ...state,
-        highlightProgressBar: true
+        highlightProgressBar: true,
       };
 }
 

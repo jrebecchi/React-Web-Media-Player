@@ -1,7 +1,8 @@
 const preventMouseLeaveVolumeSlider = (state) => {
     return {
         ...state,
-        allowMouseLeaveVolumeSlider: false
+        allowMouseLeaveVolumeSlider: false,
+        allowMenuHiding: false
       };
 }
 

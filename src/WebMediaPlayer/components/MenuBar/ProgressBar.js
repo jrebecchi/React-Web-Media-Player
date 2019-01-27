@@ -32,6 +32,7 @@ class ProgressBar extends Component {
         let currentTime = this.calculateTimeFromXCoord(e.clientX);
         this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: currentTime } });
         this.props.dispatch({ type: 'ALLOW_UNHIGHLIGHT_PROGRESS_BAR' });
+        this.props.dispatch({ type: 'USER_ACTIVE' });
         this.updateSizeProgressBarDesired(e.clientX - this.progressBarDesired.getBoundingClientRect().left);
         if (!isInsideElement(this.progressBarWrapper, e))
             this.props.dispatch({ type: 'UNHIGHTLIGHT_PROGRESS_BAR' });

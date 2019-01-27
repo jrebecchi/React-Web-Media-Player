@@ -2,7 +2,7 @@ const updateVolume = (state, action) => {
     
     return {
         ...state,
-        volume: action.payload.volume
+        volume: action.payload.volume,
       };
 }
 

@@ -1,8 +1,8 @@
 const adaptPlayerToFullscreen = (state) => {
     return {
         ...state,
-        isFullscreenActivated: true
-      };
+        isFullscreenActivated: true,
+    };
 }
 
 export default adaptPlayerToFullscreen;

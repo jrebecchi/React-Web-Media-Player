@@ -110,6 +110,9 @@ const getInitState = (options) => {
     state.volumeSliderLeftMargin = "0%";
     state.allowMouseLeaveVolumeSlider = true;
     state.showMenus = true;
+    state.allowMenuHiding = true;
+    state.showCursor = true;
+    state.timeLastUserAction = new Date();
     return state;
 }
 

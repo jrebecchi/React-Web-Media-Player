@@ -1,7 +1,7 @@
 const readingNotTerminated = (state) => {
     return {
         ...state,
-        isReadingTerminated: false
+        isReadingTerminated: false,
       };
 }
 

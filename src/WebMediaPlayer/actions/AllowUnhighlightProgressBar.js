@@ -1,7 +1,8 @@
 const allowUnhighlightProgressBar = (state) => {
     return {
         ...state,
-        allowUnhighlightProgressBar: true
+        allowUnhighlightProgressBar: true,
+        allowMenuHiding: true
       };
 }
 

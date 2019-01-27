@@ -1,8 +1,8 @@
 const hideVolumeSlider = (state) => {
     return {
         ...state,
-        showVolumeSlider: false
-      };
+        showVolumeSlider: false,
+    };
 }
 
 export default hideVolumeSlider;

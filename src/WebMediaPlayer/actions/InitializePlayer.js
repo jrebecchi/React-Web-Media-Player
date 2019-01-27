@@ -1,7 +1,7 @@
 const initializePlayer = (state) => {
     return {
         ...state,
-        isInitialized: true
+        isInitialized: true,
       };
 }
 

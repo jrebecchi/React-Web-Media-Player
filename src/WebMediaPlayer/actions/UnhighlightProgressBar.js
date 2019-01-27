@@ -1,8 +1,8 @@
 const unhightLightProgressBar = (state) => {
     return {
         ...state,
-        highlightProgressBar: false
-      };
+        highlightProgressBar: false,
+    };
 }
 
 export default unhightLightProgressBar;

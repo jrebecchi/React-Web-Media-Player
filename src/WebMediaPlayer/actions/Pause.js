@@ -1,7 +1,8 @@
 const pause = (state) => {
     return {
         ...state,
-        isPlaying: false
+        isPlaying: false,
+        allowMenuHiding: false
       };
 }
 

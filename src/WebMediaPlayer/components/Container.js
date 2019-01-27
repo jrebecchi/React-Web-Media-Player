@@ -11,6 +11,8 @@ import Audio from "./Medias/Audio";
 import Slideshow from "./Medias/Slideshow";
 import LargePlayButton from "./Init/LargePlayButton";
 
+const TIME_TO_HIDE_MENU_IN_MILLISECONDS = 3000;
+
 class Container extends Component {
     constructor(props) {
         super(props);
@@ -25,8 +27,12 @@ class Container extends Component {
         fscreen.removeEventListener("fullscreenchange", this.detectFullScreen.bind(this));
     }
 
-    componentDidUpdate = () => {
+    componentDidUpdate = (prevProps) => {
         this.handlePropsChanges(this.props);
+        if (prevProps.timeLastUserAction !== this.props.timeLastUserAction) {
+            this.waitUserToBeInactive();
+
+        }
     }
 
     handlePropsChanges = (props) => {
@@ -66,7 +72,8 @@ class Container extends Component {
         if (!this.props.isInitialized) {
             this.props.dispatch({ type: 'HIGHLIGHT_PLAYER' });
         } else if (this.props.isPlaying) {
-            this.props.dispatch({ type: 'SHOW_MENUS' });
+            //console.log("jfdsjfoijdsifjdsoifjdsoijfds");
+            //this.props.dispatch({ type: 'SHOW_MENUS' });
         }
     }
 
@@ -74,24 +81,43 @@ class Container extends Component {
         e.stopPropagation();
         if (!this.props.isInitialized) {
             this.props.dispatch({ type: 'UNHIGHLIGHT_PLAYER' });
-        } else if (this.props.isPlaying) {
+        } else if (this.props.allowMenuHiding) {
             this.props.dispatch({ type: 'HIDE_MENUS' });
         }
     }
 
     handleMouseMove = (e) => {
-        e.stopPropagation();
-        if (!this.props.isInitialized) {
+        if (this.props.isInitialized) {
             this.props.dispatch({ type: 'USER_ACTIVE' });
         }
     }
 
     handleClick = (e) => {
         e.stopPropagation();
-        if (!this.props.isInitialized){
+        if (!this.props.isInitialized) {
             this.props.dispatch({ type: 'INITIALIZE_PLAYER' });
+            this.props.dispatch({ type: 'USER_ACTIVE' });
             this.props.dispatch({ type: 'PLAY' });
         }
+    }
+
+    waitUserToBeInactive = () => {
+        //this.props.dispatch({ type: 'SHOW_CURSOR' });
+        this.props.dispatch({ type: 'SHOW_MENUS' });
+        //console.log(this.props);
+        console.log(this.mouseStopTimer);
+        if (this.mouseStopTimer) {
+            window.clearTimeout(this.mouseStopTimer);
+        }
+        this.mouseStopTimer = window.setTimeout(() => {
+            if (this.props.allowMenuHiding) {
+                console.log("stops");
+                this.props.dispatch({ type: 'HIDE_MENUS' });
+            }
+            /*if (this.props.isFullScreen) {
+                this.props.dispatch({ type: 'HIDE_CURSOR' });
+            }*/
+        }, TIME_TO_HIDE_MENU_IN_MILLISECONDS);
     }
 
     render = () => {
@@ -113,7 +139,7 @@ class Container extends Component {
         if (this.props.isInitialized && this.props.showMenus) {
             menuBar = <MenuBar />
         }
-        if (!this.props.isInitialized){
+        if (!this.props.isInitialized) {
             largePlayButton = <LargePlayButton />;
         }
         if (!this.props.isInitialized || this.props.showMenus) {
@@ -128,7 +154,7 @@ class Container extends Component {
             slideshow = <Slideshow />
         }
         return (
-            <div className={className.join(" ")} style={style} ref={node => (this.node = node)} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onMouseMove={this.handleMouseMove} onClick={this.handleClick}>
+            <div className={className.join(" ")} style={style} ref={node => (this.node = node)} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onMouseMoveCapture={this.handleMouseMove} onClick={this.handleClick}>
                 <Spinner />
                 {thumbnail}
                 {largePlayButton}
@@ -144,6 +170,7 @@ class Container extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        timeLastUserAction: state.timeLastUserAction,
         width: state.width,
         height: state.height,
         thumbnail: state.thumbnail,
@@ -154,6 +181,8 @@ const mapStateToProps = (state) => {
         isFullscreen: state.isFullscreen,
         showMenus: state.showMenus,
         isPlaying: state.isPlaying,
+        allowMenuHiding: state.allowMenuHiding
+    
     };
 };
 

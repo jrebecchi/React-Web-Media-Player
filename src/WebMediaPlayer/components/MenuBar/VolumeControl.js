@@ -24,6 +24,7 @@ class VolumeControl extends Component {
 
     handleClick = (e) => {
         e.stopPropagation();
+        this.props.dispatch({ type: 'USER_ACTIVE' });
         if (this.props.volume === 0) {
             this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: this.props.pastVolume } });
         } else {
@@ -61,6 +62,7 @@ class VolumeControl extends Component {
         let volume = this.calculateVolumeFromXCoord(e.clientX);
         this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: volume } });
         this.props.dispatch({ type: 'ALLOW_MOUSE_LEAVE_VOLUME_SLIDER' });
+        this.props.dispatch({ type: 'USER_ACTIVE' });
         if (!isInsideElement(this.spanContainer, e))
             this.props.dispatch({ type: 'HIDE_VOLUME_SLIDER' });
     };

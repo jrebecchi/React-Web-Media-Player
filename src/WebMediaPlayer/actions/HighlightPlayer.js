@@ -1,7 +1,7 @@
 const hightLightPlayer = (state) => {
     return {
         ...state,
-        isPlayerHighlighted: true
+        isPlayerHighlighted: true,
       };
 }
 
