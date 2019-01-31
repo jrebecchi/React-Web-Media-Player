@@ -8,16 +8,20 @@ import Timer from './Timer';
 import FullscreenButton from './FullscreenButton';
 import VolumeControl from './VolumeControl';
 import ProgressBar from "./ProgressBar";
+import LogoButton from "./LogoButton"
 
 class MenuBar extends Component {
 
     render = () => {
-        let volumeControl, previousButton, nextButton;
+        let volumeControl, previousButton, nextButton, logo;
         if (this.props.hasVideo || this.props.hasAudio)
             volumeControl = <VolumeControl />;
         else {
             previousButton = <PreviousButton />;
             nextButton = <NextButton />;
+        }
+        if (this.props.logo){
+            logo = <LogoButton />
         }
         return (
             <div className="wmp-menu-bar-container">
@@ -34,6 +38,7 @@ class MenuBar extends Component {
                             <Timer />
                         </div>
                         <div className="wmp-tool-constainer-right">
+                            {logo}
                             <FullscreenButton />
                         </div>
                     </div>
@@ -50,6 +55,7 @@ const mapStateToProps = (state) => {
         hasAudio: state.hasAudio,
         hasSlideshow: state.hasSlideshow,
         allowMouseLeaveVolumeSlider: state.allowMouseLeaveVolumeSlider,
+        logo: state.logo
     };
 };
 

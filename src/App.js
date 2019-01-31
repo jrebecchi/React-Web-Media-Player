@@ -18,6 +18,8 @@ class App extends Component {
           video="https://nusid.net/video.mp4"
           width="560"
           height="315"
+          logo="https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg"
+          logoLink="https://google.com"
         />
 
         <WebMediaPlayer
@@ -41,6 +43,8 @@ class App extends Component {
             src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide5.jpg",
             endTime: 5000.0
           }]}
+          logo="/img/logo.png"
+          logoLink="https://google.com"
         />
         
         <WebMediaPlayer
@@ -65,6 +69,8 @@ class App extends Component {
             src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide5.jpg",
             endTime: 120.0
           }]}
+          logo="/img/logo.png"
+          logoLink="https://google.com"
         />
       </div>
     );

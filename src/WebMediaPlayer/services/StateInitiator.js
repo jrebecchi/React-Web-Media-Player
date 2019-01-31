@@ -93,6 +93,12 @@ const getInitState = (options) => {
     } else {
         state.currentTime = 0;
     }
+    if (options.hasOwnProperty("logo")){
+        state.logo = options.logo;
+    }
+    if (options.hasOwnProperty("logoLink")){
+        state.logoLink = options.logoLink;
+    }
     state.thumbnail = options.thumbnail;
     state.title = options.title;
     state.link = options.link;
