@@ -13,9 +13,15 @@ class LogoButton extends Component {
     
     render = () => {
         let alt = this.getAltValue(this.props.logo);
+        let logo;
+        if(this.props.logoLink !== undefined){
+            logo = <a href={this.props.logoLink}><img src={this.props.logo} alt={alt} className="logo-image" /></a> 
+        } else {
+            logo = <img src={this.props.logo} alt={alt} className="logo-image" />
+        }
         return (
             <div className="wmp-tool-button logo light-grey-to-white">
-                <img src={this.props.logo} alt={alt} className="logo-image" /> 
+                {logo}
             </div>
         );
     }

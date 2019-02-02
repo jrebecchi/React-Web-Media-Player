@@ -1,10 +1,14 @@
 .logo {
     width: 50px;
+    vertical-align: baseline;
 }
 
 .logo-image {
+    max-width: 100px;
+    max-height: 80%;
     width: auto;
-    height: 80%;
+    height: auto;
     vertical-align:middle;
+    padding-top: 1px;
 }
 

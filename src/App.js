@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import WebMediaPlayer from './WebMediaPlayer/WebMediaPlayer'
+import bande from './img/bande.png';
+import logo from './img/logo.svg';
 
 class App extends Component {
   render() {
@@ -11,7 +13,6 @@ class App extends Component {
 
         <iframe title="fsqfdsqf" width="560" height="315" src="https://www.youtube.com/embed/aqz-KE-bpKQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-
         <WebMediaPlayer
           title="Video Player"
           thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg" 
@@ -19,7 +20,6 @@ class App extends Component {
           width="560"
           height="315"
           logo="https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg"
-          logoLink="https://google.com"
         />
 
         <WebMediaPlayer
@@ -43,7 +43,7 @@ class App extends Component {
             src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide5.jpg",
             endTime: 5000.0
           }]}
-          logo="/img/logo.png"
+          logo={logo}
           logoLink="https://google.com"
         />
         
@@ -69,7 +69,7 @@ class App extends Component {
             src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide5.jpg",
             endTime: 120.0
           }]}
-          logo="/img/logo.png"
+          logo={bande}
           logoLink="https://google.com"
         />
       </div>
