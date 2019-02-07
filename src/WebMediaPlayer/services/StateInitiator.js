@@ -35,7 +35,7 @@ const initVideoPlayerState = (options) => {
     state.hasVideo = true;
     state.hasAudio = false;
     state.hasSlideshow = false;
-    state.duration = 0; 
+    state.duration = 0;
     state.video = options.video;
     return state;
 }
@@ -88,16 +88,36 @@ const getInitState = (options) => {
     } else {
         state.allowFullFrame = DEFAULT_ALLOW_FULL_FRAME;
     }
-    if (options.hasOwnProperty("currentTime")){
+    if (options.hasOwnProperty("currentTime")) {
         state.currentTime = options.currentTime;
     } else {
         state.currentTime = 0;
     }
-    if (options.hasOwnProperty("logo")){
+    if (options.hasOwnProperty("logo")) {
         state.logo = options.logo;
     }
-    if (options.hasOwnProperty("logoLink")){
+    if (options.hasOwnProperty("logoLink")) {
         state.logoLink = options.logoLink;
+    }
+    if (options.hasOwnProperty("button1")) {
+        if (!options.button1.hasOwnProperty('img'))
+            throw new Error("You need to specify the img property of the button 1");
+        state.button1 = {
+            img: options.button1.img,
+            href: options.button1.href,
+            style: options.button1.style,
+            callback: options.button1.callback
+        }
+    }
+    if (options.hasOwnProperty("button2")) {
+        if (!options.button2.hasOwnProperty('img'))
+            throw new Error("You need to specify the img property of the button 2");
+        state.button2 = {
+            img: options.button2.img,
+            href: options.button2.href,
+            style: options.button2.style,
+            callback: options.button2.callback
+        }
     }
     state.thumbnail = options.thumbnail;
     state.title = options.title;
