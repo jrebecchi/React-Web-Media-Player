@@ -48,8 +48,9 @@ class App extends Component {
             }]}
           logo={logo}
           logoLink="https://google.com"
-          button1={{ img: info, style: { width: "29px", }, callback: (e) => console.log("info clicked" + e) }}
-          button2={{ img: heart, href: "https://google.com", style: { width: "26px",}, callback: (e) => console.log("heart clicked" + e) }}
+          buttons={[{ img: info, style: { width: "29px", }, callback: (e) => console.log("info clicked" + e) },
+          { img: heart, href: "https://google.com", style: { width: "26px",}, callback: (e) => console.log("heart clicked" + e)}
+          ]}
         />
 
         <WebMediaPlayer

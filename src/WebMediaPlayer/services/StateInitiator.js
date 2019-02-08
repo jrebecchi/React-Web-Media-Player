@@ -99,25 +99,13 @@ const getInitState = (options) => {
     if (options.hasOwnProperty("logoLink")) {
         state.logoLink = options.logoLink;
     }
-    if (options.hasOwnProperty("button1")) {
-        if (!options.button1.hasOwnProperty('img'))
+    if (options.hasOwnProperty("buttons")) {
+      state.buttons = []; 
+      for (let i = 0; i < options.buttons.length; ++i){
+        if (!options.buttons[i].hasOwnProperty('img'))
             throw new Error("You need to specify the img property of the button 1");
-        state.button1 = {
-            img: options.button1.img,
-            href: options.button1.href,
-            style: options.button1.style,
-            callback: options.button1.callback
-        }
-    }
-    if (options.hasOwnProperty("button2")) {
-        if (!options.button2.hasOwnProperty('img'))
-            throw new Error("You need to specify the img property of the button 2");
-        state.button2 = {
-            img: options.button2.img,
-            href: options.button2.href,
-            style: options.button2.style,
-            callback: options.button2.callback
-        }
+        state.buttons.push(options.buttons[i])
+      }
     }
     state.thumbnail = options.thumbnail;
     state.title = options.title;
