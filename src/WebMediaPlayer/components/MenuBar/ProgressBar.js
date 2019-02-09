@@ -102,7 +102,7 @@ class ProgressBar extends Component {
             <div className={progressBarWrappper} ref={progressBarWrapper => (this.progressBarWrapper = progressBarWrapper)} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onMouseMove={this.handleMouseMove} onMouseDown={this.handleMouseDown}>
                 <div className={progressBarClassName}></div>
                 <div className={progressBarLoadedClassName}></div>
-                <div className={progressBarProgressionClassName} style={{ width: progressBarLeftMargin }}></div>
+                <div className={progressBarProgressionClassName} style={{ width: progressBarLeftMargin, backgroundColor: this.props.color }}></div>
                 <div className={progressBarDesiredClassName} ref={progressBarDesired => (this.progressBarDesired = progressBarDesired)}></div>
                 {scrubberButton}
             </div>
@@ -118,6 +118,7 @@ const mapStateToProps = (state) => {
         progressBarLeftMargin: state.progressBarLeftMargin,
         isReadingTerminated: state.isReadingTerminated,
         allowUnhighlightProgressBar: state.allowUnhighlightProgressBar,
+        color: state.color,
     };
 };
 

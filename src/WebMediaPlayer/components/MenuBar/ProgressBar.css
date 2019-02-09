@@ -25,7 +25,6 @@
 
 .wmp-progress-bar.progression{
     width:0%;
-    background-color: rgb(108, 233, 6);
     z-index: 3;
 }
 

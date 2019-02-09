@@ -23,6 +23,7 @@ class App extends Component {
           width="560"
           height="315"
           logo={{ img: "https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg" }}
+          color="rgb(108, 233, 6)"
         />
 
         <WebMediaPlayer
@@ -51,6 +52,7 @@ class App extends Component {
             { img: info, style: { width: "29px", }, callback: (e) => console.log("info clicked" + e) },
             { img: heart, style: { width: "26px", }, href: "https://google.com" }
           ]}
+          color="red"
         />
 
         <WebMediaPlayer

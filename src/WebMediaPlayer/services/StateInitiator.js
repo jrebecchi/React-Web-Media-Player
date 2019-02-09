@@ -93,6 +93,11 @@ const getInitState = (options) => {
     } else {
         state.currentTime = 0;
     }
+    if (options.hasOwnProperty("color")) {
+        state.color = options.color;
+    } else {
+        state.color = "#4ea6ff";
+    }
     if (options.hasOwnProperty("logo")) {
         if (!options.logo.hasOwnProperty('img'))
           throw new Error("You need to specify the img property of the logo");

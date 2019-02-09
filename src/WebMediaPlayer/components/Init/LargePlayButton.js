@@ -9,7 +9,7 @@ class LargePlayButton extends Component {
         let style;
         if(this.props.isPlayerHighlighted){
             style = {
-                backgroundColor: "rgb(108, 233, 6)",
+                backgroundColor: this.props.color,
                 opacity: 1
             }
         }
@@ -24,7 +24,8 @@ class LargePlayButton extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        isPlayerHighlighted: state.isPlayerHighlighted
+        isPlayerHighlighted: state.isPlayerHighlighted,
+        color: state.color
     };
 };
   
