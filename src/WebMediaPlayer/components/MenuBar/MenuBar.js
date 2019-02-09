@@ -22,8 +22,8 @@ class MenuBar extends Component {
             previousButton = <PreviousButton />;
             nextButton = <NextButton />;
         }
-        if (this.props.logo) {
-            logo = <LogoButton />
+        if (this.props.logo){
+            logo = <LogoButton img={this.props.logo.img} href={this.props.logo.href}/>
         }
         if (this.props.buttons) {
             for (let i = 0; i < this.props.buttons.length; ++i) {

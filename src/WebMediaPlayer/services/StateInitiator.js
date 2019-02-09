@@ -94,16 +94,15 @@ const getInitState = (options) => {
         state.currentTime = 0;
     }
     if (options.hasOwnProperty("logo")) {
+        if (!options.logo.hasOwnProperty('img'))
+          throw new Error("You need to specify the img property of the logo");
         state.logo = options.logo;
-    }
-    if (options.hasOwnProperty("logoLink")) {
-        state.logoLink = options.logoLink;
     }
     if (options.hasOwnProperty("buttons")) {
         state.buttons = [];
         for (let i = 0; i < options.buttons.length; ++i) {
             if (!options.buttons[i].hasOwnProperty('img'))
-                throw new Error("You need to specify the img property of the button 1");
+                throw new Error("You need to specify the img property of the button");
             state.buttons.push(options.buttons[i])
         }
     }

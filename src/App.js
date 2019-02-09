@@ -22,7 +22,7 @@ class App extends Component {
           video="https://nusid.net/video.mp4"
           width="560"
           height="315"
-          logo="https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg"
+          logo={{ img: "https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg" }}
         />
 
         <WebMediaPlayer
@@ -46,8 +46,7 @@ class App extends Component {
               src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide5.jpg",
               endTime: 5000.0
             }]}
-          logo={logo}
-          logoLink="https://google.com"
+          logo={{ img: logo, href: "https://google.com" }}
           buttons={[
             { img: info, style: { width: "29px", }, callback: (e) => console.log("info clicked" + e) },
             { img: heart, style: { width: "26px", }, href: "https://google.com" }
@@ -76,7 +75,7 @@ class App extends Component {
               src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide5.jpg",
               endTime: 120.0
             }]}
-          logo={bande}
+          logo={{ img: bande, href: "https://google.com" }}
           logoLink="https://google.com"
         />
       </div>
