@@ -11,3 +11,9 @@
                   user-select: none; /* Non-prefixed version, currently
                                         supported by Chrome and Opera */
 }
+
+img {
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+}

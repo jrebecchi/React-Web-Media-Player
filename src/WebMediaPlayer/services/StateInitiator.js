@@ -100,12 +100,12 @@ const getInitState = (options) => {
         state.logoLink = options.logoLink;
     }
     if (options.hasOwnProperty("buttons")) {
-      state.buttons = []; 
-      for (let i = 0; i < options.buttons.length; ++i){
-        if (!options.buttons[i].hasOwnProperty('img'))
-            throw new Error("You need to specify the img property of the button 1");
-        state.buttons.push(options.buttons[i])
-      }
+        state.buttons = [];
+        for (let i = 0; i < options.buttons.length; ++i) {
+            if (!options.buttons[i].hasOwnProperty('img'))
+                throw new Error("You need to specify the img property of the button 1");
+            state.buttons.push(options.buttons[i])
+        }
     }
     state.thumbnail = options.thumbnail;
     state.title = options.title;
