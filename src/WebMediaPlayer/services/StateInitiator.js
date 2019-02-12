@@ -35,7 +35,7 @@ const initVideoPlayerState = (options) => {
     state.hasVideo = true;
     state.hasAudio = false;
     state.hasSlideshow = false;
-    state.duration = 0;
+    state.duration = 0; 
     state.video = options.video;
     return state;
 }
@@ -88,28 +88,16 @@ const getInitState = (options) => {
     } else {
         state.allowFullFrame = DEFAULT_ALLOW_FULL_FRAME;
     }
-    if (options.hasOwnProperty("currentTime")) {
+    if (options.hasOwnProperty("currentTime")){
         state.currentTime = options.currentTime;
     } else {
         state.currentTime = 0;
     }
-    if (options.hasOwnProperty("color")) {
-        state.color = options.color;
-    } else {
-        state.color = "#4ea6ff";
-    }
-    if (options.hasOwnProperty("logo")) {
-        if (!options.logo.hasOwnProperty('img'))
-          throw new Error("You need to specify the img property of the logo");
+    if (options.hasOwnProperty("logo")){
         state.logo = options.logo;
     }
-    if (options.hasOwnProperty("buttons")) {
-        state.buttons = [];
-        for (let i = 0; i < options.buttons.length; ++i) {
-            if (!options.buttons[i].hasOwnProperty('img'))
-                throw new Error("You need to specify the img property of the button");
-            state.buttons.push(options.buttons[i])
-        }
+    if (options.hasOwnProperty("logoLink")){
+        state.logoLink = options.logoLink;
     }
     state.thumbnail = options.thumbnail;
     state.title = options.title;

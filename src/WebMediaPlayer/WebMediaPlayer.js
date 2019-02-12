@@ -30,6 +30,7 @@ import hideMenus from './actions/HideMenus';
 import updateTimeLastUserAction from './actions/UpdateTimeLastUserAction';
 import showCursor from './actions/ShowCursor';
 import hideCursor from './actions/HideCursor';
+import updateDuration from './actions/UpdateDuration'
 
 
 class WebMediaPlayer extends Component {
@@ -47,6 +48,8 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      case 'UPDATE_DURATION':
+        return updateDuration(state, action);
       case 'SHOW_CURSOR':
         return showCursor(state);
       case 'HIDE_CURSOR':

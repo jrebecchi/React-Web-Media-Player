@@ -6,9 +6,7 @@ import TitleBar from "./TitleBar/TitleBar";
 import MenuBar from "./MenuBar/MenuBar";
 import Spinner from "./Loading/Spinner"
 import Thumbnail from "./Init/Thumbnail"
-import Video from "./Medias/Video";
-import Audio from "./Medias/Audio";
-import Slideshow from "./Medias/Slideshow";
+import Mixer from "./Medias/Mixer";
 import LargePlayButton from "./Init/LargePlayButton";
 
 const TIME_TO_HIDE_MENU_IN_MILLISECONDS = 3000;
@@ -129,7 +127,7 @@ class Container extends Component {
         }
 
 
-        let thumbnail, video, audio, slideshow, largePlayButton, menuBar, titleBar;
+        let thumbnail, largePlayButton, menuBar, titleBar;
         if (this.props.thumbnail && !this.props.isInitialized)
             thumbnail = <Thumbnail />;
         if (this.props.isInitialized && this.props.showMenus) {
@@ -141,14 +139,6 @@ class Container extends Component {
         if (!this.props.isInitialized || this.props.showMenus) {
             titleBar = <TitleBar />
         }
-        if (this.props.hasVideo) {
-            video = <Video />;
-        } else if (this.props.hasAudio) {
-            audio = <Audio />;
-            slideshow = <Slideshow />
-        } else if (this.props.hasSlideshow) {
-            slideshow = <Slideshow />
-        }
         return (
             <div className={className.join(" ")} style={style} ref={node => (this.node = node)} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onMouseMoveCapture={this.handleMouseMove} onClick={this.handleClick}>
                 <Spinner />
@@ -156,9 +146,7 @@ class Container extends Component {
                 {largePlayButton}
                 {titleBar}
                 {menuBar}
-                {video}
-                {audio}
-                {slideshow}
+                <Mixer />
             </div>
         );
     }
