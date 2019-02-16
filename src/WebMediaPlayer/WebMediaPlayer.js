@@ -30,7 +30,13 @@ import hideMenus from './actions/HideMenus';
 import updateTimeLastUserAction from './actions/UpdateTimeLastUserAction';
 import showCursor from './actions/ShowCursor';
 import hideCursor from './actions/HideCursor';
-import updateDuration from './actions/UpdateDuration'
+import updateDuration from './actions/UpdateDuration';
+import audioNotReady from './actions/AudioNotReady';
+import audioReady from './actions/AudioReady';
+import videoNotReady from './actions/VideoNotReady';
+import videoReady from  './actions/VideoReady';
+import slideshowNotReady from './actions/SlideshowNotReady';
+import slideshowReady from './actions/SlideshowReady';
 
 
 class WebMediaPlayer extends Component {
@@ -48,6 +54,20 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      case 'AUDIO_IS_NOT_READY':
+        return audioNotReady(state);
+      case 'AUDIO_IS_READY':
+        return audioReady(state);
+      case 'VIDEO_IS_NOT_READY':
+        return videoNotReady(state);
+      case 'VIDEO_IS_READY':
+        return videoReady(state);
+      case 'SLIDESHOW_IS_NOT_READY':
+        return slideshowNotReady(state);
+      case 'SLIDESHOW_IS_READY':
+        return slideshowReady(state);
+
+    
       case 'UPDATE_DURATION':
         return updateDuration(state, action);
       case 'SHOW_CURSOR':

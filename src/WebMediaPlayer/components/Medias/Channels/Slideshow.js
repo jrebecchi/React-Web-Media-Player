@@ -8,8 +8,8 @@ class Slideshow extends Component {
     constructor(props) {
         super(props);
         this.currentTime = 0;
-        this.buffered = new Array();
-        this.imageSequence = new Array();
+        this.buffered = [];
+        this.imageSequence = [];
     };
 
     getCurrentTime = () => this.currentTime;
@@ -85,22 +85,23 @@ class Slideshow extends Component {
             if (this.props.currentTime < this.props.imageSequence[i].endTime) {
                 return this.props.imageSequence[i].endTime;
             }
-            if (this.props.imageSequence[i].endTime == this.props.timeLength) {
+            if (this.props.imageSequence[i].endTime === this.props.timeLength) {
                 return this.props.duration
             }
         }
     };
 
     hasEnoughBuffered = (time) => {
-        for (var i = 0; i < this.buffered.length; i++) {
-            var startTime = this.buffered[i][0];
-            var endTime = this.buffered[i][1];
+        for (let i = 0; i < this.buffered.length; i++) {
+            let startTime = this.buffered[i][0];
+            let endTime = this.buffered[i][1];
+            let hasStartTimeBuffered
             if (time >= startTime && time <= endTime) {
                 hasStartTimeBuffered = true;
             } else {
                 hasStartTimeBuffered = false;
             }
-            minimumTimeToBeLoaded = time + MINIMUM_BUFFERED_TIME;
+            let minimumTimeToBeLoaded = time + MINIMUM_BUFFERED_TIME;
             if (minimumTimeToBeLoaded > this.props.duration)
                 minimumTimeToBeLoaded = this.props.duration;
 
@@ -186,7 +187,7 @@ class Slideshow extends Component {
     }
 
     launchRefresh = () => {
-        this.timerFunction = window.setInterval(refresh, REFRESH_TIME_IN_MILLISECONDS);
+        this.timerFunction = window.setInterval(this.refresh, REFRESH_TIME_IN_MILLISECONDS);
 
     }
 
@@ -260,7 +261,7 @@ class Slideshow extends Component {
 
     render = () => {
         return (
-            <img ref={imageSlider => (this.imageSlider = imageSlider)}></img>
+            <img ref={imageSlider => (this.imageSlider = imageSlider)} alt=""></img>
         );
     }
 }

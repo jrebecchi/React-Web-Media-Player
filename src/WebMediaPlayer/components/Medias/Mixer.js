@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import Video from "./Channels/Video";
 import Audio from "./Channels/Audio";
 import Slideshow from "./Channels/Slideshow";
-const  MAX_DIFFERENCE_AUDIO_SLIDESHOW = 0.1; //in seconds
+//const  MAX_DIFFERENCE_AUDIO_SLIDESHOW = 0.1; //in seconds
 
 class Mixer extends Component {
-
+    /*
     const init = (options) => {
         this.state = new SlideshowModel(options);
         this.eventBus = new EventBus();
@@ -375,6 +375,7 @@ class Mixer extends Component {
         else if (this.state.hasAudio)
             this.AudioController.setVolume(volume);
     };
+    */
 
     render = () => {
         let video, audio, slideshow;
