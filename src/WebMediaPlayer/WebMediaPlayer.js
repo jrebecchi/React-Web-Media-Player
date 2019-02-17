@@ -37,6 +37,7 @@ import videoNotReady from './actions/VideoNotReady';
 import videoReady from  './actions/VideoReady';
 import slideshowNotReady from './actions/SlideshowNotReady';
 import slideshowReady from './actions/SlideshowReady';
+import addImage from './actions/AddImage';
 
 
 class WebMediaPlayer extends Component {
@@ -54,6 +55,8 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      case 'ADD_IMAGE':
+        return addImage(state, action);
       case 'AUDIO_IS_NOT_READY':
         return audioNotReady(state);
       case 'AUDIO_IS_READY':
@@ -66,8 +69,6 @@ class WebMediaPlayer extends Component {
         return slideshowNotReady(state);
       case 'SLIDESHOW_IS_READY':
         return slideshowReady(state);
-
-    
       case 'UPDATE_DURATION':
         return updateDuration(state, action);
       case 'SHOW_CURSOR':

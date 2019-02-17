@@ -9,7 +9,6 @@ class Slideshow extends Component {
         super(props);
         this.currentTime = 0;
         this.buffered = [];
-        this.imageSequence = [];
     };
 
     getCurrentTime = () => this.currentTime;
@@ -18,22 +17,24 @@ class Slideshow extends Component {
         if (time === undefined || time < 0) {
             time = 0;
         }
-        this.props.isSlideshowReady = false;
+        this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
         this.startTime = time;
         var imageStartTime = 0;
-        for (var i = 0; i < this.props.imageSequence.length; ++i) {
-            var imageEndTime = this.props.imageSequence[i].endTime;
+        for (var i = 0; i < this.props.slideshow.length; ++i) {
+            var imageEndTime = this.props.slideshow[i].endTime;
             if (time < imageEndTime) {
-                this.props.imageSequence[i].element = new Image();
-                this.props.imageSequence[i].element.endTime = imageEndTime;
-                this.props.imageSequence[i].element.startTime = imageStartTime;
-                this.props.imageSequence[i].element.onload = (e) => {
+                let image = new Image();
+                image.endTime = imageEndTime;
+                image.startTime = imageStartTime;
+                image.onload = (e) => {
                     this.addPortionBuffered(e.target.startTime, e.target.endTime);
                     if (this.hasEnoughBuffered(this.startTime) && !this.props.isSlideshowReady) {
                         this.props.dispatch({ type: 'SLIDESHOW_IS_READY' });
                     }
                 }
-                this.props.imageSequence[i].element.src = this.props.imageSequence[i].src;
+                image.src = this.props.slideshow[i].src;
+                this.props.dispatch({ type: 'ADD_IMAGE', payload: { index: i, image: image } });
+
             }
             imageStartTime = imageEndTime;
         }
@@ -63,29 +64,29 @@ class Slideshow extends Component {
     };
 
     getTimePreviousImage = () => {
-        for (var i = 0; i <= this.props.imageSequence.length; ++i) {
-            if (i === this.props.imageSequence.length) {
+        for (var i = 0; i <= this.props.slideshow.length; ++i) {
+            if (i === this.props.slideshow.length) {
                 if (i < 3) {
                     return 0
                 } else {
-                    return this.props.imageSequence[i - 3].endTime
+                    return this.props.slideshow[i - 3].endTime
                 }
-            } else if (this.props.currentTime < this.props.imageSequence[i].endTime) {
+            } else if (this.props.currentTime < this.props.slideshow[i].endTime) {
                 if (i < 2) {
                     return 0
                 } else {
-                    return this.props.imageSequence[i - 2].endTime;
+                    return this.props.slideshow[i - 2].endTime;
                 }
             }
         }
     };
 
     getTimeNextImage = () => {
-        for (var i = 0; i < this.props.imageSequence.length; ++i) {
-            if (this.props.currentTime < this.props.imageSequence[i].endTime) {
-                return this.props.imageSequence[i].endTime;
+        for (var i = 0; i < this.props.slideshow.length; ++i) {
+            if (this.props.currentTime < this.props.slideshow[i].endTime) {
+                return this.props.slideshow[i].endTime;
             }
-            if (this.props.imageSequence[i].endTime === this.props.timeLength) {
+            if (this.props.slideshow[i].endTime === this.props.timeLength) {
                 return this.props.duration
             }
         }
@@ -123,9 +124,9 @@ class Slideshow extends Component {
     }
 
     updateView = () => {
-        for (var i = 0; i < this.props.imageSequence.length; ++i) {
-            if (this.currentTime < this.props.imageSequence[i].endTime) {
-                this.displayImage(this.props.imageSequence[i]);
+        for (var i = 0; i < this.props.slideshow.length; ++i) {
+            if (this.currentTime < this.props.slideshow[i].endTime) {
+                this.displayImage(this.props.slideshow[i]);
                 break;
             }
         }
@@ -269,7 +270,7 @@ class Slideshow extends Component {
 const mapStateToProps = (state) => {
     return {
         isSlideshowReady: state.isSlideshowReady,
-        imageSequence: state.imageSequence,
+        slideshow: state.slideshow,
         duration: state.duration,
         currentTime: state.currentTime,
         isFullScreenActivated: state.isFullScreenActivated,
