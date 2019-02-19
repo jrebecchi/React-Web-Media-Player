@@ -132,4 +132,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(Audio);
+export default connect(mapStateToProps, null, null, { withRef: true })(Audio);

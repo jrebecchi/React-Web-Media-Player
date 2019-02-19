@@ -279,4 +279,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(Slideshow);
+export default connect(mapStateToProps, null, null, { withRef: true })(Slideshow);
