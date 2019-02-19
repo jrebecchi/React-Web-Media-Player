@@ -9,6 +9,10 @@ class Slideshow extends Component {
         super(props);
         this.currentTime = 0;
         this.buffered = [];
+        this.startTime = 0;
+        this.tempTime = null;
+        this.imageDisplayed = null;
+        this.timerFunction = null;
     };
 
     getCurrentTime = () => this.currentTime;
