@@ -6,52 +6,34 @@ import Slideshow from "./Channels/Slideshow";
 //const  MAX_DIFFERENCE_AUDIO_SLIDESHOW = 0.1; //in seconds
 
 class Mixer extends Component {
+
     /*
-    const init = (options) => {
-        this.state = new SlideshowModel(options);
+    init = (options) => {
+        this.props = new SlideshowModel(options);
         this.eventBus = new EventBus();
         this.utils = new Utils(this);
         this.view = new View(this);
         this.menuController = new MenuController(this);
         this.fullscreenController = new FullscreenController(this)
-        if (this.state.hasVideo){
+        if (this.props.hasVideo){
             this.VideoController = new VideoController(this);
         } else {
-            if (this.state.hasAudio)
+            if (this.props.hasAudio)
                 this.AudioController = new AudioController(this);
             this.SlideshowController = new SlideshowController(this);
         }                
         this.eventHandler = new EventHandler(this);
     }
+    */
 
-    const addEventListener = () => {
-        
-        this.eventBus.on("init", () => {
-            this.state.isInitialized = true;
-            this.menuController.fadeLargePlayButton();
-            this.menuController.showLoadingState();
-            this.menuController.showMenuBar();                
-            this.state.currentTime = 0;
-            this.state.isInitialized = true;
-            this.state.isLoading = true;
-            this.state.isPlaying = true;
-            this.refreshBufferState();
-            if(this.state.hasAudio || this.state.hasVideo){
-                this.menuController.updateVolume();
-                this.menuController.hideVolumeSlider();
-            }
-            this.load();
-            this.menuController.waitForMouseStop();
-            this.menuController.updateState();
-
-        });
-
+    //const addEventListener = () => {
+    /*
         this.eventBus.on("wait-for-mouse-stop", (e) => {
             this.menuController.waitForMouseStop();
         });
 
         this.eventBus.on("update-past-volume-state", () => {
-            this.state.pastVolume = this.state.volume;
+            this.props.pastVolume = this.props.volume;
         });
 
         
@@ -65,14 +47,14 @@ class Mixer extends Component {
             if (x > maxX) x = maxX;
             if (x <= 0){
                 x = 0;
-                this.state.isMuted = true;
+                this.props.isMuted = true;
                 this.mute();
-            } else if(this.state.isMuted) {
-                this.state.isMuted = false;
+            } else if(this.props.isMuted) {
+                this.props.isMuted = false;
                 this.unMute();
             }
             let volume = x / maxX;
-            this.state.volume = volume;
+            this.props.volume = volume;
             this.setVolume(volume);
             this.menuController.updateVolume();
             this.menuController.waitForMouseStop();
@@ -89,30 +71,30 @@ class Mixer extends Component {
         });
 
         this.eventBus.on('play-pause-switch', (e) => {
-            if(this.state.isReadingTerminated){
-                this.state.currentTime = 0;
-                this.state.isReadingTerminated = false;
+            if(this.props.isReadingTerminated){
+                this.props.currentTime = 0;
+                this.props.isReadingTerminated = false;
                 if (!this.hasEnoughBuffered()){
-                    this.state.isLoading = true;
+                    this.props.isLoading = true;
                     this.menuController.showLoadingState();
                     this.pause();
                     this.load();
                 } else {
-                    this.state.isLoading = false;
+                    this.props.isLoading = false;
                     this.menuController.hideLoadingState();
                     this.play();
                 }
             }
-            else if(this.state.isPlaying){
+            else if(this.props.isPlaying){
                 this.pause();
                 this.menuController.showMenuBar();
                 this.menuController.showTitleContainer();
                 this.menuController.updateMenu();
             } else {
-                if(!this.state.isLoading)
+                if(!this.props.isLoading)
                     this.play();
             } 
-            this.state.isPlaying = !this.state.isPlaying;
+            this.props.isPlaying = !this.props.isPlaying;
             this.menuController.updateState();
             this.menuController.waitForMouseStop();
             this.refreshBufferState();
@@ -120,34 +102,34 @@ class Mixer extends Component {
         });
 
         this.eventBus.on('change-mute-state', (e) => {
-            if(this.state.isMuted){
+            if(this.props.isMuted){
                 this.unMute();
-                if(this.state.pastVolume === 0){
-                    this.state.volume = 1;
+                if(this.props.pastVolume === 0){
+                    this.props.volume = 1;
                 } else {
-                    this.state.volume = this.state.pastVolume;
+                    this.props.volume = this.props.pastVolume;
                 }
-                this.setVolume(this.state.volume);
+                this.setVolume(this.props.volume);
             }
             else{
                 this.mute();
-                this.state.pastVolume = this.state.volume;
-                this.state.volume = 0;
+                this.props.pastVolume = this.props.volume;
+                this.props.volume = 0;
             }
             this.menuController.updateVolume();   
-            this.state.isMuted = !this.state.isMuted;
+            this.props.isMuted = !this.props.isMuted;
             this.menuController.waitForMouseStop();
             this.menuController.updateState();
         });
 
         this.eventBus.on('enough-buffered', () => {
-            if((this.state.hasVideo && this.state.isVideoReady)
-            || (this.state.hasAudio && this.state.isAudioReady && this.state.isSlideshowReady)
-            || (this.state.hasAudio && !this.state.isAudioReady && this.state.isSlideshowReady && this.state.currentTime > this.AudioController.getTimeLength())//when audio stop before video
-            || (!this.state.hasAudio && this.state.isSlideshowReady)){
-                this.state.isLoading = false;
+            if((this.props.hasVideo && this.props.isVideoReady)
+            || (this.props.hasAudio && this.props.isAudioReady && this.props.isSlideshowReady)
+            || (this.props.hasAudio && !this.props.isAudioReady && this.props.isSlideshowReady && this.props.currentTime > this.AudioController.getTimeLength())//when audio stop before video
+            || (!this.props.hasAudio && this.props.isSlideshowReady)){
+                this.props.isLoading = false;
                 this.menuController.hideLoadingState();
-                if(this.state.isPlaying)
+                if(this.props.isPlaying)
                     this.play();
                 else
                     this.pause();
@@ -172,16 +154,16 @@ class Mixer extends Component {
         });
 
         this.eventBus.on("full-screen-mode-changed", (e) => {
-            this.state.isFullScreenActivated = !this.state.isFullScreenActivated;
+            this.props.isFullScreenActivated = !this.props.isFullScreenActivated;
             this.menuController.adaptMenuToPlayerWidth();
             this.menuController.updateProgressBarBuffered();
             
-            if (this.state.hasVideo)
+            if (this.props.hasVideo)
                 this.VideoController.displayVideo();
             else
                 this.SlideshowController.displayImage();
                             
-            if(this.state.hasAudio || this.state.hasVideo)
+            if(this.props.hasAudio || this.props.hasVideo)
                 this.menuController.hideVolumeSlider();
             this.menuController.waitForMouseStop();
 
@@ -189,34 +171,34 @@ class Mixer extends Component {
 
 
     this.changeTime = (time, freeze) => {
-        if (time >= this.state.timeLength){
-            time = this.state.timeLength;
+        if (time >= this.props.timeLength){
+            time = this.props.timeLength;
             
         } else if (time < 0) {
             time = 0;
         }
-        this.state.currentTime = time;
-        if(this.state.currentTime >= this.state.timeLength){
+        this.props.currentTime = time;
+        if(this.props.currentTime >= this.props.timeLength){
             this.stop();
-            this.state.isReadingTerminated = true;
-            this.state.isPlaying = false;
+            this.props.isReadingTerminated = true;
+            this.props.isPlaying = false;
         }
-        if(this.state.isReadingTerminated && this.state.currentTime < this.state.timeLength){
-            this.state.isReadingTerminated = false;
-            this.state.isPlaying = true;
+        if(this.props.isReadingTerminated && this.props.currentTime < this.props.timeLength){
+            this.props.isReadingTerminated = false;
+            this.props.isPlaying = true;
         }
         if (freeze){
             this.pause();
         } else {
             if (!this.hasEnoughBuffered()){
-                this.state.isLoading = true;
+                this.props.isLoading = true;
                 this.menuController.showLoadingState();
                 this.pause();
                 this.load();
             } else {
-                this.state.isLoading = false;
+                this.props.isLoading = false;
                 this.menuController.hideLoadingState();
-                if(this.state.isPlaying)
+                if(this.props.isPlaying)
                     this.play();
                 else 
                     this.pause();
@@ -228,31 +210,31 @@ class Mixer extends Component {
     }
 
     this.synchronize = () => {
-        if (this.state.hasVideo){
-            this.state.currentTime = this.VideoController.getCurrentTime();
+        if (this.props.hasVideo){
+            this.props.currentTime = this.VideoController.getCurrentTime();
         } else {
-            if(this.state.hasAudio){
-                if(this.AudioController.getTimeLength() > this.state.currentTime){
-                    this.state.currentTime = this.AudioController.getCurrentTime();
+            if(this.props.hasAudio){
+                if(this.AudioController.getTimeLength() > this.props.currentTime){
+                    this.props.currentTime = this.AudioController.getCurrentTime();
                     let diff = Math.abs(this.AudioController.getCurrentTime() - this.SlideshowController.getCurrentTime());
                     if (diff > MAX_DIFFERENCE_AUDIO_SLIDESHOW)//re-synchronize audio and slideshow 
                         this.SlideshowController.play(this.AudioController.getCurrentTime());
                 } else{
-                    this.state.currentTime = this.SlideshowController.getCurrentTime();
+                    this.props.currentTime = this.SlideshowController.getCurrentTime();
                     this.AudioController.pause()
                 }
             } else {
-                this.state.currentTime = this.SlideshowController.getCurrentTime();
+                this.props.currentTime = this.SlideshowController.getCurrentTime();
             }
         }
 
-        if(this.state.currentTime >= this.state.timeLength){
+        if(this.props.currentTime >= this.props.timeLength){
             this.stop();
-            this.state.isReadingTerminated = true;
-            this.state.isPlaying = false;
+            this.props.isReadingTerminated = true;
+            this.props.isPlaying = false;
         }
-        else if(!this.hasEnoughBuffered() && !this.state.isLoading){
-            this.state.isLoading = true;
+        else if(!this.hasEnoughBuffered() && !this.props.isLoading){
+            this.props.isLoading = true;
             this.menuController.showLoadingState();
             this.pause();
             this.load();
@@ -265,67 +247,67 @@ class Mixer extends Component {
 
     this.refreshBufferState = () => {
         let timeRangeBuffered;
-        if (this.state.hasVideo){
-            timeRangeBuffered = this.VideoController.timeRangeBuffered(this.state.currentTime);
+        if (this.props.hasVideo){
+            timeRangeBuffered = this.VideoController.timeRangeBuffered(this.props.currentTime);
         } else {
-            if(this.state.hasAudio){
-                let audioTimeRangeBuffered = this.AudioController.timeRangeBuffered(this.state.currentTime);
-                let slideshowTimeRangeBuffered = this.SlideshowController.timeRangeBuffered(this.state.currentTime);
-                if (this.AudioController.getTimeLength() < this.state.currentTime || audioTimeRangeBuffered === this.AudioController.getTimeLength()){
-                    timeRangeBuffered = this.SlideshowController.timeRangeBuffered(this.state.currentTime);
+            if(this.props.hasAudio){
+                let audioTimeRangeBuffered = this.AudioController.timeRangeBuffered(this.props.currentTime);
+                let slideshowTimeRangeBuffered = this.SlideshowController.timeRangeBuffered(this.props.currentTime);
+                if (this.AudioController.getTimeLength() < this.props.currentTime || audioTimeRangeBuffered === this.AudioController.getTimeLength()){
+                    timeRangeBuffered = this.SlideshowController.timeRangeBuffered(this.props.currentTime);
                 } else {
                     timeRangeBuffered = (audioTimeRangeBuffered < slideshowTimeRangeBuffered) ? audioTimeRangeBuffered : slideshowTimeRangeBuffered;
                 }
             } else {
-                timeRangeBuffered = this.SlideshowController.timeRangeBuffered(this.state.currentTime);
+                timeRangeBuffered = this.SlideshowController.timeRangeBuffered(this.props.currentTime);
             }
         }
         this.menuController.updateProgressBarBuffered(timeRangeBuffered);
     };
 
     this.hasEnoughBuffered = () => {
-        if (this.state.hasVideo){
-            return this.VideoController.hasEnoughBuffered(this.state.currentTime);
+        if (this.props.hasVideo){
+            return this.VideoController.hasEnoughBuffered(this.props.currentTime);
         } else {
-            if(this.state.hasAudio){
-                if(this.state.currentTime < this.AudioController.getTimeLength()){
-                    return (this.SlideshowController.hasEnoughBuffered(this.state.currentTime) && (this.AudioController.hasEnoughBuffered(this.state.currentTime)));
+            if(this.props.hasAudio){
+                if(this.props.currentTime < this.AudioController.getTimeLength()){
+                    return (this.SlideshowController.hasEnoughBuffered(this.props.currentTime) && (this.AudioController.hasEnoughBuffered(this.props.currentTime)));
                 }
                 else
-                    return this.SlideshowController.hasEnoughBuffered(this.state.currentTime);
+                    return this.SlideshowController.hasEnoughBuffered(this.props.currentTime);
             } else {
-                return this.SlideshowController.hasEnoughBuffered(this.state.currentTime);
+                return this.SlideshowController.hasEnoughBuffered(this.props.currentTime);
             }
         }
     };
-
-    this.load = () => {
-        if (this.state.hasVideo){
-            this.VideoController.load(this.state.currentTime);
+    */
+    load = () => {
+        if (this.props.hasVideo){
+            this.video.load(this.props.currentTime);
         } else {
-            if (this.state.hasAudio)
-                this.AudioController.load(this.state.currentTime);
-            this.SlideshowController.load(this.state.currentTime);
+            if (this.props.hasAudio)
+                this.audio.load(this.props.currentTime);
+            this.slideshow.load(this.props.currentTime);
         }
     };
-
+    /*
     this.play = () => {
-        if(this.state.currentTime >= this.state.timeLength){
+        if(this.props.currentTime >= this.props.timeLength){
             this.stop();
-            this.state.isReadingTerminated = true;
+            this.props.isReadingTerminated = true;
             return;
         }
         this.refreshBufferState();
         window.clearInterval(this.bufferTimer);
         window.clearInterval(this.timer);
         this.timer = window.setInterval(this.synchronize, 20);
-        if (this.state.hasVideo){
-            this.VideoController.play(this.state.currentTime);
+        if (this.props.hasVideo){
+            this.VideoController.play(this.props.currentTime);
         } else {
-            if (this.state.hasAudio)
-                if(this.state.currentTime < this.AudioController.getTimeLength())
-                    this.AudioController.play(this.state.currentTime);
-            this.SlideshowController.play(this.state.currentTime);
+            if (this.props.hasAudio)
+                if(this.props.currentTime < this.AudioController.getTimeLength())
+                    this.AudioController.play(this.props.currentTime);
+            this.SlideshowController.play(this.props.currentTime);
         }
     };
 
@@ -333,59 +315,65 @@ class Mixer extends Component {
         window.clearInterval(this.timer);
         this.refreshBufferState();
         this.bufferTimer = window.setInterval(this.refreshBufferState);
-        if (this.state.hasVideo){
-            this.VideoController.pause(this.state.currentTime);
+        if (this.props.hasVideo){
+            this.VideoController.pause(this.props.currentTime);
         } else {
-            if (this.state.hasAudio)
-                this.AudioController.pause(this.state.currentTime);
-            this.SlideshowController.pause(this.state.currentTime);
+            if (this.props.hasAudio)
+                this.AudioController.pause(this.props.currentTime);
+            this.SlideshowController.pause(this.props.currentTime);
         }
     };
 
     this.stop = () => {
         window.clearInterval(this.timer);
-        this.state.currentTime = this.state.timeLength;
-        if (this.state.hasVideo){
+        this.props.currentTime = this.props.timeLength;
+        if (this.props.hasVideo){
             this.VideoController.stop();
         } else {
-            if (this.state.hasAudio)
+            if (this.props.hasAudio)
                 this.AudioController.stop();
             this.SlideshowController.stop();
         }
     };
 
     this.mute = () => {
-        if (this.state.hasVideo)
+        if (this.props.hasVideo)
             this.VideoController.mute();
-        else if (this.state.hasAudio)
+        else if (this.props.hasAudio)
             this.AudioController.mute();
     };
 
 
     this.unMute = () => {
-        if (this.state.hasVideo)
+        if (this.props.hasVideo)
             this.VideoController.unMute();
-        else if (this.state.hasAudio)
+        else if (this.props.hasAudio)
             this.AudioController.unMute();
     };
 
     this.setVolume = (volume) => {
-        if (this.state.hasVideo)
+        if (this.props.hasVideo)
             this.VideoController.setVolume(volume);
-        else if (this.state.hasAudio)
+        else if (this.props.hasAudio)
             this.AudioController.setVolume(volume);
     };
     */
 
+    componentDidUpdate = (prevprops) => {
+        if (prevprops.isInitialized === false && this.props.isInitialized === true) {
+            this.load();
+        }
+    }
+
     render = () => {
         let video, audio, slideshow;
         if (this.props.hasVideo) {
-            video = <Video />;
+            video = <Video ref={video => (this.video = video)} />;
         } else if (this.props.hasAudio) {
-            audio = <Audio />;
-            slideshow = <Slideshow />
+            audio = <Audio ref={audio => (this.audio = audio)} />;
+            slideshow = <Slideshow ref={slideshow => (this.slideshow = slideshow)} />
         } else if (this.props.hasSlideshow) {
-            slideshow = <Slideshow />
+            slideshow = <Slideshow ref={slideshow => (this.slideshow = slideshow)} />
         }
         return (
             <div>
@@ -402,6 +390,9 @@ const mapStateToProps = (state) => {
         hasVideo: state.hasVideo,
         hasAudio: state.hasAudio,
         hasSlideshow: state.hasSlideshow,
+        isInitialized: state.isInitialized,
+        currentTime: state.currentTime,
+        isPlaying: state.isPlaying
     };
 };
 

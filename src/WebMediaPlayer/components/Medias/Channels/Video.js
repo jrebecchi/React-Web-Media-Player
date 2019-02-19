@@ -149,4 +149,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, null, null, { withRef: true })(Video);
+export default connect(mapStateToProps, null, null, { forwardRef: true })(Video);

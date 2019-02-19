@@ -283,4 +283,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, null, null, { withRef: true })(Slideshow);
+export default connect(mapStateToProps, null, null, { forwardRef: true })(Slideshow);

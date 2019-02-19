@@ -5,11 +5,6 @@ const MINIMUM_BUFFERED_TIME = 1;
 
 class Audio extends Component {
 
-    constructor(props) {
-        super();
-        this.audio = React.createRef();
-    }
-
     isPlaying = () => {
         return this.audio.currentTime > 0 && !this.audio.paused && !this.audio.ended && this.audio.readyState > 2;
     }
@@ -25,7 +20,7 @@ class Audio extends Component {
         } else {
             this.audio.currentTime = startTime;
         }
-        if (!this.updateTimer) this.updateTimer = window.setInterval(this.enoughBuffered, 100)
+        if (!this.updateTimer) this.updateTimer = window.setInterval(this.enoughBuffered.bind(this), 100)
     };
 
     enoughBuffered = () => {
@@ -119,7 +114,7 @@ class Audio extends Component {
 
     render = () => {
         return (
-            <audio src={this.props.audio} ref={this.audio} onWaiting={this.handleWaiting} onCanPlayThrough={this.handleCanPlayThrough} />
+            <audio src={this.props.audio} ref={audio => this.audio = audio} onWaiting={this.handleWaiting} onCanPlayThrough={this.handleCanPlayThrough} />
         );
     }
 }
@@ -132,4 +127,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, null, null, { withRef: true })(Audio);
+export default connect(mapStateToProps, null, null, { forwardRef: true })(Audio);
