@@ -103,7 +103,7 @@ const getInitState = (options) => {
     state.title = options.title;
     state.link = options.link;
     state.isPlayerHighlighted = false;
-    state.isLoading = false;
+    state.isLoading = true;
     state.isInitialized = false;
     state.isLargePlayButtonHighlighted = false;
     state.isPlaying = false;

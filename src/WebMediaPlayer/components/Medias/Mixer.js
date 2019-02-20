@@ -361,7 +361,7 @@ class Mixer extends Component {
 
     componentDidUpdate = (prevprops) => {
         if (prevprops.isInitialized === false && this.props.isInitialized === true) {
-            this.play();
+            this.load();
         }
     }
 

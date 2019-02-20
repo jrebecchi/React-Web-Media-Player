@@ -127,7 +127,7 @@ class Container extends Component {
         }
 
 
-        let thumbnail, largePlayButton, menuBar, titleBar;
+        let thumbnail, largePlayButton, menuBar, titleBar, spinner;
         if (this.props.thumbnail && !this.props.isInitialized)
             thumbnail = <Thumbnail />;
         if (this.props.isInitialized && this.props.showMenus) {
@@ -139,9 +139,12 @@ class Container extends Component {
         if (!this.props.isInitialized || this.props.showMenus) {
             titleBar = <TitleBar />
         }
+        if (this.props.isInitialized && this.props.isLoading){
+            spinner = <Spinner />
+        }
         return (
             <div className={className.join(" ")} style={style} ref={node => (this.node = node)} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onMouseMoveCapture={this.handleMouseMove} onClick={this.handleClick}>
-                <Spinner />
+                {spinner}
                 {thumbnail}
                 {largePlayButton}
                 {titleBar}
@@ -165,7 +168,8 @@ const mapStateToProps = (state) => {
         isFullscreen: state.isFullscreen,
         showMenus: state.showMenus,
         isPlaying: state.isPlaying,
-        allowMenuHiding: state.allowMenuHiding
+        allowMenuHiding: state.allowMenuHiding,
+        isLoading: state.isLoading,
     
     };
 };
