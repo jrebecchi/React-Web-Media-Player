@@ -10,7 +10,7 @@ class Audio extends Component {
     }
 
     getCurrentTime = () => this.audio.currentTime;
-
+    
     load = (startTime) => {
         console.log("load");
         if (this.isPlaying()) this.pause();

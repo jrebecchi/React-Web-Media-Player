@@ -45,6 +45,7 @@ class Slideshow extends Component {
     }
 
     play = (time) => {
+        this.load()
         if (time === undefined || time < 0) {
             time = 0;
         }
