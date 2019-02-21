@@ -363,6 +363,16 @@ class Mixer extends Component {
         if (prevprops.isInitialized === false && this.props.isInitialized === true) {
             this.load();
         }
+        if((!prevprops.isVideoReady && this.props.isVideoReady)
+        || (this.props.hasAudio && (!prevprops.isAudioReady || !prevprops.isSlideshowReady) && this.props.isAudioReady && this.props.isSlideshowReady)
+        || (this.props.hasAudio && (!prevprops.isAudioReady || !prevprops.isSlideshowReady) && !this.props.isAudioReady && this.props.isSlideshowReady && this.props.currentTime > this.audio.getDuration())//when audio stop before video
+        || (!this.props.hasAudio && !prevprops.isSlideshowReady && this.props.isSlideshowReady)){
+            this.props.dispatch({ type: 'NOT_LOADING' });
+            if(this.props.isPlaying)
+                this.play();
+            else
+                this.pause();
+        }     
     }
 
     render = () => {
@@ -388,8 +398,11 @@ class Mixer extends Component {
 const mapStateToProps = (state) => {
     return {
         hasVideo: state.hasVideo,
+        isVideoReady: state.isVideoReady,
         hasAudio: state.hasAudio,
+        isAudioReady: state.isAudioReady,
         hasSlideshow: state.hasSlideshow,
+        isSlideshowReady: state.isSlideshowReady,
         isInitialized: state.isInitialized,
         currentTime: state.currentTime,
         isPlaying: state.isPlaying

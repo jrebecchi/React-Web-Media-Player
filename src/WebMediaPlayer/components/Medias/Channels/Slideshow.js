@@ -21,7 +21,9 @@ class Slideshow extends Component {
         if (time === undefined || time < 0) {
             time = 0;
         }
-        this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
+        if(!this.hasEnoughBuffered(time)){
+            this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
+        }
         this.startTime = time;
         var imageStartTime = 0;
         for (var i = 0; i < this.props.slideshow.length; ++i) {
@@ -45,7 +47,7 @@ class Slideshow extends Component {
     }
 
     play = (time) => {
-        this.load()
+        this.load(this.currentTime)
         if (time === undefined || time < 0) {
             time = 0;
         }

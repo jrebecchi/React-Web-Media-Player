@@ -14,7 +14,7 @@ class Video extends Component {
     load = (startTime) => {
         console.log("load");
         if (this.isPlaying()) this.pause();
-        this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
+        if(!this.hasEnoughBuffered(startTime)) this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
         if ((startTime === undefined || startTime < 0 || startTime === 0) && this.props.duration === 0) {
             this.isLoadNotStarted = false;
             this.video.load();

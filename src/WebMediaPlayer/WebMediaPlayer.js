@@ -38,6 +38,8 @@ import videoReady from  './actions/VideoReady';
 import slideshowNotReady from './actions/SlideshowNotReady';
 import slideshowReady from './actions/SlideshowReady';
 import addImage from './actions/AddImage';
+import loading from './actions/Loading';
+import notLoading from './actions/NotLoading';
 
 
 class WebMediaPlayer extends Component {
@@ -48,6 +50,7 @@ class WebMediaPlayer extends Component {
   };
 
   reducer = (state, action) => {
+    console.log(action.type);
     if (state === undefined) {
       state = getInitState(this.props);
     }
@@ -55,6 +58,10 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      case 'NOT_LOADING':
+        return notLoading(state, action);
+      case 'LOADING':
+        return loading(state, action);
       case 'ADD_IMAGE':
         return addImage(state, action);
       case 'AUDIO_IS_NOT_READY':
