@@ -2,6 +2,7 @@ const DEFAULT_WIDTH = 560 //560;
 const DEFAULT_HEIGHT = 315 //315;
 const DEFAULT_ALLOW_FULL_FRAME = true;
 const DEFAULT_VOLUME = 1.0;
+const DEFAULT_COLOR = 'green';
 
 const initSlideshowPlayerState = (options) => {
     let state = {};
@@ -98,6 +99,11 @@ const getInitState = (options) => {
     }
     if (options.hasOwnProperty("logoLink")){
         state.logoLink = options.logoLink;
+    }
+    if (options.hasOwnProperty("color")){
+        state.color = options.color;
+    } else {
+        state.color = DEFAULT_COLOR;
     }
     state.thumbnail = options.thumbnail;
     state.title = options.title;
