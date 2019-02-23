@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-const MINIMUM_BUFFERED_TIME = 1;
-
+//const MINIMUM_BUFFERED_TIME = 1;
 
 class Video extends Component {
 
@@ -14,16 +13,16 @@ class Video extends Component {
     load = (startTime) => {
         console.log("load");
         if (this.isPlaying()) this.pause();
-        if(!this.hasEnoughBuffered(startTime)) this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
+        //if(!this.hasEnoughBuffered(startTime)) this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
         if ((startTime === undefined || startTime < 0 || startTime === 0) && this.props.duration === 0) {
             this.isLoadNotStarted = false;
             this.video.load();
         } else {
             this.video.currentTime = startTime;
         }
-        if (!this.updateTimer) this.updateTimer = window.setInterval(this.enoughBuffered, 100)
+        //if (!this.updateTimer) this.updateTimer = window.setInterval(this.enoughBuffered, 100)
     };
-
+    /*
     enoughBuffered = () => {
         if (this.hasEnoughBuffered(this.video.currentTime)) {
             window.clearInterval(this.updateTimer);
@@ -31,11 +30,11 @@ class Video extends Component {
             this.video.removeEventListener("progress", this.enoughBuffered);
             this.props.dispatch({ type: 'VIDEO_IS_READY' });
         }
-    };
+    };*/
 
     play = (time) => {
         console.log("play");
-        this.video.currentTime = time;
+        //this.video.currentTime = time;
         if (!this.isPlaying()) this.video.play();
     };
 
@@ -46,12 +45,15 @@ class Video extends Component {
     };
 
     stop = () => {
+        console.log("stop");
         if (this.isPlaying()) this.video.pause();
         this.video.currentTime = this.props.duration;
     };
 
     hasEnoughBuffered = (time) => {
-        if (!this.props.isVideoReady) {
+        console.log("hasbufferedenough");
+        return this.props.isVideoReady;
+        /*if (!this.props.isVideoReady) {
             return false;
         }
         for (let i = 0; i < this.video.buffered.length; i++) {
@@ -74,6 +76,7 @@ class Video extends Component {
             }
         }
         return false;
+        */
     };
 
     timeRangeBuffered = (time) => {
@@ -116,12 +119,12 @@ class Video extends Component {
     }
 
     handleWaiting = () => {
-        console.log("waiting");
+        console.log("waiting event");
         this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
     }
 
     handleCanPlayThrough = () => {
-        console.log("Can play through");
+        console.log("Can play through event");
         this.props.dispatch({ type: 'VIDEO_IS_READY' });
     }
 

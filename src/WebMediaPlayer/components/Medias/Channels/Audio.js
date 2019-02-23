@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-const MINIMUM_BUFFERED_TIME = 1;
-
+//const MINIMUM_BUFFERED_TIME = 1;
 
 class Audio extends Component {
 
@@ -14,27 +13,29 @@ class Audio extends Component {
     load = (startTime) => {
         console.log("load");
         if (this.isPlaying()) this.pause();
-        this.props.dispatch({ type: 'AUDIO_IS_NOT_READY' });
+        //this.props.dispatch({ type: 'AUDIO_IS_NOT_READY' });
         if (startTime === undefined || startTime < 0 || startTime === 0) {
             this.audio.load();
         } else {
             this.audio.currentTime = startTime;
         }
-        if (!this.updateTimer) this.updateTimer = window.setInterval(this.enoughBuffered.bind(this), 100)
+        //if (!this.updateTimer) this.updateTimer = window.setInterval(this.enoughBuffered.bind(this), 100)
     };
 
     enoughBuffered = () => {
+        /*
         if (this.hasEnoughBuffered(this.audio.currentTime)) {
             window.clearInterval(this.updateTimer);
             this.updateTimer = null;
             this.audio.removeEventListener("progress", this.enoughBuffered);
             this.props.dispatch({ type: 'AUDIO_IS_READY' });
         }
+        */
     };
 
     play = (time) => {
         console.log("play");
-        this.audio.currentTime = time;
+        //this.audio.currentTime = time;
         if (!this.isPlaying()) this.audio.play();
     };
 
@@ -51,6 +52,8 @@ class Audio extends Component {
     };
 
     hasEnoughBuffered = (time) => {
+        return true;
+        /*
         if (!this.props.isAudioReady) {
             return false
         }
@@ -74,6 +77,7 @@ class Audio extends Component {
             }
         }
         return false;
+        */
     };
 
     timeRangeBuffered = (time) => {

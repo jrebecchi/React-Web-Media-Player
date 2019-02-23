@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Video from "./Channels/Video";
 import Audio from "./Channels/Audio";
 import Slideshow from "./Channels/Slideshow";
-//const  MAX_DIFFERENCE_AUDIO_SLIDESHOW = 0.1; //in seconds
+const  MAX_DIFFERENCE_AUDIO_SLIDESHOW = 0.1; //in seconds
 
 class Mixer extends Component {
 
@@ -208,42 +208,40 @@ class Mixer extends Component {
         this.menuController.updateMenu();
         this.menuController.updateState();
     }
-
-    this.synchronize = () => {
+    */
+    synchronize = () => {
         if (this.props.hasVideo){
-            this.props.currentTime = this.video.getCurrentTime();
+            this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.video.getCurrentTime() } });
         } else {
             if(this.props.hasAudio){
                 if(this.audio.getDuration() > this.props.currentTime){
-                    this.props.currentTime = this.audio.getCurrentTime();
+                    this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.audio.getCurrentTime() } });
                     let diff = Math.abs(this.audio.getCurrentTime() - this.slideshow.getCurrentTime());
                     if (diff > MAX_DIFFERENCE_AUDIO_SLIDESHOW)//re-synchronize audio and slideshow 
                         this.slideshow.play(this.audio.getCurrentTime());
                 } else{
-                    this.props.currentTime = this.slideshow.getCurrentTime();
+                    this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.slideshow.getCurrentTime() } });
                     this.audio.pause()
                 }
             } else {
-                this.props.currentTime = this.slideshow.getCurrentTime();
+                this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.slideshow.getCurrentTime() } });
             }
         }
 
         if(this.props.currentTime >= this.props.duration){
             this.stop();
-            this.props.isReadingTerminated = true;
-            this.props.isPlaying = false;
+            this.props.dispatch({ type: 'READING_TERMINATED' });
         }
         else if(!this.hasEnoughBuffered() && !this.props.isLoading){
-            this.props.isLoading = true;
-            this.menuController.showLoadingState();
+            console.log("I do mess")
+            this.props.dispatch({ type: 'NOT_LOADING' });
             this.pause();
             this.load();
         }
 
-        this.refreshBufferState();
-        this.menuController.updateMenu();
-        this.menuController.updateState();
+        //this.refreshBufferState();
     };
+    /*
 
     this.refreshBufferState = () => {
         let timeRangeBuffered;
@@ -264,8 +262,8 @@ class Mixer extends Component {
         }
         this.menuController.updateProgressBarBuffered(timeRangeBuffered);
     };
-
-    this.hasEnoughBuffered = () => {
+    */
+    hasEnoughBuffered = () => {
         if (this.props.hasVideo){
             return this.video.hasEnoughBuffered(this.props.currentTime);
         } else {
@@ -280,14 +278,14 @@ class Mixer extends Component {
             }
         }
     };
-    */
+    
     load = () => {
         if (this.props.hasVideo){
-            this.video.play(this.props.currentTime);
+            this.video.load(this.props.currentTime);
         } else {
             if (this.props.hasAudio)
-                this.audio.play(this.props.currentTime);
-            this.slideshow.play(this.props.currentTime);
+                this.audio.load(this.props.currentTime);
+            this.slideshow.load(this.props.currentTime);
         }
     };
     
@@ -299,8 +297,8 @@ class Mixer extends Component {
         }
         //this.refreshBufferState();
         //window.clearInterval(this.bufferTimer);
-        //window.clearInterval(this.timer);
-        //this.timer = window.setInterval(this.synchronize, 20);
+        window.clearInterval(this.timer);
+        this.timer = window.setInterval(this.synchronize, 20);
         if (this.props.hasVideo){
             this.video.play(this.props.currentTime);
         } else {
