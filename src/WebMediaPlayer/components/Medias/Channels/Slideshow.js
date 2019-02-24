@@ -46,7 +46,15 @@ class Slideshow extends Component {
         }
     }
 
-    play = (time) => {
+    play = () => {
+        this.load(this.currentTime)
+        //this.currentTime = time;
+        this.tempTime = new Date();
+        //play mechanism (relaunch refresh)
+        this.relaunchRefresh();
+    };
+
+    changeTime = (time) => {
         this.load(this.currentTime)
         if (time === undefined || time < 0) {
             time = 0;

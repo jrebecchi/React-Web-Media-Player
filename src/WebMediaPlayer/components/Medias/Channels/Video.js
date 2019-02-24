@@ -15,7 +15,7 @@ class Video extends Component {
         if (this.isPlaying()) this.pause();
         //if(!this.hasEnoughBuffered(startTime)) this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
         if ((startTime === undefined || startTime < 0 || startTime === 0) && this.props.duration === 0) {
-            this.isLoadNotStarted = false;
+            //this.isLoadNotStarted = false;
             this.video.load();
         } else {
             this.video.currentTime = startTime;
@@ -36,6 +36,11 @@ class Video extends Component {
         console.log("play");
         //this.video.currentTime = time;
         if (!this.isPlaying()) this.video.play();
+    };
+
+    changeTime = (time) => {
+        console.log("changetime");
+        this.audio.currentTime = time;
     };
 
     pause = (time) => {

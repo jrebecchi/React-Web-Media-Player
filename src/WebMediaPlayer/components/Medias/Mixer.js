@@ -210,6 +210,19 @@ class Mixer extends Component {
     }
     */
     synchronize = () => {
+        if(this.props.currentTime >= this.props.duration){
+            this.stop();
+            this.props.dispatch({ type: 'READING_TERMINATED' });
+        }
+        else if(!this.hasEnoughBuffered() && !this.props.isLoading){
+            this.props.dispatch({ type: 'LOADING' });
+            this.pause();
+            this.load();
+        }
+        else if(this.hasEnoughBuffered() && this.props.isLoading){
+            this.props.dispatch({ type: 'NOT_LOADING' });
+            this.play();
+        }
         if (this.props.hasVideo){
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.video.getCurrentTime() } });
         } else {
@@ -218,7 +231,7 @@ class Mixer extends Component {
                     this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.audio.getCurrentTime() } });
                     let diff = Math.abs(this.audio.getCurrentTime() - this.slideshow.getCurrentTime());
                     if (diff > MAX_DIFFERENCE_AUDIO_SLIDESHOW)//re-synchronize audio and slideshow 
-                        this.slideshow.play(this.audio.getCurrentTime());
+                        this.slideshow.changeTime(this.audio.getCurrentTime());
                 } else{
                     this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.slideshow.getCurrentTime() } });
                     this.audio.pause()
@@ -227,18 +240,6 @@ class Mixer extends Component {
                 this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.slideshow.getCurrentTime() } });
             }
         }
-
-        if(this.props.currentTime >= this.props.duration){
-            this.stop();
-            this.props.dispatch({ type: 'READING_TERMINATED' });
-        }
-        else if(!this.hasEnoughBuffered() && !this.props.isLoading){
-            console.log("I do mess")
-            this.props.dispatch({ type: 'NOT_LOADING' });
-            this.pause();
-            this.load();
-        }
-
         //this.refreshBufferState();
     };
     /*
@@ -292,12 +293,13 @@ class Mixer extends Component {
     play = () => {
         if(this.props.currentTime >= this.props.duration){
             this.stop();
-            //this.props.isReadingTerminated = true;
+            this.props.dispatch({ type: 'READING_TERMINATED' });
             return;
         }
         //this.refreshBufferState();
         //window.clearInterval(this.bufferTimer);
         window.clearInterval(this.timer);
+        this.synchronize();
         this.timer = window.setInterval(this.synchronize, 20);
         if (this.props.hasVideo){
             this.video.play(this.props.currentTime);
@@ -359,7 +361,7 @@ class Mixer extends Component {
 
     componentDidUpdate = (prevprops) => {
         if (prevprops.isInitialized === false && this.props.isInitialized === true) {
-            this.load();
+            this.play();
         }
         if((!prevprops.isVideoReady && this.props.isVideoReady)
         || (this.props.hasAudio && (!prevprops.isAudioReady || !prevprops.isSlideshowReady) && this.props.isAudioReady && this.props.isSlideshowReady)
