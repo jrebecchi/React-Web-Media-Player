@@ -56,9 +56,9 @@ class Audio extends Component {
         this.audio.currentTime = this.props.duration;
     };
 
-    hasEnoughBuffered = () => {
+    /*hasEnoughBuffered = () => {
         return this.props.isAudioReady;
-        /*
+        
         if (!this.props.isAudioReady) {
             return false
         }
@@ -82,8 +82,7 @@ class Audio extends Component {
             }
         }
         return false;
-        */
-    };
+};*/
 
     timeRangeBuffered = (time) => {
         for (let i = 0; i < this.audio.buffered.length; i++) {

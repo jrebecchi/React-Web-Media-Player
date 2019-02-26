@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-const MINIMUM_BUFFERED_TIME = 5; //buffered time to be loaded before launching the slideshow in seconds
+const MINIMUM_BUFFERED_TIME = 2; //buffered time to be loaded before launching the slideshow in seconds
 const REFRESH_TIME_IN_MILLISECONDS = 10;
 
 class Slideshow extends Component {
@@ -18,11 +18,9 @@ class Slideshow extends Component {
     getCurrentTime = () => this.currentTime;
 
     load = (time) => {
+        console.log("slideshow load");
         if (time === undefined || time < 0) {
             time = 0;
-        }
-        if(!this.hasEnoughBuffered(time)){
-            this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
         }
         this.startTime = time;
         var imageStartTime = 0;
@@ -47,6 +45,11 @@ class Slideshow extends Component {
     }
 
     play = () => {
+        if(!this.hasEnoughBuffered(this.currentTime)){
+            this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
+            this.load(this.currentTime);
+        }
+        console.log("slideshow play");
         this.load(this.currentTime)
         //this.currentTime = time;
         this.tempTime = new Date();
@@ -55,17 +58,19 @@ class Slideshow extends Component {
     };
 
     changeTime = (time) => {
-        this.load(this.currentTime)
+        if(!this.hasEnoughBuffered(this.time)){
+            this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
+            this.load(this.time);
+        }
+        console.log("slideshow changetime");
         if (time === undefined || time < 0) {
             time = 0;
         }
         this.currentTime = time;
-        this.tempTime = new Date();
-        //play mechanism (relaunch refresh)
-        this.relaunchRefresh();
     };
 
     pause = (time) => {
+        console.log("slideshow pause");
         if (time !== undefined) this.currentTime = time;
         if (this.hasEnoughBuffered(time)) {
             this.updateView();
@@ -74,6 +79,7 @@ class Slideshow extends Component {
     };
 
     stop = () => {
+        console.log("slideshow stop");
         this.stopRefresh();
         this.currentTime = this.props.duration;
     };
@@ -212,6 +218,10 @@ class Slideshow extends Component {
     }
 
     refresh = () => {
+        if(!this.hasEnoughBuffered(this.currentTime)){
+            this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
+            this.load(this.currentTime);
+        }
         var now = new Date();
         var deltaTime = (now.getTime() - this.tempTime.getTime()) / 1000;
         this.tempTime = now;

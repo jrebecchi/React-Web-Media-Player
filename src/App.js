@@ -29,7 +29,7 @@ class App extends Component {
         <WebMediaPlayer
           title="Slideshow Player"
           link="https://google.com"
-          thumbnail="https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg"
+          thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg"
           slideshow={
             [{
               src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg",
@@ -41,7 +41,7 @@ class App extends Component {
               src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide3.jpg",
               endTime: 6.0
             }, {
-              src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide4.jpg",
+              src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide455.jpg",
               endTime: 8.0
             }, {
               src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide5.jpg",
@@ -58,7 +58,7 @@ class App extends Component {
         <WebMediaPlayer
           title="Audio Slideshow Player"
           link="https://google.com"
-          thumbnail="https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg"
+          thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg"
           audio="https://nusid.net/audio.flac"
           slideshow={
             [{
@@ -71,7 +71,7 @@ class App extends Component {
               src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide3.jpg",
               endTime: 6.0
             }, {
-              src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide4.jpg",
+              src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide455.jpg",
               endTime: 8.0
             }, {
               src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide5.jpg",

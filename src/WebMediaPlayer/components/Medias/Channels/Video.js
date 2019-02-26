@@ -11,7 +11,7 @@ class Video extends Component {
     getCurrentTime = () => this.video.currentTime;
 
     load = (startTime) => {
-        console.log("load");
+        console.log("load video");
         if (this.isPlaying()) this.pause();
         //if(!this.hasEnoughBuffered(startTime)) this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
         if ((startTime === undefined || startTime < 0 || startTime === 0) && this.props.duration === 0) {
@@ -21,6 +21,7 @@ class Video extends Component {
             this.video.currentTime = startTime;
         }
         //if (!this.updateTimer) this.updateTimer = window.setInterval(this.enoughBuffered, 100)
+        
     };
     /*
     enoughBuffered = () => {
@@ -33,32 +34,34 @@ class Video extends Component {
     };*/
 
     play = (time) => {
-        console.log("play");
+        console.log("play video");
         //this.video.currentTime = time;
-        if (!this.isPlaying()) this.video.play();
+        if (!this.isPlaying()){
+            this.video.play();
+        }
     };
 
     changeTime = (time) => {
-        console.log("changetime");
+        console.log("changetime video");
         this.audio.currentTime = time;
     };
 
     pause = (time) => {
         if (time !== undefined) this.currentTime = time;
-        console.log("pause");
+        console.log("pause video");
         if (this.isPlaying()) this.video.pause();
     };
 
     stop = () => {
-        console.log("stop");
+        console.log("stop video");
         if (this.isPlaying()) this.video.pause();
         this.video.currentTime = this.props.duration;
     };
 
-    hasEnoughBuffered = (time) => {
+    /*hasEnoughBuffered = (time) => {
         console.log("hasbufferedenough");
         return this.props.isVideoReady;
-        /*if (!this.props.isVideoReady) {
+        if (!this.props.isVideoReady) {
             return false;
         }
         for (let i = 0; i < this.video.buffered.length; i++) {
@@ -81,8 +84,7 @@ class Video extends Component {
             }
         }
         return false;
-        */
-    };
+    };*/
 
     timeRangeBuffered = (time) => {
         for (let i = 0; i < this.video.buffered.length; i++) {
@@ -124,13 +126,13 @@ class Video extends Component {
     }
 
     handleWaiting = () => {
-        console.log("waiting event");
-        this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
+        //console.log("waiting event");
+        //this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
     }
 
     handleCanPlayThrough = () => {
-        console.log("Can play through event");
-        this.props.dispatch({ type: 'VIDEO_IS_READY' });
+        //console.log("Can play through event");
+        //this.props.dispatch({ type: 'VIDEO_IS_READY' });
     }
 
     handleLoadedMetaData = () => {
