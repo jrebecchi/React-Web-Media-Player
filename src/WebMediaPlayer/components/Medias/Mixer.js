@@ -365,7 +365,6 @@ class Mixer extends Component {
             this.audio.mute();
     };
 
-
     unMute = () => {
         if (this.props.hasVideo)
             this.video.unMute();
@@ -384,23 +383,23 @@ class Mixer extends Component {
         if ((this.props.hasVideo && !this.props.isVideoReady)
             || ((this.props.hasAudio && !this.props.isAudioReady) /*|| this.props.currentTime > this.audio.getDuration()*/)
             || (this.props.hasSlideshow && !this.props.isSlideshowReady)) {
-            
+
             this.props.dispatch({ type: 'LOADING' });
             console.log("isLoading");
             this.pause();
         } else {
             this.props.dispatch({ type: 'NOT_LOADING' });
             console.log("isNotLoading");
-            
             if (this.props.isPlaying) this.play();
         }
     }
 
     componentDidMount = () => {
-        console.log(this.video);
         this.handleChannelsBufferStateChange();
+        this.setVolume(this.props.volume);
+        if (this.props.isMuted) this.mute();
+        else this.unMute();
     }
-
 
     componentDidUpdate = (prevprops) => {
         if (prevprops.isAudioReady !== this.props.isAudioReady
@@ -408,7 +407,6 @@ class Mixer extends Component {
             || prevprops.isSlideshowReady !== this.props.isSlideshowReady) {
             this.handleChannelsBufferStateChange();
         }
-
 
         if (prevprops.isInitialized === false && this.props.isInitialized === true) {
             this.play();
@@ -422,6 +420,15 @@ class Mixer extends Component {
         if (prevprops.askedTime !== this.props.askedTime) {
             this.changeTime(this.props.askedTime);
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.props.askedTime } });
+        }
+
+        if (prevprops.volume !== this.props.volume) {
+            this.setVolume(this.props.volume)
+        }
+
+        if (prevprops.isMuted !== this.props.isMuted) {
+            if (this.props.isMuted) this.mute();
+            else this.unMute();
         }
 
     }
@@ -448,6 +455,8 @@ class Mixer extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        volume: state.volume,
+        isMuted: state.isMuted,
         hasVideo: state.hasVideo,
         isVideoReady: state.isVideoReady,
         hasAudio: state.hasAudio,
