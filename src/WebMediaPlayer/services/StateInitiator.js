@@ -2,7 +2,7 @@ const DEFAULT_WIDTH = 560 //560;
 const DEFAULT_HEIGHT = 315 //315;
 const DEFAULT_ALLOW_FULL_FRAME = true;
 const DEFAULT_VOLUME = 1.0;
-const DEFAULT_COLOR = 'green';
+const DEFAULT_COLOR = 'rgb(96, 157, 255)';
 
 const initSlideshowPlayerState = (options) => {
     let state = {};
