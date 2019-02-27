@@ -12,25 +12,25 @@ class ProgressBar extends Component {
 
     animateScrubberButton = (e) => {
         this.props.dispatch({ type: 'PREVENT_UNHIGHLIGHT_PROGRESS_BAR' });
-        let currentTime = this.calculateTimeFromXCoord(e.clientX);
-        this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: currentTime } });
+        let askedTime = this.calculateTimeFromXCoord(e.clientX);
+        this.props.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: askedTime } });
         document.addEventListener('mousemove', this.moveScrubberButton, true);
         document.addEventListener('mouseup', this.stopScrubberButton, true);
     };
 
     moveScrubberButton = (e) => {
         e.stopPropagation();
-        let currentTime = this.calculateTimeFromXCoord(e.clientX);
+        let askedTime = this.calculateTimeFromXCoord(e.clientX);
         this.updateSizeProgressBarDesired(e.clientX - this.progressBarDesired.getBoundingClientRect().left);
-        this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: currentTime } });
+        this.props.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: askedTime } });
     };
 
     stopScrubberButton = (e) => {
         e.stopPropagation();
         document.removeEventListener('mousemove', this.moveScrubberButton, true);
         document.removeEventListener('mouseup', this.stopScrubberButton, true);
-        let currentTime = this.calculateTimeFromXCoord(e.clientX);
-        this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: currentTime } });
+        let askedTime = this.calculateTimeFromXCoord(e.clientX);
+        this.props.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: askedTime } });
         this.props.dispatch({ type: 'ALLOW_UNHIGHLIGHT_PROGRESS_BAR' });
         this.props.dispatch({ type: 'USER_ACTIVE' });
         this.updateSizeProgressBarDesired(e.clientX - this.progressBarDesired.getBoundingClientRect().left);

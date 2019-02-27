@@ -16,7 +16,7 @@ class PlayButton extends Component {
         } else {
             this.props.dispatch({ type: 'PLAY' });
             this.props.dispatch({ type: 'READING_NOT_TERMINATED' });
-            this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: 0 } });
+            this.props.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { currentTime: 0 } });
         }
     }
 

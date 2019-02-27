@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Video from "./Channels/Video";
 import Audio from "./Channels/Audio";
 import Slideshow from "./Channels/Slideshow";
-const  MAX_DIFFERENCE_AUDIO_SLIDESHOW = 0.1; //in seconds
+const MAX_DIFFERENCE_AUDIO_SLIDESHOW = 0.1; //in seconds
 
 class Mixer extends Component {
 
@@ -210,7 +210,7 @@ class Mixer extends Component {
     }
     */
     synchronize = () => {
-        if(this.props.currentTime >= this.props.duration){
+        if (this.props.currentTime >= this.props.duration) {
             this.stop();
             this.props.dispatch({ type: 'READING_TERMINATED' });
             return;
@@ -224,16 +224,16 @@ class Mixer extends Component {
             this.play();
             return;
         }*/
-        if (this.props.hasVideo){
+        if (this.props.hasVideo) {
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.video.getCurrentTime() } });
         } else {
-            if(this.props.hasAudio){
-                if(this.audio.getDuration() > this.props.currentTime){
+            if (this.props.hasAudio) {
+                if (this.audio.getDuration() > this.props.currentTime) {
                     this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.audio.getCurrentTime() } });
                     let diff = Math.abs(this.audio.getCurrentTime() - this.slideshow.getCurrentTime());
                     if (diff > MAX_DIFFERENCE_AUDIO_SLIDESHOW)//re-synchronize audio and slideshow 
                         this.slideshow.changeTime(this.audio.getCurrentTime());
-                } else{
+                } else {
                     this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.slideshow.getCurrentTime() } });
                     this.audio.pause()
                 }
@@ -280,9 +280,9 @@ class Mixer extends Component {
             }
         }
     };*/
-    
+
     load = () => {
-        if (this.props.hasVideo){
+        if (this.props.hasVideo) {
             this.video.load(this.props.currentTime);
         } else {
             if (this.props.hasAudio)
@@ -290,9 +290,9 @@ class Mixer extends Component {
             this.slideshow.load(this.props.currentTime);
         }
     };
-    
+
     play = () => {
-        if(this.props.currentTime >= this.props.duration){
+        if (this.props.currentTime >= this.props.duration) {
             this.stop();
             this.props.dispatch({ type: 'READING_TERMINATED' });
             return;
@@ -302,21 +302,21 @@ class Mixer extends Component {
         window.clearInterval(this.timer);
         this.synchronize();
         this.timer = window.setInterval(this.synchronize, 20);
-        if (this.props.hasVideo){
+        if (this.props.hasVideo) {
             this.video.play();
         } else {
             if (this.props.hasAudio)
-                if(this.props.currentTime < this.audio.getDuration())
+                if (this.props.currentTime < this.audio.getDuration())
                     this.audio.play();
             this.slideshow.play();
         }
     };
-    
+
     pause = () => {
         window.clearInterval(this.timer);
         //this.refreshBufferState();
         //this.bufferTimer = window.setInterval(this.refreshBufferState);
-        if (this.props.hasVideo){
+        if (this.props.hasVideo) {
             this.video.pause(this.props.currentTime);
         } else {
             if (this.props.hasAudio)
@@ -325,10 +325,31 @@ class Mixer extends Component {
         }
     };
 
+    changeTime = (time) => {
+        if (this.props.currentTime >= this.props.duration) {
+            this.stop();
+            this.props.dispatch({ type: 'READING_TERMINATED' });
+            return;
+        }
+        //this.refreshBufferState();
+        //window.clearInterval(this.bufferTimer);
+        window.clearInterval(this.timer);
+        this.synchronize();
+        this.timer = window.setInterval(this.synchronize, 20);
+        if (this.props.hasVideo) {
+            this.video.changeTime(time);
+        } else {
+            if (this.props.hasAudio)
+                if (this.props.currentTime < this.audio.getDuration())
+                    this.audio.changeTime(time);
+            this.slideshow.changeTime(time);
+        }
+    };
+
     stop = () => {
         window.clearInterval(this.timer);
         //this.props.currentTime = this.props.duration;
-        if (this.props.hasVideo){
+        if (this.props.hasVideo) {
             this.video.stop();
         } else {
             if (this.props.hasAudio)
@@ -358,24 +379,51 @@ class Mixer extends Component {
         else if (this.props.hasAudio)
             this.audio.setVolume(volume);
     };
-    
 
-    componentDidUpdate = (prevprops) => {
-        if (prevprops.isInitialized === false && this.props.isInitialized === true) {
-            this.play();
-        }
-        
-        if((this.props.hasVideo && !this.props.isVideoReady)
-        || ((this.props.hasAudio && !this.props.isAudioReady) /*|| this.props.currentTime > this.audio.getDuration()*/)
-        || (this.props.hasSlideshow && !this.props.isSlideshowReady)){
+    handleChannelsBufferStateChange = () => {
+        if ((this.props.hasVideo && !this.props.isVideoReady)
+            || ((this.props.hasAudio && !this.props.isAudioReady) /*|| this.props.currentTime > this.audio.getDuration()*/)
+            || (this.props.hasSlideshow && !this.props.isSlideshowReady)) {
+            
             this.props.dispatch({ type: 'LOADING' });
             console.log("isLoading");
             this.pause();
-        } else if (this.props.isPlaying){
+        } else {
             this.props.dispatch({ type: 'NOT_LOADING' });
             console.log("isNotLoading");
+            
+            if (this.props.isPlaying) this.play();
+        }
+    }
+
+    componentDidMount = () => {
+        console.log(this.video);
+        this.handleChannelsBufferStateChange();
+    }
+
+
+    componentDidUpdate = (prevprops) => {
+        if (prevprops.isAudioReady !== this.props.isAudioReady
+            || prevprops.isVideoReady !== this.props.isVideoReady
+            || prevprops.isSlideshowReady !== this.props.isSlideshowReady) {
+            this.handleChannelsBufferStateChange();
+        }
+
+
+        if (prevprops.isInitialized === false && this.props.isInitialized === true) {
             this.play();
-        }   
+        }
+
+        if (prevprops.isPlaying !== this.props.isPlaying) {
+            if (this.props.isPlaying) this.play();
+            else this.pause();
+        }
+
+        if (prevprops.askedTime !== this.props.askedTime) {
+            this.changeTime(this.props.askedTime);
+            this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.props.askedTime } });
+        }
+
     }
 
     render = () => {
@@ -408,7 +456,8 @@ const mapStateToProps = (state) => {
         isSlideshowReady: state.isSlideshowReady,
         isInitialized: state.isInitialized,
         currentTime: state.currentTime,
-        isPlaying: state.isPlaying
+        askedTime: state.askedTime,
+        isPlaying: state.isPlaying,
     };
 };
 
@@ -420,5 +469,5 @@ Mixer play - pause - stop - changetime and synchronize channels
 
 It also decide who update the buffer state.
 
-Channels says when they can play or need to load, when need to load mixer pause the rest of the channels, when it gets ready it play agin all the channels. 
+Channels says when they can play or need to load, when need to load mixer pause the rest of the channels, when it gets ready it play agin all the channels.
 */

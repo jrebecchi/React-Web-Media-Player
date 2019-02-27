@@ -43,7 +43,7 @@ class Video extends Component {
 
     changeTime = (time) => {
         console.log("changetime video");
-        this.audio.currentTime = time;
+        this.video.currentTime = time;
     };
 
     pause = (time) => {
@@ -126,13 +126,13 @@ class Video extends Component {
     }
 
     handleWaiting = () => {
-        //console.log("waiting event");
-        //this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
+        console.log("waiting event");
+        this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
     }
 
     handleCanPlayThrough = () => {
-        //console.log("Can play through event");
-        //this.props.dispatch({ type: 'VIDEO_IS_READY' });
+        console.log("Can play through event");
+        this.props.dispatch({ type: 'VIDEO_IS_READY' });
     }
 
     handleLoadedMetaData = () => {

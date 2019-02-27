@@ -10,7 +10,6 @@ const initSlideshowPlayerState = (options) => {
     state.hasSlideshow = true;
     state.hasVideo = false;
     state.isSlideshowReady = false;
-    state.isLoading = true;
     if (options.slideshow.slice(-1)[0].endTime === undefined) {
         throw new Error("No time specified for slideshow");
     }
@@ -26,7 +25,6 @@ const initAudioSlideshowPlayerState = (options) => {
     state.hasVideo = false;
     state.isSlideshowReady = false;
     state.isAudioReady = true;
-    state.isLoading = true;
     if (options.slideshow.slice(-1)[0].endTime === undefined) {
         throw new Error("No time specified for slideshow");
     }
@@ -42,7 +40,6 @@ const initVideoPlayerState = (options) => {
     state.hasAudio = false;
     state.hasSlideshow = false;
     state.isVideoReady = true;
-    state.isLoading = true;
     state.duration = 0; 
     state.video = options.video;
     return state;
@@ -115,6 +112,7 @@ const getInitState = (options) => {
     state.thumbnail = options.thumbnail;
     state.title = options.title;
     state.link = options.link;
+    state.isLoading = true;
     state.isPlayerHighlighted = false;
     state.isInitialized = false;
     state.isLargePlayButtonHighlighted = false;
@@ -131,6 +129,7 @@ const getInitState = (options) => {
     state.allowMenuHiding = true;
     state.showCursor = true;
     state.timeLastUserAction = new Date();
+    state.askTime = 0;
     return state;
 }
 

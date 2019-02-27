@@ -48,6 +48,8 @@ class Slideshow extends Component {
         if(!this.hasEnoughBuffered(this.currentTime)){
             this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
             this.load(this.currentTime);
+        } else {
+            this.props.dispatch({ type: 'SLIDESHOW_IS_READY' });
         }
         console.log("slideshow play");
         this.load(this.currentTime)
@@ -58,15 +60,18 @@ class Slideshow extends Component {
     };
 
     changeTime = (time) => {
-        if(!this.hasEnoughBuffered(this.time)){
-            this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
-            this.load(this.time);
-        }
         console.log("slideshow changetime");
         if (time === undefined || time < 0) {
             time = 0;
         }
+        if(!this.hasEnoughBuffered(time)){
+            this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
+            this.load(time);
+        } else {
+            this.props.dispatch({ type: 'SLIDESHOW_IS_READY' });
+        }
         this.currentTime = time;
+        this.tempTime = new Date();
     };
 
     pause = (time) => {
