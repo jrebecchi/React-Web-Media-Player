@@ -235,7 +235,6 @@ class Mixer extends Component {
                         this.slideshow.changeTime(this.audio.getCurrentTime());
                 } else {
                     this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.slideshow.getCurrentTime() } });
-                    this.audio.pause()
                 }
             } else {
                 this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.slideshow.getCurrentTime() } });
@@ -306,7 +305,7 @@ class Mixer extends Component {
             this.video.play();
         } else {
             if (this.props.hasAudio)
-                if (this.props.currentTime < this.audio.getDuration())
+                //if (this.props.currentTime < this.audio.getDuration())
                     this.audio.play();
             this.slideshow.play();
         }

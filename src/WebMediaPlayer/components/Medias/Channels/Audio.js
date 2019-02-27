@@ -14,8 +14,8 @@ class Audio extends Component {
         if (this.isPlaying()) this.pause();
         //this.props.dispatch({ type: 'AUDIO_IS_NOT_READY' });
         if (startTime === undefined || startTime < 0 || startTime === 0) {
-            console.log("load");
-            this.audio.play();
+            console.log("audio load");
+            this.audio.load();
         } else {
             this.audio.currentTime = startTime;
         }
@@ -34,19 +34,19 @@ class Audio extends Component {
     };
 
     play = (time) => {
-        console.log("play");
+        console.log("audio play");
         //this.audio.currentTime = time;
         if (!this.isPlaying()) this.audio.play();
     };
 
     changeTime = (time) => {
-        console.log("changetime");
+        console.log("audio changetime");
         this.audio.currentTime = time;
     };
 
     pause = (time) => {
         if (time !== undefined) this.currentTime = time;
-        console.log("pause");
+        console.log("audio pause");
         if (this.isPlaying()) this.audio.pause();
     };
 
