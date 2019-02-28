@@ -41,6 +41,7 @@ import addImage from './actions/AddImage';
 import loading from './actions/Loading';
 import notLoading from './actions/NotLoading';
 import updateAskedTime from './actions/UpdateAskedTime'
+import updateImageDisplayed from './actions/UpdateImageDisplayed'
 
 
 class WebMediaPlayer extends Component {
@@ -59,6 +60,8 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      case 'UPDATE_IMAGE_DISPLAYED':
+        return updateImageDisplayed(state, action);
       case 'UPDATE_ASKED_TIME':
         return updateAskedTime(state, action);
       case 'NOT_LOADING':

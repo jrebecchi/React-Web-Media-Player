@@ -214,16 +214,7 @@ class Mixer extends Component {
             this.stop();
             this.props.dispatch({ type: 'READING_TERMINATED' });
             return;
-        }/*
-        else if(!this.hasEnoughBuffered() && !this.props.isLoading){
-            this.pause();
-            this.load();
-            return;
         }
-        else if(this.hasEnoughBuffered() && this.props.isLoading){
-            this.play();
-            return;
-        }*/
         if (this.props.hasVideo) {
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.video.getCurrentTime() } });
         } else {
@@ -306,7 +297,7 @@ class Mixer extends Component {
         } else {
             if (this.props.hasAudio)
                 //if (this.props.currentTime < this.audio.getDuration())
-                    this.audio.play();
+                this.audio.play();
             this.slideshow.play();
         }
     };
@@ -429,7 +420,6 @@ class Mixer extends Component {
             if (this.props.isMuted) this.mute();
             else this.unMute();
         }
-
     }
 
     render = () => {

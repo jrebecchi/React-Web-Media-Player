@@ -141,8 +141,16 @@ class Video extends Component {
     }
 
     render = () => {
+        let width, height;
+        if (this.props.isFullscreenActivated) {
+            width = window.screen.width;
+            height = window.screen.height;
+        } else {
+            width = this.props.width;
+            height = this.props.height;
+        }
         return (
-            <video width={this.props.width} ref={video => (this.video = video)} height={this.props.height} onLoadedMetadata={this.handleLoadedMetaData} onWaiting={this.handleWaiting} onCanPlayThrough={this.handleCanPlayThrough}>
+            <video width={width} ref={video => (this.video = video)} height={height} onLoadedMetadata={this.handleLoadedMetaData} onWaiting={this.handleWaiting} onCanPlayThrough={this.handleCanPlayThrough}>
                 <source src={this.props.video} />
             </video>
         );
@@ -151,6 +159,7 @@ class Video extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        isFullscreenActivated: state.isFullscreenActivated,
         isVideoReady: state.isVideoReady,
         duration: state.duration,
         video: state.video,

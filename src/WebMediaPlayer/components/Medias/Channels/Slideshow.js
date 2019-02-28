@@ -152,60 +152,32 @@ class Slideshow extends Component {
     updateView = () => {
         for (var i = 0; i < this.props.slideshow.length; ++i) {
             if (this.currentTime < this.props.slideshow[i].endTime) {
-                this.displayImage(this.props.slideshow[i]);
+                this.props.dispatch({ type: 'UPDATE_IMAGE_DISPLAYED', payload: { imageDisplayed: this.props.slideshow[i] } });
                 break;
             }
         }
     }
 
-    displayImage = (image) => {
-        let width, height;
-
-        if (image !== undefined)
-            this.imageDisplayed = image;
-        if (this.props.isFullScreenActivated) {
-            width = window.screen.width;
-            height = window.screen.height;
-        } else {
-            width = this.props.width;
-            height = this.props.height;
-        }
-        let imgWidth = this.imageDisplayed.element.width;
-        let imgHeight = this.imageDisplayed.element.height;
-        this.imageSlider.style.marginTop = "0px";
-        this.imageSlider.style.marginLeft = "0px";
-        if (imgWidth >= imgHeight) {
-            if (imgHeight / imgWidth * width <= height) {
-                this.adaptImageToWidth(width, height);
-            } else {
-                this.adaptImageToHeight(width, height);
-            }
-        } else {
-            if (imgHeight / imgWidth * width <= height) {
-                this.adaptImageToWidth(width, height);
-            } else {
-                this.adaptImageToHeight(width, height);
-            }
-        }
-        this.imageSlider.src = this.imageDisplayed.src;
-    };
-
     adaptImageToWidth = (width, height) => {
-        let imgWidth = this.imageDisplayed.element.width;
-        let imgHeight = this.imageDisplayed.element.height;
+        let imgWidth = this.props.imageDisplayed.element.width;
+        let imgHeight = this.props.imageDisplayed.element.height;
         let margin = (height - imgHeight / imgWidth * width) / 2;
-        this.imageSlider.style.marginTop = margin + "px";
-        this.imageSlider.style.width = "100%";
-        this.imageSlider.style.height = (imgHeight / imgWidth * width) + "px";
+        return {
+            marginTop: margin + "px",
+            width: "100%",
+            height: (imgHeight / imgWidth * width) + "px",
+        }
     };
 
     adaptImageToHeight = (width, height) => {
-        let imgWidth = this.imageDisplayed.element.width;
-        let imgHeight = this.imageDisplayed.element.height;
+        let imgWidth = this.props.imageDisplayed.element.width;
+        let imgHeight = this.props.imageDisplayed.element.height;
         let margin = (width - imgWidth / imgHeight * height) / 2;
-        this.imageSlider.style.marginLeft = margin + "px";
-        this.imageSlider.style.height = "100%";
-        this.imageSlider.style.width = (imgWidth / imgHeight * height) + "px";
+        return {
+            marginLeft: margin + "px",
+            height: "100%",
+            width: (imgWidth / imgHeight * height) + "px",
+        }
     };
 
     relaunchRefresh = () => {
@@ -291,14 +263,48 @@ class Slideshow extends Component {
 
 
     render = () => {
+
+        let width, height, imageSliderStyle, src;
+        if(this.props.imageDisplayed !== null){
+            if (this.props.isFullscreenActivated) {
+                width = window.screen.width;
+                height = window.screen.height;
+            } else {
+                width = this.props.width;
+                height = this.props.height;
+            }
+            let imgWidth = this.props.imageDisplayed.element.width;
+            let imgHeight = this.props.imageDisplayed.element.height;
+            
+            if (imgWidth >= imgHeight) {
+                if (imgHeight / imgWidth * width <= height) {
+                    imageSliderStyle = this.adaptImageToWidth(width, height);
+                } else {
+                    imageSliderStyle = this.adaptImageToHeight(width, height);
+                }
+            } else {
+                if (imgHeight / imgWidth * width <= height) {
+                    imageSliderStyle = this.adaptImageToWidth(width, height);
+                } else {
+                    imageSliderStyle = this.adaptImageToHeight(width, height);
+                }
+            }
+            imageSliderStyle.marginTop = "0px";
+            imageSliderStyle.marginLeft = "0px";
+            
+            src = this.props.imageDisplayed.src;
+        }
+        
         return (
-            <img ref={imageSlider => (this.imageSlider = imageSlider)} alt=""></img>
+            <img style={imageSliderStyle} src={src} ref={imageSlider => (this.imageSlider = imageSlider)} alt=""></img>
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
+        imageDisplayed:state.imageDisplayed,
+        isFullscreenActivated: state.isFullscreenActivated,
         isSlideshowReady: state.isSlideshowReady,
         slideshow: state.slideshow,
         duration: state.duration,

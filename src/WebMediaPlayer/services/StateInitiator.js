@@ -10,6 +10,7 @@ const initSlideshowPlayerState = (options) => {
     state.hasSlideshow = true;
     state.hasVideo = false;
     state.isSlideshowReady = false;
+    state.imageDisplayed= null;
     if (options.slideshow.slice(-1)[0].endTime === undefined) {
         throw new Error("No time specified for slideshow");
     }
@@ -25,6 +26,7 @@ const initAudioSlideshowPlayerState = (options) => {
     state.hasVideo = false;
     state.isSlideshowReady = false;
     state.isAudioReady = true;
+    state.imageDisplayed= null;
     if (options.slideshow.slice(-1)[0].endTime === undefined) {
         throw new Error("No time specified for slideshow");
     }
