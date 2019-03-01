@@ -132,6 +132,8 @@ const getInitState = (options) => {
     state.showCursor = true;
     state.timeLastUserAction = new Date();
     state.askTime = 0;
+    state.askNextImage= null;
+    state.askPreviousImage= null;
     return state;
 }
 

@@ -138,12 +138,14 @@ class Video extends Component {
     handleLoadedMetaData = () => {
         let duration = this.video.duration;
         this.props.dispatch({ type: 'UPDATE_DURATION', payload: { duration:  duration}  });
+        this.props.dispatch({ type: 'UPDATE_VIDEO_WIDTH', payload: { videoWidth:  this.video.videoWidth}  });
+        this.props.dispatch({ type: 'UPDATE_VIDEO_HEIGHT', payload: { videoWidth:  this.video.videoHeight}  });
     }
 
     render = () => {
         let width, height;
         if (this.props.isFullscreenActivated) {
-            width = window.screen.width;
+            width = "100%";
             height = window.screen.height;
         } else {
             width = this.props.width;

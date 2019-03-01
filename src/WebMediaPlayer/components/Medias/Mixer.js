@@ -420,6 +420,18 @@ class Mixer extends Component {
             if (this.props.isMuted) this.mute();
             else this.unMute();
         }
+
+        if (prevprops.askNextImage !== this.props.askNextImage) {
+            let time = this.slideshow.getTimeNextImage();
+            this.changeTime(time);
+            this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: time } });
+        }
+
+        if (prevprops.askPreviousImage !== this.props.askPreviousImage) {
+            let time = this.slideshow.getTimePreviousImage();
+            this.changeTime(time);
+            this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: time } });
+        }
     }
 
     render = () => {
@@ -444,6 +456,8 @@ class Mixer extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        askNextImage: state.askNextImage,
+        askPreviousImage: state.askPreviousImage,
         volume: state.volume,
         isMuted: state.isMuted,
         hasVideo: state.hasVideo,

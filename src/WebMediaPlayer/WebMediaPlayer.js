@@ -40,9 +40,10 @@ import slideshowReady from './actions/SlideshowReady';
 import addImage from './actions/AddImage';
 import loading from './actions/Loading';
 import notLoading from './actions/NotLoading';
-import updateAskedTime from './actions/UpdateAskedTime'
-import updateImageDisplayed from './actions/UpdateImageDisplayed'
-
+import updateAskedTime from './actions/UpdateAskedTime';
+import updateImageDisplayed from './actions/UpdateImageDisplayed';
+import askPreviousImage from './actions/AskPreviousImage';
+import askNextImage from './actions/AskNextImage';
 
 class WebMediaPlayer extends Component {
 
@@ -60,6 +61,12 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      //this.props.dispatch({ type: 'UPDATE_VIDEO_WIDTH', payload: { videoWidth:  this.video.videoWidth}  });
+      //this.props.dispatch({ type: 'UPDATE_VIDEO_HEIGHT', payload: { videoWidth:  this.video.videoHeight}  });
+      case "ASK_NEXT_IMAGE":
+        return askNextImage(state);
+      case "ASK_PREVIOUS_IMAGE":
+        return askPreviousImage(state);
       case 'UPDATE_IMAGE_DISPLAYED':
         return updateImageDisplayed(state, action);
       case 'UPDATE_ASKED_TIME':
