@@ -267,8 +267,8 @@ class Slideshow extends Component {
         let width, height, imageSliderStyle, src;
         if(this.props.imageDisplayed !== null){
             if (this.props.isFullscreenActivated) {
-                width = window.screen.width;
-                height = window.screen.height;
+                width = this.props.fullscreenWidth;
+                height = this.props.fullscreenHeight;
             } else {
                 width = this.props.width;
                 height = this.props.height;
@@ -288,10 +288,7 @@ class Slideshow extends Component {
                 } else {
                     imageSliderStyle = this.adaptImageToHeight(width, height);
                 }
-            }
-            imageSliderStyle.marginTop = "0px";
-            imageSliderStyle.marginLeft = "0px";
-            
+            }            
             src = this.props.imageDisplayed.src;
         }
         
@@ -303,6 +300,8 @@ class Slideshow extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        fullscreenWidth: window.innerWidth,
+        fullscreenHeight: window.innerHeight,
         imageDisplayed:state.imageDisplayed,
         isFullscreenActivated: state.isFullscreenActivated,
         isSlideshowReady: state.isSlideshowReady,

@@ -270,7 +270,7 @@ class Mixer extends Component {
             }
         }
     };*/
-
+    /*
     load = () => {
         if (this.props.hasVideo) {
             this.video.load(this.props.currentTime);
@@ -280,7 +280,7 @@ class Mixer extends Component {
             this.slideshow.load(this.props.currentTime);
         }
     };
-
+    */
     play = () => {
         if (this.props.currentTime >= this.props.duration) {
             this.stop();
@@ -348,20 +348,6 @@ class Mixer extends Component {
         }
     };
 
-    mute = () => {
-        if (this.props.hasVideo)
-            this.video.mute();
-        else if (this.props.hasAudio)
-            this.audio.mute();
-    };
-
-    unMute = () => {
-        if (this.props.hasVideo)
-            this.video.unMute();
-        else if (this.props.hasAudio)
-            this.audio.unMute();
-    };
-
     setVolume = (volume) => {
         if (this.props.hasVideo)
             this.video.setVolume(volume);
@@ -387,8 +373,6 @@ class Mixer extends Component {
     componentDidMount = () => {
         this.handleChannelsBufferStateChange();
         this.setVolume(this.props.volume);
-        if (this.props.isMuted) this.mute();
-        else this.unMute();
     }
 
     componentDidUpdate = (prevprops) => {
@@ -408,29 +392,24 @@ class Mixer extends Component {
         }
 
         if (prevprops.askedTime !== this.props.askedTime) {
-            this.changeTime(this.props.askedTime);
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.props.askedTime } });
+            this.changeTime(this.props.askedTime);
         }
 
         if (prevprops.volume !== this.props.volume) {
             this.setVolume(this.props.volume)
         }
 
-        if (prevprops.isMuted !== this.props.isMuted) {
-            if (this.props.isMuted) this.mute();
-            else this.unMute();
-        }
-
         if (prevprops.askNextImage !== this.props.askNextImage) {
             let time = this.slideshow.getTimeNextImage();
-            this.changeTime(time);
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: time } });
+            this.changeTime(time);
         }
 
         if (prevprops.askPreviousImage !== this.props.askPreviousImage) {
             let time = this.slideshow.getTimePreviousImage();
-            this.changeTime(time);
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: time } });
+            this.changeTime(time);
         }
     }
 

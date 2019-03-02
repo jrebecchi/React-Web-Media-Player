@@ -101,7 +101,6 @@ class VolumeControl extends Component {
     }
 
     render = () => {
-        console.log("call");
         let icon, volumeSlider;
         if (this.props.volume === 0) {
             icon = "volume_off";

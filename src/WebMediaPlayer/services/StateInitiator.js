@@ -10,7 +10,7 @@ const initSlideshowPlayerState = (options) => {
     state.hasSlideshow = true;
     state.hasVideo = false;
     state.isSlideshowReady = false;
-    state.imageDisplayed= null;
+    state.imageDisplayed = null;
     if (options.slideshow.slice(-1)[0].endTime === undefined) {
         throw new Error("No time specified for slideshow");
     }
@@ -26,7 +26,7 @@ const initAudioSlideshowPlayerState = (options) => {
     state.hasVideo = false;
     state.isSlideshowReady = false;
     state.isAudioReady = true;
-    state.imageDisplayed= null;
+    state.imageDisplayed = null;
     if (options.slideshow.slice(-1)[0].endTime === undefined) {
         throw new Error("No time specified for slideshow");
     }
@@ -42,7 +42,7 @@ const initVideoPlayerState = (options) => {
     state.hasAudio = false;
     state.hasSlideshow = false;
     state.isVideoReady = true;
-    state.duration = 0; 
+    state.duration = 0;
     state.video = options.video;
     return state;
 }
@@ -95,18 +95,18 @@ const getInitState = (options) => {
     } else {
         state.allowFullFrame = DEFAULT_ALLOW_FULL_FRAME;
     }
-    if (options.hasOwnProperty("currentTime")){
+    if (options.hasOwnProperty("currentTime")) {
         state.currentTime = options.currentTime;
     } else {
         state.currentTime = 0;
     }
-    if (options.hasOwnProperty("logo")){
+    if (options.hasOwnProperty("logo")) {
         state.logo = options.logo;
     }
-    if (options.hasOwnProperty("logoLink")){
+    if (options.hasOwnProperty("logoLink")) {
         state.logoLink = options.logoLink;
     }
-    if (options.hasOwnProperty("color")){
+    if (options.hasOwnProperty("color")) {
         state.color = options.color;
     } else {
         state.color = DEFAULT_COLOR;
@@ -132,8 +132,10 @@ const getInitState = (options) => {
     state.showCursor = true;
     state.timeLastUserAction = new Date();
     state.askTime = 0;
-    state.askNextImage= null;
-    state.askPreviousImage= null;
+    state.askNextImage = null;
+    state.askPreviousImage = null;
+    state.videoHeight = null;
+    state.videoWidth = null;
     return state;
 }
 

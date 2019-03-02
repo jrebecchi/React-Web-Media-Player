@@ -6,6 +6,12 @@ import logo from './img/logo.svg';
 import info from './img/info.svg';
 import heart from './img/heart.svg';
 
+/*
+Si j'ai mis pause et que c'est pret ca va lire
+
+Si ca charge et que je reviens en arrière la ou s'est chargé et que ca lit ca garde le chargement
+*/
+
 
 class App extends Component {
   render() {

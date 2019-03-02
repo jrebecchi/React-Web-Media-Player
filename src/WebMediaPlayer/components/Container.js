@@ -26,10 +26,12 @@ class Container extends Component {
     }
 
     componentDidUpdate = (prevProps) => {
-        this.handlePropsChanges(this.props);
+        if (prevProps.isFullscreen !== this.props.isFullscreen) {
+            this.handlePropsChanges(this.props);
+        }
+
         if (prevProps.timeLastUserAction !== this.props.timeLastUserAction) {
             this.waitUserToBeInactive();
-
         }
     }
 
@@ -120,7 +122,7 @@ class Container extends Component {
             width: this.props.width + "px",
             height: this.props.height + "px"
         }
-        if (this.props.isFullScreenActivated) {
+        if (this.props.isFullscreenActivated) {
             className.push("fullscreen-enabled");
             style.width = "100%";
             style.height = "100%";
@@ -139,7 +141,7 @@ class Container extends Component {
         if (!this.props.isInitialized || this.props.showMenus) {
             titleBar = <TitleBar />
         }
-        if (this.props.isInitialized && this.props.isLoading){
+        if (this.props.isInitialized && this.props.isLoading) {
             spinner = <Spinner />
         }
         return (
@@ -170,7 +172,7 @@ const mapStateToProps = (state) => {
         isPlaying: state.isPlaying,
         allowMenuHiding: state.allowMenuHiding,
         isLoading: state.isLoading,
-    
+        isFullscreenActivated: state.isFullscreenActivated,
     };
 };
 

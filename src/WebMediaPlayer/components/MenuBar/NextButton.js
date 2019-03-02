@@ -5,6 +5,7 @@ import './Button.css';
 class NextButton extends Component {
   handleClick = () => {
     this.props.dispatch({ type: 'ASK_NEXT_IMAGE' });
+    this.props.dispatch({ type: 'USER_ACTIVE' });
   }
   
   render = () => {

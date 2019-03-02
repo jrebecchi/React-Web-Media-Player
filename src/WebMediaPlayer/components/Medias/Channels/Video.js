@@ -21,7 +21,7 @@ class Video extends Component {
             this.video.currentTime = startTime;
         }
         //if (!this.updateTimer) this.updateTimer = window.setInterval(this.enoughBuffered, 100)
-        
+
     };
     /*
     enoughBuffered = () => {
@@ -36,7 +36,7 @@ class Video extends Component {
     play = (time) => {
         console.log("play video");
         //this.video.currentTime = time;
-        if (!this.isPlaying()){
+        if (!this.isPlaying()) {
             this.video.play();
         }
     };
@@ -137,22 +137,59 @@ class Video extends Component {
 
     handleLoadedMetaData = () => {
         let duration = this.video.duration;
-        this.props.dispatch({ type: 'UPDATE_DURATION', payload: { duration:  duration}  });
-        this.props.dispatch({ type: 'UPDATE_VIDEO_WIDTH', payload: { videoWidth:  this.video.videoWidth}  });
-        this.props.dispatch({ type: 'UPDATE_VIDEO_HEIGHT', payload: { videoWidth:  this.video.videoHeight}  });
+        this.props.dispatch({ type: 'UPDATE_DURATION', payload: { duration: duration } });
+        this.props.dispatch({ type: 'UPDATE_VIDEO_WIDTH', payload: { videoWidth: this.video.videoWidth } });
+        this.props.dispatch({ type: 'UPDATE_VIDEO_HEIGHT', payload: { videoHeight: this.video.videoHeight } });
     }
 
+    adaptImageToWidth = (width, ) => {
+        return {
+            marginTop: (this.props.fullscreenHeight - this.props.videoHeight / this.props.videoWidth * this.props.fullscreenWidth) / 2,
+            width: width,
+            height: (this.props.videoHeight / this.props.videoWidth * this.props.fullscreenWidth),
+        }
+    };
+
+    adaptImageToHeight = (height) => {
+        return {
+            marginLeft: (this.props.fullscreenWidth - this.props.videoWidth / this.props.videoHeight * this.props.fullscreenHeight) / 2,
+            height: height,
+            width: (this.props.videoWidth / this.props.videoHeight * this.props.fullscreenHeight),
+        }
+    };
+
     render = () => {
-        let width, height;
+        let dimensions;
         if (this.props.isFullscreenActivated) {
-            width = "100%";
-            height = window.screen.height;
+            if (this.props.videoWidth >= this.props.videoHeight) {
+                if (this.props.videoHeight / this.props.videoWidth * this.props.fullscreenWidth <= this.props.fullscreenHeight) {
+                    dimensions = this.adaptImageToWidth(this.props.fullscreenWidth);
+                } else {
+                    dimensions = this.adaptImageToHeight(this.props.fullscreenHeight);
+                }
+            } else {
+                if (this.props.videoHeight / this.props.videoWidth * this.props.fullscreenWidth <= this.props.fullscreenHeight) {
+                    dimensions = this.adaptImageToWidth(this.props.fullscreenWidth);
+                } else {
+                    dimensions = this.adaptImageToHeight(this.props.fullscreenHeight);
+                }
+            }
         } else {
-            width = this.props.width;
-            height = this.props.height;
+            dimensions = {
+                width: this.props.width,
+                height: this.props.height,
+            }
         }
         return (
-            <video width={width} ref={video => (this.video = video)} height={height} onLoadedMetadata={this.handleLoadedMetaData} onWaiting={this.handleWaiting} onCanPlayThrough={this.handleCanPlayThrough}>
+            <video
+                width={dimensions.width}
+                style={{marginLeft: dimensions.marginLeft, marginTop: dimensions.marginTop}}
+                ref={video => (this.video = video)}
+                height={dimensions.height}
+                onLoadedMetadata={this.handleLoadedMetaData}
+                onWaiting={this.handleWaiting}
+                onCanPlayThrough={this.handleCanPlayThrough}
+            >
                 <source src={this.props.video} />
             </video>
         );
@@ -161,6 +198,10 @@ class Video extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        fullscreenWidth: window.innerWidth,
+        fullscreenHeight: window.innerHeight,
+        videoHeight: state.videoHeight,
+        videoWidth: state.videoWidth,
         isFullscreenActivated: state.isFullscreenActivated,
         isVideoReady: state.isVideoReady,
         duration: state.duration,
