@@ -46,6 +46,8 @@ import askPreviousImage from './actions/AskPreviousImage';
 import askNextImage from './actions/AskNextImage';
 import updateVideoWidth from './actions/UpdateVideoWidth';
 import updateVideoHeight from './actions/UpdateVideoHeight';
+import preventMenuHiding from './actions/PreventMenuHiding';
+import allowMenuHiding from './actions/AllowMenuHiding';
 
 class WebMediaPlayer extends Component {
 
@@ -63,6 +65,10 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      case "PREVENT_MENU_HIDING":
+        return preventMenuHiding(state);
+      case "ALLOW_MENU_HIDING":
+        return allowMenuHiding(state);
       case "UPDATE_VIDEO_WIDTH":
         return updateVideoWidth(state, action);
       case "UPDATE_VIDEO_HEIGHT":

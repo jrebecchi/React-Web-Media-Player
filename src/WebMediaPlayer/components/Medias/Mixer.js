@@ -213,6 +213,8 @@ class Mixer extends Component {
         if (this.props.currentTime >= this.props.duration) {
             this.stop();
             this.props.dispatch({ type: 'READING_TERMINATED' });
+            this.props.dispatch({ type: 'PAUSE' });
+            this.props.dispatch({ type: 'SHOW_MENUS' });
             return;
         }
         if (this.props.hasVideo) {
@@ -285,8 +287,10 @@ class Mixer extends Component {
         if (this.props.currentTime >= this.props.duration) {
             this.stop();
             this.props.dispatch({ type: 'NOT_LOADING' });
+            this.props.dispatch({ type: 'PREVENT_MENU_HIDING' });
             this.props.dispatch({ type: 'PAUSE' });
             this.props.dispatch({ type: 'READING_TERMINATED' });
+            this.props.dispatch({ type: 'SHOW_MENUS' });
             return;
         }
         //this.refreshBufferState();
@@ -321,8 +325,9 @@ class Mixer extends Component {
         if (time >= this.props.duration) {
             this.stop();
             this.props.dispatch({ type: 'NOT_LOADING' });
-            //this.props.dispatch({ type: 'PAUSE' });
             this.props.dispatch({ type: 'READING_TERMINATED' });
+            this.props.dispatch({ type: 'PAUSE' });
+            this.props.dispatch({ type: 'SHOW_MENUS' });
             return;
         }
         if (this.props.isPlaying) {
@@ -402,7 +407,10 @@ class Mixer extends Component {
             this.changeTime(this.props.askedTime);
             if (this.props.isReadingTerminated) {
                 this.props.dispatch({ type: 'READING_NOT_TERMINATED' });
-                this.props.dispatch({ type: 'PLAY' });
+                if (this.props.allowUnhighlightProgressBar){
+                    this.props.dispatch({ type: 'PLAY' });
+                    this.props.dispatch({ type: 'ALLOW_MENU_HIDING' });
+                }
             }
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.props.askedTime } });
         }
@@ -464,6 +472,7 @@ const mapStateToProps = (state) => {
         isPlaying: state.isPlaying,
         duration: state.duration,
         isReadingTerminated: state.isReadingTerminated,
+        allowUnhighlightProgressBar: state.allowUnhighlightProgressBar,
     };
 };
 

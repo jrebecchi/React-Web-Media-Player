@@ -42,6 +42,7 @@ class VolumeControl extends Component {
     animateVolumeScrubberButton = (e) => {
         if (this.props.volume !== 0)
             this.props.dispatch({ type: 'SAVE_ACTUAL_VOLUME_AS_PAST_VOLUME' });
+        this.props.dispatch({ type: 'PREVENT_MENU_HIDING' });
         this.props.dispatch({ type: 'PREVENT_MOUSE_LEAVE_VOLUME_SLIDER' });
         let volume = this.calculateVolumeFromXCoord(e.clientX);
         this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: volume } });
@@ -62,6 +63,7 @@ class VolumeControl extends Component {
         let volume = this.calculateVolumeFromXCoord(e.clientX);
         this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: volume } });
         this.props.dispatch({ type: 'ALLOW_MOUSE_LEAVE_VOLUME_SLIDER' });
+        this.props.dispatch({ type: 'ALLOW_MENU_HIDING' });
         this.props.dispatch({ type: 'USER_ACTIVE' });
         if (!isInsideElement(this.spanContainer, e))
             this.props.dispatch({ type: 'HIDE_VOLUME_SLIDER' });
