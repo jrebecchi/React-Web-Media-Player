@@ -5,18 +5,17 @@ import './Button.css';
 class PlayButton extends Component {
 
     handleClick = (e) => {
+        this.props.dispatch({ type: 'USER_ACTIVE' });
         if (!this.props.isReadingTerminated){
             if(this.props.isPlaying){
                 this.props.dispatch({ type: 'PAUSE' });
-                this.props.dispatch({ type: 'USER_ACTIVE' });
             } else {
                 this.props.dispatch({ type: 'PLAY' });
-                this.props.dispatch({ type: 'USER_ACTIVE' });
             }
         } else {
-            this.props.dispatch({ type: 'PLAY' });
-            this.props.dispatch({ type: 'READING_NOT_TERMINATED' });
-            this.props.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { currentTime: 0 } });
+            //this.props.dispatch({ type: 'READING_NOT_TERMINATED' });
+            this.props.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: 0 } });
+            //this.props.dispatch({ type: 'PLAY' });
         }
     }
 

@@ -55,7 +55,7 @@ class WebMediaPlayer extends Component {
   };
 
   reducer = (state, action) => {
-    //console.log(action.type);
+    console.log(action.type);
     if (state === undefined) {
       state = getInitState(this.props);
     }

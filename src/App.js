@@ -8,8 +8,9 @@ import heart from './img/heart.svg';
 
 /*
 Si j'ai mis pause et que c'est pret ca va lire
-
+Move scrubber button should not close menu
 Si ca charge et que je reviens en arrière la ou s'est chargé et que ca lit ca garde le chargement
+Initialiser Audio slideshow et déplacer directement le scrubber button 2 seconde avant la fin bug
 */
 
 
@@ -51,7 +52,7 @@ class App extends Component {
               endTime: 8.0
             }, {
               src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide5.jpg",
-              endTime: 5000.0
+              endTime: 120.0
             }]}
           logo={{ img: logo, href: "https://google.com" }}
           buttons={[

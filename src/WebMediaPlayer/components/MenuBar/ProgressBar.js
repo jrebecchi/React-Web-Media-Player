@@ -13,6 +13,7 @@ class ProgressBar extends Component {
     animateScrubberButton = (e) => {
         this.props.dispatch({ type: 'PREVENT_UNHIGHLIGHT_PROGRESS_BAR' });
         let askedTime = this.calculateTimeFromXCoord(e.clientX);
+        this.props.dispatch({ type: 'USER_ACTIVE' });
         this.props.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: askedTime } });
         document.addEventListener('mousemove', this.moveScrubberButton, true);
         document.addEventListener('mouseup', this.stopScrubberButton, true);
@@ -22,6 +23,7 @@ class ProgressBar extends Component {
         e.stopPropagation();
         let askedTime = this.calculateTimeFromXCoord(e.clientX);
         this.updateSizeProgressBarDesired(e.clientX - this.progressBarDesired.getBoundingClientRect().left);
+        this.props.dispatch({ type: 'USER_ACTIVE' });
         this.props.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: askedTime } });
     };
 
@@ -41,13 +43,10 @@ class ProgressBar extends Component {
     calculateTimeFromXCoord = (clientX) => {
         let x = clientX - this.progressBarWrapper.getBoundingClientRect().left;
         if (x <= 0 || this.props.duration === 0) {
-            this.props.dispatch({ type: 'READING_NOT_TERMINATED' });
             return 0;
         } else if (x >= this.progressBarWrapper.clientWidth) {
-            this.props.dispatch({ type: 'READING_TERMINATED' });
             return this.props.duration;
         } else {
-            this.props.dispatch({ type: 'READING_NOT_TERMINATED' });
             return x / (this.progressBarWrapper.clientWidth) * this.props.duration;
         }
     }
@@ -116,7 +115,6 @@ const mapStateToProps = (state) => {
         currentTime: state.currentTime,
         duration: state.duration,
         progressBarLeftMargin: state.progressBarLeftMargin,
-        isReadingTerminated: state.isReadingTerminated,
         allowUnhighlightProgressBar: state.allowUnhighlightProgressBar,
         color: state.color,
     };
