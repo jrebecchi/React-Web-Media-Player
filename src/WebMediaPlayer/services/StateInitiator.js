@@ -141,6 +141,7 @@ const getInitState = (options) => {
     state.askPreviousImage = null;
     state.videoHeight = null;
     state.videoWidth = null;
+    state.timeRangeBuffered = 0;
     return state;
 }
 

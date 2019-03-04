@@ -94,6 +94,7 @@ class Video extends Component {
                 return portionEndTime
             }
         }
+        return time;
     };
 
     displayVideo = () => {

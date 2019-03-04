@@ -48,6 +48,7 @@ import updateVideoWidth from './actions/UpdateVideoWidth';
 import updateVideoHeight from './actions/UpdateVideoHeight';
 import preventMenuHiding from './actions/PreventMenuHiding';
 import allowMenuHiding from './actions/AllowMenuHiding';
+import updateTimeRangeBuffered from './actions/UpdateTimeRangeBuffered';
 
 class WebMediaPlayer extends Component {
 
@@ -57,7 +58,7 @@ class WebMediaPlayer extends Component {
   };
 
   reducer = (state, action) => {
-    console.log(action.type);
+    //console.log(action.type);
     if (state === undefined) {
       state = getInitState(this.props);
     }
@@ -65,6 +66,8 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      case "UPDATE_TIME_RANGE_BUFFERED":
+        return updateTimeRangeBuffered(state, action);
       case "PREVENT_MENU_HIDING":
         return preventMenuHiding(state);
       case "ALLOW_MENU_HIDING":

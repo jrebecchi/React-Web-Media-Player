@@ -147,6 +147,7 @@ class Slideshow extends Component {
                 return portionEndTime
             }
         }
+        return time;
     }
 
     updateView = () => {

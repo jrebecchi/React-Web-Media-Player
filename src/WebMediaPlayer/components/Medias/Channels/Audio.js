@@ -92,6 +92,7 @@ class Audio extends Component {
                 return portionEndTime
             }
         }
+        return time;
     };
 
     setVolume = (volume) => {

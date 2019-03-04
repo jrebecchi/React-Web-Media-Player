@@ -79,8 +79,9 @@ class ProgressBar extends Component {
 
     render = () => {
 
-        let progressBarLeftMargin
+        let progressBarLeftMargin, loadedBarLeftMargin;
         if (this.props.duration > 0) progressBarLeftMargin = this.props.currentTime / this.props.duration * 100 + "%";
+        if (this.props.duration > 0) loadedBarLeftMargin = this.props.timeRangeBuffered / this.props.duration * 100 + "%";
         else progressBarLeftMargin = "0%";
         let scrubberButton, progressBarWrappper, progressBarClassName, progressBarLoadedClassName, progressBarProgressionClassName, progressBarDesiredClassName;
         if (this.props.highlightProgressBar) {
@@ -102,7 +103,7 @@ class ProgressBar extends Component {
         return (
             <div className={progressBarWrappper} ref={progressBarWrapper => (this.progressBarWrapper = progressBarWrapper)} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onMouseMove={this.handleMouseMove} onMouseDown={this.handleMouseDown}>
                 <div className={progressBarClassName}></div>
-                <div className={progressBarLoadedClassName}></div>
+                <div className={progressBarLoadedClassName} style={{ width: loadedBarLeftMargin}}></div>
                 <div className={progressBarProgressionClassName} style={{ width: progressBarLeftMargin, backgroundColor: this.props.color }}></div>
                 <div className={progressBarDesiredClassName} ref={progressBarDesired => (this.progressBarDesired = progressBarDesired)}></div>
                 {scrubberButton}
@@ -113,6 +114,7 @@ class ProgressBar extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        timeRangeBuffered: state.timeRangeBuffered,
         highlightProgressBar: state.highlightProgressBar,
         currentTime: state.currentTime,
         duration: state.duration,

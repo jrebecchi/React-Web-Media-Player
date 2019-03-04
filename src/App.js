@@ -8,7 +8,6 @@ import heart from './img/heart.svg';
 
 /*
 Si j'ai mis pause et que c'est pret ca va lire
-Move scrubber button should not close menu
 Si ca charge et que je reviens en arrière la ou s'est chargé et que ca lit ca garde le chargement
 Initialiser Audio slideshow et déplacer directement le scrubber button 2 seconde avant la fin bug
 */
