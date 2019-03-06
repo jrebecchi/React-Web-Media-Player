@@ -148,9 +148,20 @@ class Mixer extends Component {
             this.audio.setVolume(volume);
     };
 
+    hasEnoughBuffered = () => {
+        if (this.props.hasVideo) {
+            return this.props.isVideoReady;
+        } else {
+            if (this.props.hasAudio)
+                return this.props.isAudioReady && this.props.isSlideshowReady;
+            else
+                return this.props.isSlideshowReady;
+        }
+    }
+
     handleChannelsBufferStateChange = () => {
         if ((this.props.hasVideo && !this.props.isVideoReady)
-            || ((this.props.hasAudio && !this.props.isAudioReady) /*|| this.props.currentTime > this.audio.getDuration()*/)
+            || (this.props.hasAudio && !this.props.isAudioReady) /*|| this.props.currentTime > this.audio.getDuration()*/
             || (this.props.hasSlideshow && !this.props.isSlideshowReady)) {
 
             this.props.dispatch({ type: 'LOADING' });
@@ -159,7 +170,7 @@ class Mixer extends Component {
         } else {
             this.props.dispatch({ type: 'NOT_LOADING' });
             console.log("isNotLoading");
-            if (this.props.isPlaying) this.play();
+            if (this.props.isPlaying && !this.props.channelsWait) this.play();
         }
     }
 
@@ -180,7 +191,12 @@ class Mixer extends Component {
         }
 
         if (prevprops.isPlaying !== this.props.isPlaying) {
-            if (this.props.isPlaying) this.play();
+            if (!this.props.channelsWait && this.props.isPlaying && this.hasEnoughBuffered()) this.play();
+            else this.pause();
+        }
+
+        if (prevprops.channelsWait !== this.props.channelsWait) {
+            if (!this.props.channelsWait && this.props.isPlaying && this.hasEnoughBuffered()) this.play();
             else this.pause();
         }
 
@@ -238,6 +254,7 @@ class Mixer extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        channelsWait: state.channelsWait,
         timeRangeBuffered: state.timeRangeBuffered,
         askNextImage: state.askNextImage,
         askPreviousImage: state.askPreviousImage,

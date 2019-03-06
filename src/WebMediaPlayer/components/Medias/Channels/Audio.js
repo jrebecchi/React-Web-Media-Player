@@ -130,7 +130,6 @@ class Audio extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        isAudioReady: state.isAudioReady,
         duration: state.duration,
         audio: state.audio,
     };

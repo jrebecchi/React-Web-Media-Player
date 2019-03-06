@@ -10,18 +10,17 @@ import heart from './img/heart.svg';
 Si j'ai mis pause et que c'est pret ca va lire
 Si ca charge et que je reviens en arrière la ou s'est chargé et que ca lit ca garde le chargement
 Initialiser Audio slideshow et déplacer directement le scrubber button 2 seconde avant la fin bug
+Option pour réduire le volume à la fin et au début
 */
 
 
 class App extends Component {
   render() {
-
-
     return (
       <div className="App">
 
         <iframe title="fsqfdsqf" width="560" height="315" src="https://www.youtube.com/embed/aqz-KE-bpKQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+    
         <WebMediaPlayer
           title="Video Player"
           thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg"
@@ -51,7 +50,7 @@ class App extends Component {
               endTime: 8.0
             }, {
               src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide5.jpg",
-              endTime: 120.0
+              endTime: 120.0//durantion is better
             }]}
           logo={{ img: logo, href: "https://google.com" }}
           buttons={[

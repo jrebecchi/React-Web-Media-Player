@@ -11,6 +11,7 @@ class ProgressBar extends Component {
     }
 
     animateScrubberButton = (e) => {
+        this.props.dispatch({ type: 'CHANNELS_WAIT' });
         this.props.dispatch({ type: 'PREVENT_MENU_HIDING' });
         this.props.dispatch({ type: 'PREVENT_UNHIGHLIGHT_PROGRESS_BAR' });
         let askedTime = this.calculateTimeFromXCoord(e.clientX);
@@ -40,6 +41,7 @@ class ProgressBar extends Component {
         this.updateSizeProgressBarDesired(e.clientX - this.progressBarDesired.getBoundingClientRect().left);
         if (!isInsideElement(this.progressBarWrapper, e))
             this.props.dispatch({ type: 'UNHIGHTLIGHT_PROGRESS_BAR' });
+            this.props.dispatch({ type: 'CHANNELS_CONTINUE' });
     };
 
     calculateTimeFromXCoord = (clientX) => {

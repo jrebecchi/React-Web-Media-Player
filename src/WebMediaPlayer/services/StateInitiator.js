@@ -142,6 +142,7 @@ const getInitState = (options) => {
     state.videoHeight = null;
     state.videoWidth = null;
     state.timeRangeBuffered = 0;
+    state.channelsWait = false;
     return state;
 }
 

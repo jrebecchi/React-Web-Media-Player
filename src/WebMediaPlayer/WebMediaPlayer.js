@@ -49,6 +49,8 @@ import updateVideoHeight from './actions/UpdateVideoHeight';
 import preventMenuHiding from './actions/PreventMenuHiding';
 import allowMenuHiding from './actions/AllowMenuHiding';
 import updateTimeRangeBuffered from './actions/UpdateTimeRangeBuffered';
+import channelsWait from './actions/ChannelsWait';
+import channelsContinue from './actions/ChannelsContinue';
 
 class WebMediaPlayer extends Component {
 
@@ -66,6 +68,12 @@ class WebMediaPlayer extends Component {
       return state;
     }
     switch (action.type) {
+      case "CHANNELS_CONTINUE":
+      console.log("continue")
+        return channelsContinue(state);
+      case "CHANNELS_WAIT":
+      console.log("wait")
+        return channelsWait(state);
       case "UPDATE_TIME_RANGE_BUFFERED":
         return updateTimeRangeBuffered(state, action);
       case "PREVENT_MENU_HIDING":

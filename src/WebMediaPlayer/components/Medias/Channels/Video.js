@@ -204,7 +204,6 @@ const mapStateToProps = (state) => {
         videoHeight: state.videoHeight,
         videoWidth: state.videoWidth,
         isFullscreenActivated: state.isFullscreenActivated,
-        isVideoReady: state.isVideoReady,
         duration: state.duration,
         video: state.video,
         width: state.width,
