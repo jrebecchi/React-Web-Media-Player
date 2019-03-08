@@ -27,8 +27,12 @@ Dev:
 - init function where we say when to actually init the player
 - autoplay option
 - 100% test cover
+- Packager le composant en package npm (ce qui sera publié sur github)
+- faire un readme
+- avoir un serveur de démo
 
 Refactorings:
+- //enlever le reducer de WebMediaPlayer.js
 - changer option entime en duration pour slideshow
 */
 
