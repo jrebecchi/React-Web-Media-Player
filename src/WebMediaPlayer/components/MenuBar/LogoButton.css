@@ -1,6 +1,6 @@
 .logo {
     width: 50px;
-    vertical-align: baseline;
+    vertical-align: middle;
 }
 
 .logo-image {
@@ -8,7 +8,6 @@
     max-height: 80%;
     width: auto;
     height: auto;
-    vertical-align:middle;
-    padding-top: 1px;
+    margin-top: 1px;
 }
 

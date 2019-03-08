@@ -7,10 +7,24 @@ import info from './img/info.svg';
 import heart from './img/heart.svg';
 
 /*
-Si j'ai mis pause et que c'est pret ca va lire
-Si ca charge et que je reviens en arrière la ou s'est chargé et que ca lit ca garde le chargement
-Initialiser Audio slideshow et déplacer directement le scrubber button 2 seconde avant la fin bug
-Option pour réduire le volume à la fin et au début
+Bugs:
+- Si play -> Loaf -> while loading -> pause -> when video ready -> will play
+- Si ca charge et que je reviens en arrière la ou s'est chargé et que ca lit ca garde le chargement
+- Quand on passe la souris sur l'icone sound empêche la fermeture du menu en quittant le player
+- Régler problème de CSS sur IE
+- Loading animation not working on IE
+- Audio not working on IE
+- Player en mode replay quand video time length not loaded
+
+Dev:
+- Option pour réduire le volume à la fin et au début
+- Slideshow plus long que l'audio
+- adapter menu icon size au fullscreen
+- Player audio en mode vinyle
+- différente forme de bulle de play pour l'init : carré, ovale rond...
+
+Refactorings:
+- changer option entime en duration pour slideshow
 */
 
 

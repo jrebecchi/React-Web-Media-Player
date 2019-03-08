@@ -49,7 +49,7 @@ class Video extends Component {
     pause = (time) => {
         if (time !== undefined) this.currentTime = time;
         console.log("pause video");
-        if (this.isPlaying()) this.video.pause();
+        /*if (this.isPlaying()) */this.video.pause();
     };
 
     stop = () => {
