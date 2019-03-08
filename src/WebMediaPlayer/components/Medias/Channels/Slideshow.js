@@ -112,7 +112,7 @@ class Slideshow extends Component {
             if (this.props.currentTime < this.props.slideshow[i].endTime) {
                 return this.props.slideshow[i].endTime;
             }
-            if (this.props.slideshow[i].endTime === this.props.timeLength) {
+            if (this.props.slideshow[i].endTime === this.props.duration) {
                 return this.props.duration
             }
         }
