@@ -31,7 +31,6 @@ class VolumeControl extends Component {
     }
 
     handleMouseLeave = (e) => {
-        e.stopPropagation();
         if (this.props.allowMouseLeaveVolumeSlider)
             this.props.dispatch({ type: 'HIDE_VOLUME_SLIDER' });
     }
@@ -55,6 +54,7 @@ class VolumeControl extends Component {
 
     handleMouseDownVolumeBar = (e) => {
         e.stopPropagation();
+        this.props.dispatch({ type: 'USER_ACTIVE' });
         this.animateVolumeScrubberButton(e);
     }
 

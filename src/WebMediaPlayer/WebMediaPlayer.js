@@ -69,10 +69,8 @@ class WebMediaPlayer extends Component {
     }
     switch (action.type) {
       case "CHANNELS_CONTINUE":
-      console.log("continue")
         return channelsContinue(state);
       case "CHANNELS_WAIT":
-      console.log("wait")
         return channelsWait(state);
       case "UPDATE_TIME_RANGE_BUFFERED":
         return updateTimeRangeBuffered(state, action);

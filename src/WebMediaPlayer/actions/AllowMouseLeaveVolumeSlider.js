@@ -1,8 +1,8 @@
 const allowMouseLeaveVolumeSlider = (state) => {
-    return {
-        ...state,
-        allowMouseLeaveVolumeSlider: true,
-      };
+  return {
+    ...state,
+    allowMouseLeaveVolumeSlider: true,
+  };
 }
 
 export default allowMouseLeaveVolumeSlider;

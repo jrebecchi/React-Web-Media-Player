@@ -9,10 +9,10 @@ import heart from './img/heart.svg';
 /*
 Bugs:
 - //Si play -> Loaf -> while loading -> pause -> when video ready -> will play
-- //Clicking on next button when slideshow is already over, make the duration be NaN
+- //Clicking on the next button of a slideshow when it is is already over, make the duration be NaN
+- //Régler problème de CSS sur IE
+- //Quand on passe la souris sur l'icone sound empêche la fermeture du menu en quittant le player
 - Si ca charge et que je reviens en arrière la ou s'est chargé et que ca lit ca garde le chargement
-- Quand on passe la souris sur l'icone sound empêche la fermeture du menu en quittant le player
-- Régler problème de CSS sur IE
 - Loading animation not working on IE
 - Audio not working on IE
 - Player en mode replay quand video time length not loaded
@@ -23,6 +23,10 @@ Dev:
 - adapter menu icon size au fullscreen
 - Player audio en mode vinyle
 - différente forme de bulle de play pour l'init : carré, ovale rond...
+- allowfullscreen option
+- init function where we say when to actually init the player
+- autoplay option
+- 100% test cover
 
 Refactorings:
 - changer option entime en duration pour slideshow
