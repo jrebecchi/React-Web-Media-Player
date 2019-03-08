@@ -8,13 +8,14 @@ import heart from './img/heart.svg';
 
 /*
 Bugs:
-- Si play -> Loaf -> while loading -> pause -> when video ready -> will play
+- //Si play -> Loaf -> while loading -> pause -> when video ready -> will play
 - Si ca charge et que je reviens en arrière la ou s'est chargé et que ca lit ca garde le chargement
 - Quand on passe la souris sur l'icone sound empêche la fermeture du menu en quittant le player
 - Régler problème de CSS sur IE
 - Loading animation not working on IE
 - Audio not working on IE
 - Player en mode replay quand video time length not loaded
+- Clicking on next button when slideshow is already over, make the duration be NaN
 
 Dev:
 - Option pour réduire le volume à la fin et au début
