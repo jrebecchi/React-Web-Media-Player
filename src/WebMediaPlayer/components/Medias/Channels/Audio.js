@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 class Audio extends Component {
 
     isPlaying = () => {
-        return this.audio.currentTime > 0 && !this.audio.paused && !this.audio.ended && this.audio.readyState > 2;
+        return !this.audio.paused;
     }
 
     getCurrentTime = () => this.audio.currentTime;
@@ -22,21 +22,20 @@ class Audio extends Component {
         //if (!this.updateTimer) this.updateTimer = window.setInterval(this.enoughBuffered.bind(this), 100)
     };
 
-    enoughBuffered = () => {
-        /*
-        if (this.hasEnoughBuffered(this.audio.currentTime)) {
-            window.clearInterval(this.updateTimer);
-            this.updateTimer = null;
-            this.audio.removeEventListener("progress", this.enoughBuffered);
-            this.props.dispatch({ type: 'AUDIO_IS_READY' });
-        }
-        */
-    };
-
-    play = (time) => {
+    play = () => {
         console.log("audio play");
         //this.audio.currentTime = time;
-        if (!this.isPlaying()) this.audio.play();
+        if (!this.isPlaying()){
+            let playPromise = this.audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Automatic playback started!
+                }).catch(_ => {
+                    // Auto-play was prevented
+                });
+            }
+
+        }
     };
 
     changeTime = (time) => {

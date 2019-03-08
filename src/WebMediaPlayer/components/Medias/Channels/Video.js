@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 class Video extends Component {
 
     isPlaying = () => {
-        return this.video.currentTime > 0 && !this.video.paused && !this.video.ended && this.video.readyState > 2;
+        return !this.video.paused;
     }
 
     getCurrentTime = () => this.video.currentTime;
@@ -33,13 +33,20 @@ class Video extends Component {
         }
     };*/
 
-    play = (time) => {
+    play = () => {
         console.log("play video");
         //this.video.currentTime = time;
         if (!this.isPlaying()) {
-            this.video.play();
+            let playPromise = this.video.play();
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Automatic playback started!
+                }).catch(_ => {
+                    // Auto-play was prevented
+                });
+            }
         }
-    };
+    }
 
     changeTime = (time) => {
         console.log("changetime video");
@@ -49,7 +56,7 @@ class Video extends Component {
     pause = (time) => {
         if (time !== undefined) this.currentTime = time;
         console.log("pause video");
-        /*if (this.isPlaying()) */this.video.pause();
+        if (this.isPlaying()) this.video.pause();
     };
 
     stop = () => {
@@ -75,10 +82,10 @@ class Video extends Component {
             }
             minimumTimeToBeLoaded = time + MINIMUM_BUFFERED_TIME;
             if (minimumTimeToBeLoaded > this.video.duration) minimumTimeToBeLoaded = this.video.duration;
-
+ 
             if (minimumTimeToBeLoaded > this.props.duration)
                 minimumTimeToBeLoaded = this.props.duration;
-
+ 
             if (hasStartTimeBuffered && minimumTimeToBeLoaded <= endTime) {
                 return true;
             }
@@ -184,7 +191,7 @@ class Video extends Component {
         return (
             <video
                 width={dimensions.width}
-                style={{marginLeft: dimensions.marginLeft, marginTop: dimensions.marginTop}}
+                style={{ marginLeft: dimensions.marginLeft, marginTop: dimensions.marginTop }}
                 ref={video => (this.video = video)}
                 height={dimensions.height}
                 onLoadedMetadata={this.handleLoadedMetaData}
