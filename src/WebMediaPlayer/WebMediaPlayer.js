@@ -4,7 +4,7 @@ import { createStore } from 'redux';
 import { getInitState } from './services/StateInitiator';
 import Container from './components/Container';
 
-import thereducer from './reducers/Reducer'; 
+import thereducer from './reducers/Reducer';
 
 class WebMediaPlayer extends Component {
 

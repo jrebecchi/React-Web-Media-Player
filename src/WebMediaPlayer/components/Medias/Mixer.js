@@ -37,13 +37,13 @@ class Mixer extends Component {
 
     refreshBufferState = () => {
         let timeRangeBuffered;
-        if (this.props.hasVideo){
+        if (this.props.hasVideo) {
             timeRangeBuffered = this.video.timeRangeBuffered(this.props.currentTime);
         } else {
-            if(this.props.hasAudio){
+            if (this.props.hasAudio) {
                 let audioTimeRangeBuffered = this.audio.timeRangeBuffered(this.props.currentTime);
                 let slideshowTimeRangeBuffered = this.slideshow.timeRangeBuffered(this.props.currentTime);
-                if (this.audio.getDuration() < this.props.currentTime || audioTimeRangeBuffered === this.audio.getDuration()){
+                if (this.audio.getDuration() < this.props.currentTime || audioTimeRangeBuffered === this.audio.getDuration()) {
                     timeRangeBuffered = this.slideshow.timeRangeBuffered(this.props.currentTime);
                 } else {
                     timeRangeBuffered = (audioTimeRangeBuffered < slideshowTimeRangeBuffered) ? audioTimeRangeBuffered : slideshowTimeRangeBuffered;
@@ -52,12 +52,12 @@ class Mixer extends Component {
                 timeRangeBuffered = this.slideshow.timeRangeBuffered(this.props.currentTime);
             }
         }
-        if(timeRangeBuffered !== this.props.timeRangeBuffered && Math.abs(timeRangeBuffered - this.props.timeRangeBuffered) >= BUFFER_UPDATE_PRECISION){
+        if (timeRangeBuffered !== this.props.timeRangeBuffered && Math.abs(timeRangeBuffered - this.props.timeRangeBuffered) >= BUFFER_UPDATE_PRECISION) {
             console.log(timeRangeBuffered);
             this.props.dispatch({ type: 'UPDATE_TIME_RANGE_BUFFERED', payload: { timeRangeBuffered: timeRangeBuffered } });
         }
     };
-    
+
     play = () => {
         if (this.props.currentTime >= this.props.duration) {
             this.stop();
@@ -87,7 +87,7 @@ class Mixer extends Component {
 
     pause = () => {
         window.clearInterval(this.timer);
-        if(this.props.isInitialized){
+        if (this.props.isInitialized) {
             window.clearInterval(this.bufferTimer);
             this.refreshBufferState();
             this.bufferTimer = window.setInterval(this.refreshBufferState);
@@ -187,6 +187,11 @@ class Mixer extends Component {
         }
 
         if (prevprops.isInitialized === false && this.props.isInitialized === true) {
+            if (this.props.duration > 0)
+                this.play();
+        }
+
+        if (prevprops.duration === 0 && this.props.duration > 0) {
             this.play();
         }
 
@@ -205,7 +210,7 @@ class Mixer extends Component {
             this.changeTime(this.props.askedTime);
             if (this.props.isReadingTerminated) {
                 this.props.dispatch({ type: 'READING_NOT_TERMINATED' });
-                if (this.props.allowUnhighlightProgressBar){
+                if (this.props.allowUnhighlightProgressBar) {
                     this.props.dispatch({ type: 'PLAY' });
                     this.props.dispatch({ type: 'ALLOW_MENU_HIDING' });
                 }

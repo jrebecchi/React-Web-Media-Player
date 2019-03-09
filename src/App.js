@@ -12,17 +12,22 @@ Bugs:
 - //Clicking on the next button of a slideshow when it is is already over, make the duration be NaN
 - //Régler problème de CSS sur IE
 - //Quand on passe la souris sur l'icone sound empêche la fermeture du menu en quittant le player
+
 - Si ca charge et que je reviens en arrière la ou s'est chargé et que ca lit ca garde le chargement
 - Loading animation not working on IE
 - Audio not working on IE
 - Player en mode replay quand video time length not loaded
+- Video et audio ne se lancent pas
 
 Dev:
 - Option pour réduire le volume à la fin et au début
+- play/pause au click sur le container
+- cacher souris après 3 secondes
 - Slideshow plus long que l'audio
 - adapter menu icon size au fullscreen
 - Player audio en mode vinyle
 - différente forme de bulle de play pour l'init : carré, ovale rond...
+- avoir une preview quand on passe sur la progress bar avec le scrubber button
 - allowfullscreen option
 - init function where we say when to actually init the player
 - autoplay option
@@ -32,7 +37,8 @@ Dev:
 - avoir un serveur de démo
 
 Refactorings:
-- //enlever le reducer de WebMediaPlayer.js
+- //moving the reducer include in WebMediaPlayer.js in a separate file
+
 - changer option entime en duration pour slideshow
 */
 

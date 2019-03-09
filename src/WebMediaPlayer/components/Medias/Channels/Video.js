@@ -23,15 +23,6 @@ class Video extends Component {
         //if (!this.updateTimer) this.updateTimer = window.setInterval(this.enoughBuffered, 100)
 
     };
-    /*
-    enoughBuffered = () => {
-        if (this.hasEnoughBuffered(this.video.currentTime)) {
-            window.clearInterval(this.updateTimer);
-            this.updateTimer = null;
-            this.video.removeEventListener("progress", this.enoughBuffered);
-            this.props.dispatch({ type: 'VIDEO_IS_READY' });
-        }
-    };*/
 
     play = () => {
         console.log("play video");
@@ -64,34 +55,6 @@ class Video extends Component {
         if (this.isPlaying()) this.video.pause();
         this.video.currentTime = this.props.duration;
     };
-
-    /*hasEnoughBuffered = (time) => {
-        console.log("hasbufferedenough");
-        return this.props.isVideoReady;
-        if (!this.props.isVideoReady) {
-            return false;
-        }
-        for (let i = 0; i < this.video.buffered.length; i++) {
-            let startTime = this.video.buffered.start(i);
-            let endTime = this.video.buffered.end(i);
-            let hasStartTimeBuffered, minimumTimeToBeLoaded;
-            if (time >= startTime && time <= endTime) {
-                hasStartTimeBuffered = true;
-            } else {
-                hasStartTimeBuffered = false;
-            }
-            minimumTimeToBeLoaded = time + MINIMUM_BUFFERED_TIME;
-            if (minimumTimeToBeLoaded > this.video.duration) minimumTimeToBeLoaded = this.video.duration;
- 
-            if (minimumTimeToBeLoaded > this.props.duration)
-                minimumTimeToBeLoaded = this.props.duration;
- 
-            if (hasStartTimeBuffered && minimumTimeToBeLoaded <= endTime) {
-                return true;
-            }
-        }
-        return false;
-    };*/
 
     timeRangeBuffered = (time) => {
         for (let i = 0; i < this.video.buffered.length; i++) {
