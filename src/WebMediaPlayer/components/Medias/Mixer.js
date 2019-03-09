@@ -187,6 +187,7 @@ class Mixer extends Component {
         }
 
         if (prevprops.isInitialized === false && this.props.isInitialized === true) {
+            this.props.dispatch({ type: 'LOADING' });
             if (this.props.duration > 0)
                 this.play();
         }
@@ -196,12 +197,12 @@ class Mixer extends Component {
         }
 
         if (prevprops.isPlaying !== this.props.isPlaying) {
-            if (!this.props.channelsWait && this.props.isPlaying && this.hasEnoughBuffered()) this.play();
+            if (!this.props.channelsWait && this.props.isPlaying && this.hasEnoughBuffered() && this.props.duration > 0) this.play();
             else this.pause();
         }
 
         if (prevprops.channelsWait !== this.props.channelsWait) {
-            if (!this.props.channelsWait && this.props.isPlaying && this.hasEnoughBuffered()) this.play();
+            if (!this.props.channelsWait && this.props.isPlaying && this.hasEnoughBuffered() & this.props.duration > 0) this.play();
             else this.pause();
         }
 

@@ -12,11 +12,13 @@ Bugs:
 - //Clicking on the next button of a slideshow when it is is already over, make the duration be NaN
 - //Régler problème de CSS sur IE
 - //Quand on passe la souris sur l'icone sound empêche la fermeture du menu en quittant le player
+- //Player en mode replay quand video time length not loaded
+- //Si ca charge et que je reviens en arrière la ou s'est chargé et que ca lit ca garde le chargement
 
-- Si ca charge et que je reviens en arrière la ou s'est chargé et que ca lit ca garde le chargement
+
+
 - Loading animation not working on IE
 - Audio not working on IE
-- Player en mode replay quand video time length not loaded
 - Video et audio ne se lancent pas
 
 Dev:
