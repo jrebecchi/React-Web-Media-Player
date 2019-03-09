@@ -9,14 +9,20 @@ class Spinner extends Component {
     }
 
     render = () => {
-        return (
-            <div className="wmp-spinner-container" hidden={!this.props.isLoading}>
-              <div className="wmp-animate-loader">
-                <svg className="wmp-animate-loader-circular" viewBox="25 25 50 50">
-                    <circle className="wmp-animate-loader-path" cx="50" cy="50" r="20" fill="none" strokeWidth="4"></circle>
-                </svg>
-              </div>
+        return( 
+            <div className="wmp-spinner" hidden={!this.props.isLoading}>
+                <div className="wmp-spinner-container">
+                    <div className="wmp-spinner-rotator">
+                        <div className="wmp-spinner-left">
+                            <div className="wmp-spinner-circle"></div>
+                        </div>
+                        <div className="wmp-spinner-right">
+                            <div className="wmp-spinner-circle"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
         );
     }
 }
@@ -26,5 +32,5 @@ const mapStateToProps = (state) => {
         isLoading: state.isLoading
     };
 };
-  
+
 export default connect(mapStateToProps)(Spinner);

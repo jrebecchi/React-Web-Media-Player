@@ -193,7 +193,8 @@ class Mixer extends Component {
         }
 
         if (prevprops.duration === 0 && this.props.duration > 0) {
-            this.play();
+            if(this.props.isInitialized)
+                this.play();
         }
 
         if (prevprops.isPlaying !== this.props.isPlaying) {

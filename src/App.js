@@ -15,8 +15,6 @@ Bugs:
 - //Player en mode replay quand video time length not loaded
 - //Si ca charge et que je reviens en arrière la ou s'est chargé et que ca lit ca garde le chargement
 
-
-
 - Loading animation not working on IE
 - Audio not working on IE
 - Video et audio ne se lancent pas
