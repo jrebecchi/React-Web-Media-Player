@@ -188,8 +188,10 @@ class Mixer extends Component {
 
         if (prevprops.isInitialized === false && this.props.isInitialized === true) {
             this.props.dispatch({ type: 'LOADING' });
-            if (this.props.duration > 0)
+            if (this.props.duration > 0){
+                this.props.dispatch({ type: 'NOT_LOADING' });
                 this.play();
+            }
         }
 
         if (prevprops.duration === 0 && this.props.duration > 0) {
