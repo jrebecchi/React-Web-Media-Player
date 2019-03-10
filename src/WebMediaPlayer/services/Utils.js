@@ -3,4 +3,7 @@ const isInsideElement = (element,event) => {
     return element.contains(elementPointed);
 };
 
-export {isInsideElement}
+const isIE = () => !!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g);
+
+
+export {isInsideElement, isIE}

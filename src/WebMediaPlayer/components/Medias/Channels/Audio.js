@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-//const MINIMUM_BUFFERED_TIME = 1;
-
+import { isIE } from '../../../services/Utils';
 class Audio extends Component {
 
     isPlaying = () => {
@@ -9,7 +8,7 @@ class Audio extends Component {
     }
 
     getCurrentTime = () => this.audio.currentTime;
-    
+
     load = (startTime) => {
         if (this.isPlaying()) this.pause();
         //this.props.dispatch({ type: 'AUDIO_IS_NOT_READY' });
@@ -25,7 +24,7 @@ class Audio extends Component {
     play = () => {
         console.log("audio play");
         //this.audio.currentTime = time;
-        if (!this.isPlaying()){
+        if (!this.isPlaying()) {
             let playPromise = this.audio.play();
             if (playPromise !== undefined) {
                 playPromise.then(_ => {
@@ -112,17 +111,38 @@ class Audio extends Component {
 
     handleWaiting = () => {
         console.log("waiting");
-        this.props.dispatch({ type: 'AUDIO_IS_NOT_READY' });
+        if (!isIE())
+            this.props.dispatch({ type: 'AUDIO_IS_NOT_READY' });
     }
 
     handleCanPlayThrough = () => {
         console.log("Can play through");
-        this.props.dispatch({ type: 'AUDIO_IS_READY' });
+        if (!isIE())
+            this.props.dispatch({ type: 'AUDIO_IS_READY' });
+    }
+
+    handleSeeking = () => {
+        console.log("seeking");
+        if (isIE())
+            this.props.dispatch({ type: 'AUDIO_IS_NOT_READY' });
+    }
+
+    handleSeeked = () => {
+        console.log("seeked");
+        if (isIE())
+            this.props.dispatch({ type: 'AUDIO_IS_READY' });
     }
 
     render = () => {
         return (
-            <audio src={this.props.audio} ref={audio => this.audio = audio} onWaiting={this.handleWaiting} onCanPlayThrough={this.handleCanPlayThrough} />
+            <audio
+                src={this.props.audio}
+                ref={audio => this.audio = audio}
+                onWaiting={this.handleWaiting}
+                onCanPlayThrough={this.handleCanPlayThrough}
+                onSeeked={this.handleSeeked}
+                onSeeking={this.handleSeeking}
+            />
         );
     }
 }

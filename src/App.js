@@ -14,18 +14,17 @@ Bugs:
 - //Quand on passe la souris sur l'icone sound empêche la fermeture du menu en quittant le player
 - //Player en mode replay quand video time length not loaded
 - //Si ca charge et que je reviens en arrière la ou s'est chargé et que ca lit ca garde le chargement
-
-- Loading animation not working on IE
-- Audio not working on IE
-- Video et audio ne se lancent pas
+- //Loading animation not working on IE
+- //Video et audio ne se lancent pas
+- Audio & video not working on IE
 
 Dev:
-- Option pour réduire le volume à la fin et au début
 - play/pause au click sur le container
 - cacher souris après 3 secondes
 - Slideshow plus long que l'audio
 - adapter menu icon size au fullscreen
 - Player audio en mode vinyle
+- Permettre d'avoir différentes sources
 - différente forme de bulle de play pour l'init : carré, ovale rond...
 - avoir une preview quand on passe sur la progress bar avec le scrubber button
 - allowfullscreen option
@@ -35,6 +34,8 @@ Dev:
 - Packager le composant en package npm (ce qui sera publié sur github)
 - faire un readme
 - avoir un serveur de démo
+- Option pour réduire le volume à la fin et au début pour audio slideshow
+
 
 Refactorings:
 - //moving the reducer include in WebMediaPlayer.js in a separate file
@@ -93,7 +94,7 @@ class App extends Component {
           title="Audio Slideshow Player"
           link="https://google.com"
           thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg"
-          audio="https://nusid.net/audio.flac"
+          audio="https://nusid.net/audio.mp3"
           slideshow={
             [{
               src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg",

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-//const MINIMUM_BUFFERED_TIME = 1;
-
+import { isIE } from '../../../services/Utils';
 class Video extends Component {
 
     isPlaying = () => {
@@ -25,7 +24,6 @@ class Video extends Component {
     };
 
     play = () => {
-        console.log("play video");
         //this.video.currentTime = time;
         if (!this.isPlaying()) {
             let playPromise = this.video.play();
@@ -98,12 +96,14 @@ class Video extends Component {
 
     handleWaiting = () => {
         console.log("waiting event");
-        this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
+        if (!isIE())
+            this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
     }
 
     handleCanPlayThrough = () => {
         console.log("Can play through event");
-        this.props.dispatch({ type: 'VIDEO_IS_READY' });
+        if (!isIE())
+            this.props.dispatch({ type: 'VIDEO_IS_READY' });
     }
 
     handleLoadedMetaData = () => {
@@ -111,6 +111,18 @@ class Video extends Component {
         this.props.dispatch({ type: 'UPDATE_DURATION', payload: { duration: duration } });
         this.props.dispatch({ type: 'UPDATE_VIDEO_WIDTH', payload: { videoWidth: this.video.videoWidth } });
         this.props.dispatch({ type: 'UPDATE_VIDEO_HEIGHT', payload: { videoHeight: this.video.videoHeight } });
+    }
+
+    handleSeeking = () => {
+        console.log("seeking");
+        if (isIE())
+            this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
+    }
+
+    handleSeeked = () => {
+        console.log("seeked");
+        if (isIE())
+            this.props.dispatch({ type: 'VIDEO_IS_READY' });
     }
 
     adaptImageToWidth = (width, ) => {
@@ -160,6 +172,8 @@ class Video extends Component {
                 onLoadedMetadata={this.handleLoadedMetaData}
                 onWaiting={this.handleWaiting}
                 onCanPlayThrough={this.handleCanPlayThrough}
+                onSeeked={this.handleSeeked}
+                onSeeking={this.handleSeeking}
             >
                 <source src={this.props.video} />
             </video>
@@ -169,6 +183,7 @@ class Video extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        isPlaying: state.isPlaying,
         fullscreenWidth: window.innerWidth,
         fullscreenHeight: window.innerHeight,
         videoHeight: state.videoHeight,

@@ -53,7 +53,6 @@ class Mixer extends Component {
             }
         }
         if (timeRangeBuffered !== this.props.timeRangeBuffered && Math.abs(timeRangeBuffered - this.props.timeRangeBuffered) >= BUFFER_UPDATE_PRECISION) {
-            console.log(timeRangeBuffered);
             this.props.dispatch({ type: 'UPDATE_TIME_RANGE_BUFFERED', payload: { timeRangeBuffered: timeRangeBuffered } });
         }
     };

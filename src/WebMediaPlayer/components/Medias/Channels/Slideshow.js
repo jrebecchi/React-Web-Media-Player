@@ -60,7 +60,6 @@ class Slideshow extends Component {
     };
 
     changeTime = (time) => {
-        console.log("slideshow changetime");
         if (time === undefined || time < 0) {
             time = 0;
         }
