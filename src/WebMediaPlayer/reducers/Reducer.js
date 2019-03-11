@@ -86,6 +86,7 @@ const reducer = (state, action) => {
         case 'AUDIO_IS_READY':
             return audioReady(state);
         case 'VIDEO_IS_NOT_READY':
+            console.log("nott readdyyyyyyyyyyy");
             return videoNotReady(state);
         case 'VIDEO_IS_READY':
             return videoReady(state);
@@ -99,7 +100,7 @@ const reducer = (state, action) => {
             return showCursor(state);
         case 'HIDE_CURSOR':
             return hideCursor(state);
-        case 'UPDATE_CURRENT_TIME':
+        case 'UPDATE_CURRENT_TIME':   
             return updateCurrentTime(state, action);
         case 'SHOW_MENUS':
             return showMenus(state);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isIE } from '../../../services/Utils';
+const IE_IMPRECISION = 0.1;
 class Video extends Component {
 
     isPlaying = () => {
@@ -9,18 +10,10 @@ class Video extends Component {
 
     getCurrentTime = () => this.video.currentTime;
 
-    load = (startTime) => {
+    load = () => {
+        this.video.currentTime = 0;
         console.log("load video");
-        if (this.isPlaying()) this.pause();
-        //if(!this.hasEnoughBuffered(startTime)) this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
-        if ((startTime === undefined || startTime < 0 || startTime === 0) && this.props.duration === 0) {
-            //this.isLoadNotStarted = false;
-            this.video.load();
-        } else {
-            this.video.currentTime = startTime;
-        }
-        //if (!this.updateTimer) this.updateTimer = window.setInterval(this.enoughBuffered, 100)
-
+        this.video.load();
     };
 
     play = () => {
@@ -30,8 +23,8 @@ class Video extends Component {
             if (playPromise !== undefined) {
                 playPromise.then(_ => {
                     // Automatic playback started!
-                }).catch(_ => {
-                    // Auto-play was prevented
+                }).catch(e => {
+                    console.log(e);
                 });
             }
         }
@@ -102,8 +95,7 @@ class Video extends Component {
 
     handleCanPlayThrough = () => {
         console.log("Can play through event");
-        if (!isIE())
-            this.props.dispatch({ type: 'VIDEO_IS_READY' });
+        this.props.dispatch({ type: 'VIDEO_IS_READY' });
     }
 
     handleLoadedMetaData = () => {
@@ -115,7 +107,7 @@ class Video extends Component {
 
     handleSeeking = () => {
         console.log("seeking");
-        if (isIE())
+        if (isIE() && (this.video.currentTime < (this.video.duration - IE_IMPRECISION) && Math.round(this.video.currentTime*100)/100 !== 0))
             this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
     }
 
@@ -123,6 +115,12 @@ class Video extends Component {
         console.log("seeked");
         if (isIE())
             this.props.dispatch({ type: 'VIDEO_IS_READY' });
+    }
+
+    handlePlay = () => {
+        console.log("played");
+        if (isIE() && this.video.currentTime !==0)
+            this.props.dispatch({ type: 'NOT_LOADING' });
     }
 
     adaptImageToWidth = (width, ) => {
@@ -174,6 +172,7 @@ class Video extends Component {
                 onCanPlayThrough={this.handleCanPlayThrough}
                 onSeeked={this.handleSeeked}
                 onSeeking={this.handleSeeking}
+                onPlay={this.handlePlay}
             >
                 <source src={this.props.video} />
             </video>
@@ -192,7 +191,8 @@ const mapStateToProps = (state) => {
         duration: state.duration,
         video: state.video,
         width: state.width,
-        height: state.height
+        height: state.height,
+        isReadingTerminated: state.isReadingTerminated
     };
 };
 

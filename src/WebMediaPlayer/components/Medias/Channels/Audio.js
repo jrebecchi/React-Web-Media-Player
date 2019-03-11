@@ -133,6 +133,12 @@ class Audio extends Component {
             this.props.dispatch({ type: 'AUDIO_IS_READY' });
     }
 
+    handlePlay = () => {
+        console.log("played");
+        if (isIE())
+            this.props.dispatch({ type: 'NOT_LOADING' });
+    } 
+
     render = () => {
         return (
             <audio
@@ -142,6 +148,7 @@ class Audio extends Component {
                 onCanPlayThrough={this.handleCanPlayThrough}
                 onSeeked={this.handleSeeked}
                 onSeeking={this.handleSeeking}
+                onPlay={this.handlePlay}
             />
         );
     }

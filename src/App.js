@@ -16,7 +16,9 @@ Bugs:
 - //Si ca charge et que je reviens en arrière la ou s'est chargé et que ca lit ca garde le chargement
 - //Loading animation not working on IE
 - //Video et audio ne se lancent pas
-- Audio & video not working on IE
+- //Audio & video not working on IE
+- Appeler this.video.load sur IE pour tenter de relire la video
+- Slideshow can't replay on Chrome previous button when isreading terminated should change the replay arow
 
 Dev:
 - play/pause au click sur le container

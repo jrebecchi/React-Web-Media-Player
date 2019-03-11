@@ -94,7 +94,7 @@ class Slideshow extends Component {
                 if (i < 3) {
                     return 0
                 } else {
-                    return this.props.slideshow[i - 3].endTime
+                    return this.props.slideshow[i - 2].endTime
                 }
             } else if (this.props.currentTime < this.props.slideshow[i].endTime) {
                 if (i < 2) {
@@ -213,7 +213,6 @@ class Slideshow extends Component {
         This function merge the cells that are following in time
     */
     updatePortionsBuffered = () => {
-        console.log(this.buffered);
         for (var i = 0; i < this.buffered.length; i++) {
             for (var j = 0; j < this.buffered.length; j++) {
                 if (i !== j) {

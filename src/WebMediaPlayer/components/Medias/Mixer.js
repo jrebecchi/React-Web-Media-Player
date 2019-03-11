@@ -3,34 +3,52 @@ import { connect } from 'react-redux';
 import Video from "./Channels/Video";
 import Audio from "./Channels/Audio";
 import Slideshow from "./Channels/Slideshow";
+import { isIE } from '../../services/Utils';
+
 const MAX_DIFFERENCE_AUDIO_SLIDESHOW = 0.1; //in seconds
 const BUFFER_UPDATE_PRECISION = 0.1; //in seconds
+const IE_IMPRECISION = 1
 
 class Mixer extends Component {
 
     synchronize = () => {
+        if (!this.props.channelsWait) {
+            if (this.props.hasVideo) {
+                let currentTime = this.video.getCurrentTime();
+                if (currentTime <= this.video.getDuration() + IE_IMPRECISION) {
+                    this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: currentTime } });
+                } else {
+                    return;
+                }
+            } else {
+                if (this.props.hasAudio) {
+                    if (this.audio.getDuration() > this.props.currentTime) {
+                        let currentTime = this.audio.getCurrentTime();
+                        if (currentTime <= this.audio.getDuration() + IE_IMPRECISION) {
+                            this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: currentTime } });
+                            let diff = Math.abs(this.audio.getCurrentTime() - this.slideshow.getCurrentTime());
+                            if (diff > MAX_DIFFERENCE_AUDIO_SLIDESHOW)//re-synchronize audio and slideshow 
+                                this.slideshow.changeTime(this.audio.getCurrentTime());
+                        } else {
+                            return;
+                        }
+                    } else {
+                        this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.slideshow.getCurrentTime() } });
+                    }
+                } else {
+                    this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.slideshow.getCurrentTime() } });
+                }
+            }
+        }
+        if (isIE() && this.props.currentTime > 0.3) {
+            this.props.dispatch({ type: 'NOT_LOADING' });
+        }
         if (this.props.currentTime >= this.props.duration) {
             this.stop();
             this.props.dispatch({ type: 'READING_TERMINATED' });
             this.props.dispatch({ type: 'PAUSE' });
             this.props.dispatch({ type: 'SHOW_MENUS' });
             return;
-        }
-        if (this.props.hasVideo) {
-            this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.video.getCurrentTime() } });
-        } else {
-            if (this.props.hasAudio) {
-                if (this.audio.getDuration() > this.props.currentTime) {
-                    this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.audio.getCurrentTime() } });
-                    let diff = Math.abs(this.audio.getCurrentTime() - this.slideshow.getCurrentTime());
-                    if (diff > MAX_DIFFERENCE_AUDIO_SLIDESHOW)//re-synchronize audio and slideshow 
-                        this.slideshow.changeTime(this.audio.getCurrentTime());
-                } else {
-                    this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.slideshow.getCurrentTime() } });
-                }
-            } else {
-                this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.slideshow.getCurrentTime() } });
-            }
         }
         this.refreshBufferState();
     };
@@ -162,13 +180,13 @@ class Mixer extends Component {
         if ((this.props.hasVideo && !this.props.isVideoReady)
             || (this.props.hasAudio && !this.props.isAudioReady) /*|| this.props.currentTime > this.audio.getDuration()*/
             || (this.props.hasSlideshow && !this.props.isSlideshowReady)) {
-
-            this.props.dispatch({ type: 'LOADING' });
+            if (!isIE() || !this.props.hasAudio || this.props.currentTime < this.props.duration)
+                this.props.dispatch({ type: 'LOADING' });
             console.log("isLoading");
             this.pause();
         } else {
-            this.props.dispatch({ type: 'NOT_LOADING' });
-            console.log("isNotLoading");
+            if (!isIE() || !this.props.hasAudio)
+                this.props.dispatch({ type: 'NOT_LOADING' });
             if (this.props.isPlaying && !this.props.channelsWait) this.play();
         }
     }
@@ -187,14 +205,15 @@ class Mixer extends Component {
 
         if (prevprops.isInitialized === false && this.props.isInitialized === true) {
             this.props.dispatch({ type: 'LOADING' });
-            if (this.props.duration > 0){
-                this.props.dispatch({ type: 'NOT_LOADING' });
+            if (this.props.duration > 0) {
+                if (!isIE())
+                    this.props.dispatch({ type: 'NOT_LOADING' });
                 this.play();
             }
         }
 
         if (prevprops.duration === 0 && this.props.duration > 0) {
-            if(this.props.isInitialized)
+            if (this.props.isInitialized)
                 this.play();
         }
 
@@ -204,14 +223,23 @@ class Mixer extends Component {
         }
 
         if (prevprops.channelsWait !== this.props.channelsWait) {
+            if (isIE() && !this.props.channelsWait && this.props.currentTime <= (this.props.duration - IE_IMPRECISION)) {
+                this.props.dispatch({ type: 'LOADING' });
+            }
             if (!this.props.channelsWait && this.props.isPlaying && this.hasEnoughBuffered() & this.props.duration > 0) this.play();
             else this.pause();
         }
 
         if (prevprops.askedTime !== this.props.askedTime) {
+            if (this.props.duration === 0)
+                return;
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.props.askedTime } });
             this.changeTime(this.props.askedTime);
             if (this.props.isReadingTerminated) {
+                if (isIE() && this.props.hasVideo && this.props.askedTime === 0) {
+                    this.props.dispatch({ type: 'LOADING' });
+                    this.video.load();
+                }
                 this.props.dispatch({ type: 'READING_NOT_TERMINATED' });
                 if (this.props.allowUnhighlightProgressBar) {
                     this.props.dispatch({ type: 'PLAY' });
@@ -233,6 +261,8 @@ class Mixer extends Component {
         }
 
         if (prevprops.askPreviousImage !== this.props.askPreviousImage) {
+            if (this.props.isReadingTerminated)
+                this.props.dispatch({ type: 'READING_NOT_TERMINATED' });
             let time = this.slideshow.getTimePreviousImage();
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: time } });
             this.changeTime(time);
