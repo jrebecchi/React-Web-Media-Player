@@ -17,8 +17,9 @@ Bugs:
 - //Loading animation not working on IE
 - //Video et audio ne se lancent pas
 - //Audio & video not working on IE
-- Appeler this.video.load sur IE pour tenter de relire la video
-- Slideshow can't replay on Chrome previous button when isreading terminated should change the replay arow
+- //Appeler this.video.load sur IE pour tenter de relire la video
+- //Slideshow can't replay on Chrome previous button when isreading terminated should change the replay arow
+- //On IE, when reloading video, last image is wrongly redisplayed before replaying the video
 
 Dev:
 - play/pause au click sur le container
