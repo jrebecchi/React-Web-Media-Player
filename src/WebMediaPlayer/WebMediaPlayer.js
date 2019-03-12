@@ -17,7 +17,6 @@ class WebMediaPlayer extends Component {
   render() {
     return (
       <Provider store={this.store}>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <Container />
       </Provider>
     );

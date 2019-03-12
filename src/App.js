@@ -115,7 +115,6 @@ class App extends Component {
               endTime: 120.0
             }]}
           logo={{ img: bande, href: "https://google.com" }}
-          logoLink="https://google.com"
         />
       </div>
     );
