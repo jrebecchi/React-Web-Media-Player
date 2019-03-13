@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 const REFRESH_TIME_IN_MILLISECONDS = 10;
+const SPEED = 45; //45 RPM vinyl
 
 class Vinyl extends Component {
 
     constructor(props) {
         super(props);
         this.vinyl = null;
+        this.tempTime  = 0;
     };
 
     load = () => {
@@ -19,11 +21,12 @@ class Vinyl extends Component {
 
     play = () => {
         console.log("vinyl play");
-        this.load(this.currentTime)
+        this.load(this.currentTime);
+        this.tempTime = new Date();
         this.relaunchRefresh();
     };
 
-    pause = (time) => {
+    pause = () => {
         console.log("vinyl pause");
         this.stopRefresh();
     };
@@ -31,7 +34,7 @@ class Vinyl extends Component {
     stop = () => {
         console.log("vinyl stop");
         this.stopRefresh();
-        this.props.dispatch({ type: 'INIT_VINYL_POSITION' });
+        this.props.dispatch({ type: 'INIT_VINYL_ANGLE' });
     };
 
     adaptImageToWidth = (width, height) => {
@@ -71,7 +74,11 @@ class Vinyl extends Component {
     }
 
     refresh = () => {
-        this.render();
+        var now = new Date();
+        var deltaTime = (now.getTime() - this.tempTime.getTime()) / 1000;
+        this.tempTime = now;
+        vinylAngle = SPEED * 360 / 60 * deltaTime % 360;
+        this.props.dispatch({ type: 'UPDATE_VINYL_ANGLE', payload: {vinylAngle : vinylAngle}});
     };
 
     render = () => {
@@ -102,6 +109,7 @@ class Vinyl extends Component {
                 }
             }
         }
+        imageSliderStyle.transform = "rotate("+this.props.vinylAngle+"deg)"
 
         return (
             <img style={imageSliderStyle} src={this.props.vinyl} alt=""></img>
@@ -115,6 +123,7 @@ const mapStateToProps = (state) => {
         fullscreenHeight: window.innerHeight,
         isFullscreenActivated: state.isFullscreenActivated,
         vinyl: state.vinyl,
+        vinylAngle: state.vinylAngle,
         duration: state.duration,
         currentTime: state.currentTime,
         isFullScreenActivated: state.isFullScreenActivated,
