@@ -93,22 +93,32 @@ class Container extends Component {
 
     handleClick = (e) => {
         e.stopPropagation();
+        this.props.dispatch({ type: 'USER_ACTIVE' });
         if (!this.props.isInitialized) {
             this.props.dispatch({ type: 'INITIALIZE_PLAYER' });
-            this.props.dispatch({ type: 'USER_ACTIVE' });
             this.props.dispatch({ type: 'PLAY' });
+        } else {
+            if (this.props.isPlaying) {
+                this.props.dispatch({ type: 'PREVENT_MENU_HIDING' });
+                this.props.dispatch({ type: 'PAUSE' });
+            } else {
+                this.props.dispatch({ type: 'PLAY' });
+                this.props.dispatch({ type: 'ALLOW_MENU_HIDING' });
+            }
         }
     }
 
     waitUserToBeInactive = () => {
         //this.props.dispatch({ type: 'SHOW_CURSOR' });
         this.props.dispatch({ type: 'SHOW_MENUS' });
+        this.node.style.cursor = "";
         if (this.mouseStopTimer) {
             window.clearTimeout(this.mouseStopTimer);
         }
         this.mouseStopTimer = window.setTimeout(() => {
             if (this.props.allowMenuHiding && this.props.isPlaying) {
                 this.props.dispatch({ type: 'HIDE_MENUS' });
+                this.node.style.cursor = "none";
             }
             /*if (this.props.isFullScreen) {
                 this.props.dispatch({ type: 'HIDE_CURSOR' });
@@ -145,7 +155,14 @@ class Container extends Component {
             spinner = <Spinner />
         }
         return (
-            <div className={className.join(" ")} style={style} ref={node => (this.node = node)} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onMouseMoveCapture={this.handleMouseMove} onClick={this.handleClick}>
+            <div 
+                className={className.join(" ")} 
+                style={style} ref={node => (this.node = node)} 
+                onMouseEnter={this.handleMouseEnter} 
+                onMouseLeave={this.handleMouseLeave} 
+                onMouseMoveCapture={this.handleMouseMove} 
+                onClick={this.handleClick}
+            >
                 {spinner}
                 {thumbnail}
                 {largePlayButton}

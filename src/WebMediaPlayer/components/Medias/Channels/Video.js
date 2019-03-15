@@ -13,7 +13,7 @@ class Video extends Component {
     reset = () => {
         this.video.currentTime = 0;
         console.log("load video");
-        //this.video.load();
+        this.video.load();
     };
 
     play = () => {

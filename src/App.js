@@ -21,11 +21,13 @@ Bugs:
 - //Slideshow can't replay on Chrome previous button when isreading terminated should change the replay arow
 
 Dev:
+- lire de l'audio sans vinyle qui tourne
 - play/pause au click sur le container
 - cacher souris après 3 secondes
 - Slideshow plus long que l'audio
 - adapter menu icon size au fullscreen
 - //Player audio en mode vinyle
+
 - Permettre d'avoir différentes sources
 - récupérer le niveau de scroll à la sortie du fullscreen pour le réappliquer
 - différente forme de bulle de play pour l'init : carré, ovale rond...
@@ -33,6 +35,7 @@ Dev:
 - allowfullscreen option
 - init function where we say when to actually init the player
 - autoplay option
+
 - 100% test cover
 - Packager le composant en package npm (ce qui sera publié sur github)
 - faire un readme

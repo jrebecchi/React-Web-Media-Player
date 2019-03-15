@@ -84,7 +84,6 @@ class Vinyl extends Component {
                     marginTop:"-"+blackHoleSize/20+"px",
                     height:""+blackHoleSize/10+"px", 
                     width:""+blackHoleSize/10+"px", 
-                    height:""+blackHoleSize/10+"px", 
                     backgroundColor:"black",
                     borderRadius:"100%",
                     position:"absolute",
