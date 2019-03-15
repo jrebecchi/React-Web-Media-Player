@@ -3,7 +3,7 @@ const DEFAULT_HEIGHT = 315 //315;
 const DEFAULT_ALLOW_FULL_FRAME = true;
 const DEFAULT_VOLUME = 1.0;
 const DEFAULT_COLOR = 'rgb(96, 157, 255)';
-const DEFAULT_VINYL_RPM = 45;
+const DEFAULT_VINYL_RPM = 33;
 
 const initSlideshowPlayerState = (options) => {
     let state = {};

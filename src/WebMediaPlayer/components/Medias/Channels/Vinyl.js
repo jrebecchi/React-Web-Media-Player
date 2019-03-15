@@ -44,6 +44,7 @@ class Vinyl extends Component {
         //let angle =90;
         let width, height
         let imageSliderStyle = {};
+        let blackHoleSize;
         if (this.vinyl !== null && this.props.isVinylReady) {
             if (this.props.isFullscreenActivated) {
                 width = this.props.fullscreenWidth;
@@ -57,14 +58,18 @@ class Vinyl extends Component {
 
             if (imgWidth >= imgHeight) {
                 if (imgHeight / imgWidth * width <= height) {
+                    blackHoleSize = width;
                     imageSliderStyle = this.adaptImageToWidth(width, height);
                 } else {
+                    blackHoleSize = height;
                     imageSliderStyle = this.adaptImageToHeight(width, height);
                 }
             } else {
                 if (imgHeight / imgWidth * width <= height) {
+                    blackHoleSize = width;
                     imageSliderStyle = this.adaptImageToWidth(width, height);
                 } else {
+                    blackHoleSize = height;
                     imageSliderStyle = this.adaptImageToHeight(width, height);
                 }
             }
@@ -75,11 +80,11 @@ class Vinyl extends Component {
         return (
             <span>
                 <div style={{
-                    marginLeft:"-"+this.props.width/20+"px",
-                    marginTop:"-"+this.props.width/20+"px",
-                    height:""+this.props.width/10+"px", 
-                    width:""+this.props.width/10+"px", 
-                    height:""+this.props.width/10+"px", 
+                    marginLeft:"-"+blackHoleSize/20+"px",
+                    marginTop:"-"+blackHoleSize/20+"px",
+                    height:""+blackHoleSize/10+"px", 
+                    width:""+blackHoleSize/10+"px", 
+                    height:""+blackHoleSize/10+"px", 
                     backgroundColor:"black",
                     borderRadius:"100%",
                     position:"absolute",

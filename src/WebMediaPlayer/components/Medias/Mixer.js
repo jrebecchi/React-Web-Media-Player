@@ -51,7 +51,7 @@ class Mixer extends Component {
         if (isIE() && this.props.currentTime > 0.3) {
             this.props.dispatch({ type: 'NOT_LOADING' });
         }
-        if (this.props.currentTime >= this.props.duration) {
+        if (this.props.currentTime >= this.props.duration && this.props.duration > 0) {
             this.stop();
             this.props.dispatch({ type: 'READING_TERMINATED' });
             this.props.dispatch({ type: 'PAUSE' });
@@ -86,7 +86,7 @@ class Mixer extends Component {
     };
 
     play = () => {
-        if (this.props.currentTime >= this.props.duration) {
+        if (this.props.currentTime >= this.props.duration && this.props.duration > 0) {
             this.stop();
             this.props.dispatch({ type: 'NOT_LOADING' });
             this.props.dispatch({ type: 'PREVENT_MENU_HIDING' });
@@ -134,7 +134,7 @@ class Mixer extends Component {
     };
 
     changeTime = (time) => {
-        if (time >= this.props.duration) {
+        if (time >= this.props.duration && this.props.duration > 0) {
             this.stop();
             this.props.dispatch({ type: 'NOT_LOADING' });
             this.props.dispatch({ type: 'READING_TERMINATED' });

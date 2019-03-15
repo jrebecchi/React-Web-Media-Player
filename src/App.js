@@ -25,7 +25,7 @@ Dev:
 - cacher souris après 3 secondes
 - Slideshow plus long que l'audio
 - adapter menu icon size au fullscreen
-- Player audio en mode vinyle
+- //Player audio en mode vinyle
 - Permettre d'avoir différentes sources
 - récupérer le niveau de scroll à la sortie du fullscreen pour le réappliquer
 - différente forme de bulle de play pour l'init : carré, ovale rond...
@@ -122,8 +122,11 @@ class App extends Component {
           height="400"
           title="Major Lazer - Thunder & Lightning"
           link="https://google.com"
-          thumbnail="https://is3-ssl.mzstatic.com/image/thumb/Music19/v4/b4/bd/47/b4bd473d-eae8-ca4a-1e1d-a585da7d33f2/mzm.kfkqosrp.jpg/268x0w.jpg"
-          vinyl={{img:"https://is3-ssl.mzstatic.com/image/thumb/Music19/v4/b4/bd/47/b4bd473d-eae8-ca4a-1e1d-a585da7d33f2/mzm.kfkqosrp.jpg/268x0w.jpg", rpm: 33}}
+          thumbnail="https://1.bp.blogspot.com/-_YpihVbzDdI/WJh6cts82ZI/AAAAAAAAAUY/JscaeB6qRlEPW0DTnoRIspFiqAlU2T9lACLcB/s1600/Peace%2BIs%2BThe%2BMission%2B%2528Extended%2529%2B-%2B2015%2B.jpg"
+          vinyl={{
+            img:"https://1.bp.blogspot.com/-_YpihVbzDdI/WJh6cts82ZI/AAAAAAAAAUY/JscaeB6qRlEPW0DTnoRIspFiqAlU2T9lACLcB/s1600/Peace%2BIs%2BThe%2BMission%2B%2528Extended%2529%2B-%2B2015%2B.jpg", 
+            rpm: 33
+          }}
           audio="https://nusid.net/audio.mp3"
         />
       </div>
