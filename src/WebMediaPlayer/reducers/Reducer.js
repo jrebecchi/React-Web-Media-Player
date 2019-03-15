@@ -46,13 +46,16 @@ import allowMenuHiding from '../actions/AllowMenuHiding';
 import updateTimeRangeBuffered from '../actions/UpdateTimeRangeBuffered';
 import channelsWait from '../actions/ChannelsWait';
 import channelsContinue from '../actions/ChannelsContinue';
+import vinylReady from '../actions/VinylReady';
 
 const reducer = (state, action) => {
-    //console.log(action.type);
+    console.log(action.type);
     if (action === undefined) {
         return state;
     }
     switch (action.type) {
+        case "VINYL_IS_READY":
+            return vinylReady(state);
         case "CHANNELS_CONTINUE":
             return channelsContinue(state);
         case "CHANNELS_WAIT":

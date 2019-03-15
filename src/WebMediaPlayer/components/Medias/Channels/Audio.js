@@ -48,7 +48,6 @@ class Audio extends Component {
         if (this.isPlaying()) this.audio.pause();
     };
 
-
     stop = () => {
         if (this.isPlaying()) this.audio.pause();
         this.audio.currentTime = this.props.duration;
@@ -137,7 +136,14 @@ class Audio extends Component {
         console.log("played");
         if (isIE())
             this.props.dispatch({ type: 'NOT_LOADING' });
-    } 
+    }
+
+    handleLoadedMetaData = () => {
+        if (this.props.hasVinyl) {
+            let duration = this.audio.duration;
+            this.props.dispatch({ type: 'UPDATE_DURATION', payload: { duration: duration } });
+        }
+    }
 
     render = () => {
         return (
@@ -149,6 +155,7 @@ class Audio extends Component {
                 onSeeked={this.handleSeeked}
                 onSeeking={this.handleSeeking}
                 onPlay={this.handlePlay}
+                onLoadedMetadata={this.handleLoadedMetaData}
             />
         );
     }
@@ -158,6 +165,7 @@ const mapStateToProps = (state) => {
     return {
         duration: state.duration,
         audio: state.audio,
+        hasVinyl: state.hasVinyl,
     };
 };
 

@@ -3,12 +3,14 @@ const DEFAULT_HEIGHT = 315 //315;
 const DEFAULT_ALLOW_FULL_FRAME = true;
 const DEFAULT_VOLUME = 1.0;
 const DEFAULT_COLOR = 'rgb(96, 157, 255)';
+const DEFAULT_VINYL_RPM = 45;
 
 const initSlideshowPlayerState = (options) => {
     let state = {};
     state.hasAudio = false;
     state.hasSlideshow = true;
     state.hasVideo = false;
+    state.hasVinyl = false;
     state.isSlideshowReady = false;
     state.imageDisplayed = null;
     if (options.slideshow.slice(-1)[0].endTime === undefined) {
@@ -24,6 +26,7 @@ const initAudioSlideshowPlayerState = (options) => {
     state.hasAudio = true;
     state.hasSlideshow = true;
     state.hasVideo = false;
+    state.hasVinyl = false;
     state.isSlideshowReady = false;
     state.isAudioReady = true;
     state.imageDisplayed = null;
@@ -41,9 +44,33 @@ const initVideoPlayerState = (options) => {
     state.hasVideo = true;
     state.hasAudio = false;
     state.hasSlideshow = false;
+    state.hasVinyl = false;
     state.isVideoReady = true;
     state.duration = 0;
     state.video = options.video;
+    return state;
+}
+
+const initAudioVinylPlayerState = (options) => {
+    let state = {};
+    state.hasAudio = true;
+    state.hasSlideshow = false;
+    state.hasVideo = false;
+    state.hasVinyl = true;
+    state.isAudioReady = true;
+    state.isVinylReady = false;
+    state.duration = 0;
+    state.audio = options.audio;
+    if (!options.vinyl.hasOwnProperty("img")) { 
+        throw new Error("Please pass an image link through the img property of the vinyl option");
+    }
+    if (options.vinyl.hasOwnProperty("rpm")) { 
+        state.rpm = options.vinyl.rpm;
+    } else {
+        state.rpm = DEFAULT_VINYL_RPM;
+    }
+    state.vinyl = options.vinyl.img;
+
     return state;
 }
 
@@ -57,6 +84,8 @@ const getInitState = (options) => {
             throw new Error("Combination impossible");
         } else if (options.hasOwnProperty("imageSequence")) {
             throw new Error("Combination impossible");
+        } else if (options.hasOwnProperty("vinyl")) {
+            throw new Error("Combination impossible");
         } else {
             state = initVideoPlayerState(options);
         }
@@ -65,8 +94,18 @@ const getInitState = (options) => {
             state = initAudioSlideshowPlayerState(options);
         } else if (options.hasOwnProperty("video")) {
             throw new Error("Combination impossible");
+        } else if (options.hasOwnProperty("vinyl")) {
+            throw new Error("Combination impossible");
         } else {
             state = initSlideshowPlayerState(options);
+        }
+    } else if (options.hasOwnProperty("vinyl")) {
+        if (options.hasOwnProperty("audio")) {
+            state = initAudioVinylPlayerState(options);
+        } else if (options.hasOwnProperty("video")) {
+            throw new Error("Combination impossible");
+        } else if (!options.hasOwnProperty("audio")) {
+            throw new Error("Combination impossible");
         }
     } else {
         throw new Error("Combination impossible");

@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-const REFRESH_TIME_IN_MILLISECONDS = 10;
-const SPEED = 45; //45 RPM vinyl
 
 class Vinyl extends Component {
 
     constructor(props) {
         super(props);
-        this.vinyl = null;
-        this.tempTime  = 0;
-    };
+        this.load();
+    }
 
     load = () => {
         this.vinyl = new Image();
@@ -18,24 +15,6 @@ class Vinyl extends Component {
         }
         this.vinyl.src = this.props.vinyl;
     }
-
-    play = () => {
-        console.log("vinyl play");
-        this.load(this.currentTime);
-        this.tempTime = new Date();
-        this.relaunchRefresh();
-    };
-
-    pause = () => {
-        console.log("vinyl pause");
-        this.stopRefresh();
-    };
-
-    stop = () => {
-        console.log("vinyl stop");
-        this.stopRefresh();
-        this.props.dispatch({ type: 'INIT_VINYL_ANGLE' });
-    };
 
     adaptImageToWidth = (width, height) => {
         let imgWidth = this.vinyl.width;
@@ -59,32 +38,13 @@ class Vinyl extends Component {
         }
     };
 
-    relaunchRefresh = () => {
-        this.stopRefresh();
-        this.launchRefresh();
-    }
-
-    launchRefresh = () => {
-        this.timerFunction = window.setInterval(this.refresh, REFRESH_TIME_IN_MILLISECONDS);
-
-    }
-
-    stopRefresh = () => {
-        window.clearInterval(this.timerFunction);
-    }
-
-    refresh = () => {
-        var now = new Date();
-        var deltaTime = (now.getTime() - this.tempTime.getTime()) / 1000;
-        this.tempTime = now;
-        vinylAngle = SPEED * 360 / 60 * deltaTime % 360;
-        this.props.dispatch({ type: 'UPDATE_VINYL_ANGLE', payload: {vinylAngle : vinylAngle}});
-    };
-
     render = () => {
-
-        let width, height, imageSliderStyle, src;
-        if (this.props.vinyl !== null) {
+        console.log()
+        let angle = this.props.rpm * 360 / 60 * this.props.currentTime;
+        //let angle =90;
+        let width, height
+        let imageSliderStyle = {};
+        if (this.vinyl !== null && this.props.isVinylReady) {
             if (this.props.isFullscreenActivated) {
                 width = this.props.fullscreenWidth;
                 height = this.props.fullscreenHeight;
@@ -109,26 +69,44 @@ class Vinyl extends Component {
                 }
             }
         }
-        imageSliderStyle.transform = "rotate("+this.props.vinylAngle+"deg)"
+        imageSliderStyle.transform = `rotate(${angle}deg)`;
+        imageSliderStyle.borderRadius = "100%"
 
         return (
-            <img style={imageSliderStyle} src={this.props.vinyl} alt=""></img>
+            <span>
+                <div style={{
+                    marginLeft:"-"+this.props.width/20+"px",
+                    marginTop:"-"+this.props.width/20+"px",
+                    height:""+this.props.width/10+"px", 
+                    width:""+this.props.width/10+"px", 
+                    height:""+this.props.width/10+"px", 
+                    backgroundColor:"black",
+                    borderRadius:"100%",
+                    position:"absolute",
+                    left: "50%",
+                    top: "50%",
+                    zIndex:"10"
+                }}></div>
+                <img style={imageSliderStyle} src={this.props.vinyl} alt=""></img>
+            </span>
+            
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
+        isInitialized: state.isInitialized,
         fullscreenWidth: window.innerWidth,
         fullscreenHeight: window.innerHeight,
         isFullscreenActivated: state.isFullscreenActivated,
         vinyl: state.vinyl,
-        vinylAngle: state.vinylAngle,
-        duration: state.duration,
+        isVinylReady: state.isVinylReady,
         currentTime: state.currentTime,
         isFullScreenActivated: state.isFullScreenActivated,
         width: state.width,
         height: state.height,
+        rpm: state.rpm,
     };
 };
 

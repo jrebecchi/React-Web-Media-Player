@@ -123,6 +123,10 @@ class Video extends Component {
             this.props.dispatch({ type: 'NOT_LOADING' });
     }
 
+    handleEnded = () => {
+        this.props.dispatch({ type: 'READING_TERMINATED' });
+    }
+
     adaptImageToWidth = (width, ) => {
         return {
             marginTop: (this.props.fullscreenHeight - this.props.videoHeight / this.props.videoWidth * this.props.fullscreenWidth) / 2,
@@ -173,6 +177,7 @@ class Video extends Component {
                 onSeeked={this.handleSeeked}
                 onSeeking={this.handleSeeking}
                 onPlay={this.handlePlay}
+                onEnded={this.handleEnded}
             >
                 <source src={this.props.video} />
             </video>

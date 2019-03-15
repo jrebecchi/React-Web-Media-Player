@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Video from "./Channels/Video";
 import Audio from "./Channels/Audio";
 import Slideshow from "./Channels/Slideshow";
+import Vinyl from "./Channels/Vinyl"
 import { isIE } from '../../services/Utils';
 
 const MAX_DIFFERENCE_AUDIO_SLIDESHOW = 0.1; //in seconds
@@ -21,7 +22,7 @@ class Mixer extends Component {
                     return;
                 }
             } else {
-                if (this.props.hasAudio) {
+                if (this.props.hasAudio && this.props.hasSlideshow) {
                     if (this.audio.getDuration() > this.props.currentTime) {
                         let currentTime = this.audio.getCurrentTime();
                         if (currentTime <= this.audio.getDuration() + IE_IMPRECISION) {
@@ -34,6 +35,13 @@ class Mixer extends Component {
                         }
                     } else {
                         this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.slideshow.getCurrentTime() } });
+                    }
+                } else if (this.props.hasAudio && this.props.hasVinyl) {
+                    let currentTime = this.audio.getCurrentTime();
+                    if (currentTime <= this.audio.getDuration() + IE_IMPRECISION) {
+                        this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: currentTime } });
+                    } else {
+                        return;
                     }
                 } else {
                     this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.slideshow.getCurrentTime() } });
@@ -58,7 +66,7 @@ class Mixer extends Component {
         if (this.props.hasVideo) {
             timeRangeBuffered = this.video.timeRangeBuffered(this.props.currentTime);
         } else {
-            if (this.props.hasAudio) {
+            if (this.props.hasAudio && this.props.hasSlideshow) {
                 let audioTimeRangeBuffered = this.audio.timeRangeBuffered(this.props.currentTime);
                 let slideshowTimeRangeBuffered = this.slideshow.timeRangeBuffered(this.props.currentTime);
                 if (this.audio.getDuration() < this.props.currentTime || audioTimeRangeBuffered === this.audio.getDuration()) {
@@ -66,6 +74,8 @@ class Mixer extends Component {
                 } else {
                     timeRangeBuffered = (audioTimeRangeBuffered < slideshowTimeRangeBuffered) ? audioTimeRangeBuffered : slideshowTimeRangeBuffered;
                 }
+            } else if (this.props.hasAudio && this.props.hasVinyl) {
+                timeRangeBuffered = this.audio.timeRangeBuffered(this.props.currentTime);
             } else {
                 timeRangeBuffered = this.slideshow.timeRangeBuffered(this.props.currentTime);
             }
@@ -92,12 +102,15 @@ class Mixer extends Component {
         window.clearInterval(this.timer);
         this.synchronize();
         this.timer = window.setInterval(this.synchronize, 20);
+
         if (this.props.hasVideo) {
             this.video.play();
-        } else {
-            if (this.props.hasAudio)
-                //if (this.props.currentTime < this.audio.getDuration())
-                this.audio.play();
+        }
+        if (this.props.hasAudio) {
+            //if (this.props.currentTime < this.audio.getDuration())
+            this.audio.play();
+        }
+        if (this.props.hasSlideshow) {
             this.slideshow.play();
         }
     };
@@ -110,11 +123,13 @@ class Mixer extends Component {
             this.bufferTimer = window.setInterval(this.refreshBufferState);
         }
         if (this.props.hasVideo) {
-            this.video.pause(this.props.currentTime);
-        } else {
-            if (this.props.hasAudio)
-                this.audio.pause(this.props.currentTime);
-            this.slideshow.pause(this.props.currentTime);
+            this.video.pause();
+        }
+        if (this.props.hasAudio) {
+            this.audio.pause();
+        }
+        if (this.props.hasSlideshow) {
+            this.slideshow.pause();
         }
     };
 
@@ -137,10 +152,11 @@ class Mixer extends Component {
         this.bufferTimer = window.setInterval(this.refreshBufferState);
         if (this.props.hasVideo) {
             this.video.changeTime(time);
-        } else {
-            if (this.props.hasAudio)
-                if (this.props.currentTime < this.audio.getDuration())
-                    this.audio.changeTime(time);
+        }
+        if (this.props.hasAudio && time < this.audio.getDuration()) {
+            this.audio.changeTime(time);
+        }
+        if (this.props.hasSlideshow) {
             this.slideshow.changeTime(time);
         }
     };
@@ -151,9 +167,11 @@ class Mixer extends Component {
         //this.props.currentTime = this.props.duration;
         if (this.props.hasVideo) {
             this.video.stop();
-        } else {
-            if (this.props.hasAudio)
-                this.audio.stop();
+        }
+        if (this.props.hasAudio) {
+            this.audio.stop();
+        }
+        if (this.props.hasSlideshow) {
             this.slideshow.stop();
         }
     };
@@ -166,20 +184,21 @@ class Mixer extends Component {
     };
 
     hasEnoughBuffered = () => {
-        if (this.props.hasVideo) {
+        if (this.props.hasVideo)
             return this.props.isVideoReady;
-        } else {
-            if (this.props.hasAudio)
-                return this.props.isAudioReady && this.props.isSlideshowReady;
-            else
-                return this.props.isSlideshowReady;
-        }
+        else if (this.props.hasAudio && this.props.hasSlideshow)
+            return this.props.isAudioReady && this.props.isSlideshowReady;
+        else if (this.props.hasAudio && this.props.hasVinyl)
+            return this.props.isAudioReady && this.props.isVinylReady;
+        else
+            return this.props.isSlideshowReady;
     }
 
     handleChannelsBufferStateChange = () => {
         if ((this.props.hasVideo && !this.props.isVideoReady)
             || (this.props.hasAudio && !this.props.isAudioReady) /*|| this.props.currentTime > this.audio.getDuration()*/
-            || (this.props.hasSlideshow && !this.props.isSlideshowReady)) {
+            || (this.props.hasSlideshow && !this.props.isSlideshowReady)
+            || (this.props.hasVinyl && !this.props.hasVinyl)) {
             if (!isIE() || !this.props.hasAudio || this.props.currentTime < this.props.duration)
                 this.props.dispatch({ type: 'LOADING' });
             console.log("isLoading");
@@ -207,7 +226,8 @@ class Mixer extends Component {
 
         if (prevprops.isAudioReady !== this.props.isAudioReady
             || prevprops.isVideoReady !== this.props.isVideoReady
-            || prevprops.isSlideshowReady !== this.props.isSlideshowReady) {
+            || prevprops.isSlideshowReady !== this.props.isSlideshowReady
+            || prevprops.isVinylReady !== this.props.isVinylReady) {
             this.handleChannelsBufferStateChange();
         }
 
@@ -272,20 +292,25 @@ class Mixer extends Component {
     }
 
     render = () => {
-        let video, audio, slideshow;
+        let video, audio, slideshow, vinyl;
         if (this.props.hasVideo) {
             video = <Video ref={video => (this.video = video)} />;
-        } else if (this.props.hasAudio) {
+        }
+        if (this.props.hasAudio) {
             audio = <Audio ref={audio => (this.audio = audio)} />;
+        }
+        if (this.props.hasSlideshow) {
             slideshow = <Slideshow ref={slideshow => (this.slideshow = slideshow)} />
-        } else if (this.props.hasSlideshow) {
-            slideshow = <Slideshow ref={slideshow => (this.slideshow = slideshow)} />
+        }
+        if (this.props.hasVinyl && this.props.isInitialized) {
+            vinyl = <Vinyl />
         }
         return (
             <div>
                 {video}
                 {audio}
                 {slideshow}
+                {vinyl}
             </div>
         );
     }
@@ -310,6 +335,8 @@ const mapStateToProps = (state) => {
         askedTime: state.askedTime,
         isPlaying: state.isPlaying,
         duration: state.duration,
+        hasVinyl: state.hasVinyl,
+        isVinylReady: state.isVinylReady,
         isReadingTerminated: state.isReadingTerminated,
         allowUnhighlightProgressBar: state.allowUnhighlightProgressBar,
     };

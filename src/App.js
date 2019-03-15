@@ -19,7 +19,6 @@ Bugs:
 - //Audio & video not working on IE
 - //Appeler this.video.load sur IE pour tenter de relire la video
 - //Slideshow can't replay on Chrome previous button when isreading terminated should change the replay arow
-- //On IE, when reloading video, last image is wrongly redisplayed before replaying the video
 
 Dev:
 - play/pause au click sur le container
@@ -28,6 +27,7 @@ Dev:
 - adapter menu icon size au fullscreen
 - Player audio en mode vinyle
 - Permettre d'avoir différentes sources
+- récupérer le niveau de scroll à la sortie du fullscreen pour le réappliquer
 - différente forme de bulle de play pour l'init : carré, ovale rond...
 - avoir une preview quand on passe sur la progress bar avec le scrubber button
 - allowfullscreen option
@@ -116,6 +116,15 @@ class App extends Component {
               endTime: 120.0
             }]}
           logo={{ img: bande, href: "https://google.com" }}
+        />
+        <WebMediaPlayer
+          width="400"
+          height="400"
+          title="Major Lazer - Thunder & Lightning"
+          link="https://google.com"
+          thumbnail="https://is3-ssl.mzstatic.com/image/thumb/Music19/v4/b4/bd/47/b4bd473d-eae8-ca4a-1e1d-a585da7d33f2/mzm.kfkqosrp.jpg/268x0w.jpg"
+          vinyl={{img:"https://is3-ssl.mzstatic.com/image/thumb/Music19/v4/b4/bd/47/b4bd473d-eae8-ca4a-1e1d-a585da7d33f2/mzm.kfkqosrp.jpg/268x0w.jpg", rpm: 33}}
+          audio="https://nusid.net/audio.mp3"
         />
       </div>
     );
