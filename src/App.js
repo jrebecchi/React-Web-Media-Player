@@ -19,9 +19,9 @@ Bugs:
 - //Audio & video not working on IE
 - //Appeler this.video.load sur IE pour tenter de relire la video
 - //Slideshow can't replay on Chrome previous button when isreading terminated should change the replay arow
-- enlever le alt du logo
+- //enlever le alt du logo
+- //Les bouton du menu bar et progress bar actionnent le play pause
 - bug au replay
-- bug changetime
 Dev:
 - //Player audio en mode vinyle
 - //play/pause au click sur le container
@@ -66,8 +66,8 @@ class App extends Component {
           video="https://nusid.net/video.mp4"
           width="560"
           height="315"
-          logo={{ img: "https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg" }}
-          color="rgb(108, 233, 6)"
+          logo={{ img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Arte-Logo.svg/1280px-Arte-Logo.svg.png", href:"http://zrte.fr" }}
+          color="rgb(222, 119, 18)"
         />
 
         <WebMediaPlayer
