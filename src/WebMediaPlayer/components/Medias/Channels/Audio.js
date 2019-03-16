@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isIE } from '../../../services/Utils';
+const FLOAT_IMPRECISION = 0.1;
+
 class Audio extends Component {
 
     isPlaying = () => {
@@ -53,34 +55,6 @@ class Audio extends Component {
         this.audio.currentTime = this.props.duration;
     };
 
-    /*hasEnoughBuffered = () => {
-        return this.props.isAudioReady;
-        
-        if (!this.props.isAudioReady) {
-            return false
-        }
-        for (let i = 0; i < this.audio.buffered.length; i++) {
-            let startTime = this.audio.buffered.start(i);
-            let endTime = this.audio.buffered.end(i);
-            let hasStartTimeBuffered, minimumTimeToBeLoaded;
-            if (time >= startTime && time <= endTime) {
-                hasStartTimeBuffered = true;
-            } else {
-                hasStartTimeBuffered = false;
-            }
-            minimumTimeToBeLoaded = time + MINIMUM_BUFFERED_TIME;
-            if (minimumTimeToBeLoaded > this.audio.duration) minimumTimeToBeLoaded = this.audio.duration;
-
-            if (minimumTimeToBeLoaded > this.props.duration)
-                minimumTimeToBeLoaded = this.props.duration;
-
-            if (hasStartTimeBuffered && minimumTimeToBeLoaded <= endTime) {
-                return true;
-            }
-        }
-        return false;
-};*/
-
     timeRangeBuffered = (time) => {
         for (let i = 0; i < this.audio.buffered.length; i++) {
             let portionStartTime = this.audio.buffered.start(i);
@@ -110,7 +84,7 @@ class Audio extends Component {
 
     handleWaiting = () => {
         console.log("waiting");
-        if (!isIE())
+        if (!isIE() && this.audio.currentTime < (this.audio.duration - FLOAT_IMPRECISION))
             this.props.dispatch({ type: 'AUDIO_IS_NOT_READY' });
     }
 

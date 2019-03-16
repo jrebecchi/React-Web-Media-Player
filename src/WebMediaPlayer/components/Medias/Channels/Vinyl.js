@@ -75,7 +75,8 @@ class Vinyl extends Component {
             }
         }
         imageSliderStyle.transform = `rotate(${angle}deg)`;
-        imageSliderStyle.borderRadius = "100%"
+        imageSliderStyle.borderRadius = "100%";
+        imageSliderStyle.overflow = "hidden";
 
         return (
             <span>

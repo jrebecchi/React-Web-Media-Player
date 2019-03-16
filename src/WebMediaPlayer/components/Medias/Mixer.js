@@ -9,6 +9,7 @@ import { isIE } from '../../services/Utils';
 const MAX_DIFFERENCE_AUDIO_SLIDESHOW = 0.1; //in seconds
 const BUFFER_UPDATE_PRECISION = 0.1; //in seconds
 const IE_IMPRECISION = 1
+const ASKED_TIME_TREATED = "isTreated";
 
 class Mixer extends Component {
 
@@ -258,9 +259,7 @@ class Mixer extends Component {
             else this.pause();
         }
 
-        if (prevprops.askedTime !== this.props.askedTime) {
-            if (this.props.duration === 0)
-                return;
+        if (prevprops.askedTime !== this.props.askedTime && this.props.duration !== 0 && this.props.askedTime !== ASKED_TIME_TREATED) {
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.props.askedTime } });
             this.changeTime(this.props.askedTime);
             if (this.props.isReadingTerminated) {
@@ -275,6 +274,7 @@ class Mixer extends Component {
                 }
             }
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.props.askedTime } });
+            this.props.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: ASKED_TIME_TREATED } });
         }
 
         if (prevprops.volume !== this.props.volume) {
@@ -306,7 +306,7 @@ class Mixer extends Component {
             vinyl = <Vinyl />
         }
         return (
-            <div>
+            <div style={{overflow: "hidden"}}>
                 {video}
                 {audio}
                 {slideshow}

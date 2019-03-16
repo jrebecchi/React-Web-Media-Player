@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isIE } from '../../../services/Utils';
-const IE_IMPRECISION = 0.1;
+const FLOAT_IMPRECISION = 0.1;
 class Video extends Component {
 
     isPlaying = () => {
@@ -89,7 +89,7 @@ class Video extends Component {
 
     handleWaiting = () => {
         console.log("waiting event");
-        if (!isIE())
+        if (!isIE() && this.video.currentTime < (this.video.duration - FLOAT_IMPRECISION))
             this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
     }
 
@@ -107,7 +107,7 @@ class Video extends Component {
 
     handleSeeking = () => {
         console.log("seeking");
-        if (isIE() && (this.video.currentTime < (this.video.duration - IE_IMPRECISION) && Math.round(this.video.currentTime*100)/100 !== 0))
+        if (isIE() && (this.video.currentTime < (this.video.duration - FLOAT_IMPRECISION) && Math.round(this.video.currentTime*100)/100 !== 0))
             this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
     }
 
@@ -122,10 +122,11 @@ class Video extends Component {
         if (isIE() && this.video.currentTime !==0)
             this.props.dispatch({ type: 'NOT_LOADING' });
     }
-
+    /*
     handleEnded = () => {
         this.props.dispatch({ type: 'READING_TERMINATED' });
-    }
+        this.props.dispatch({ type: 'NOT_LOADING' });
+    }*/
 
     adaptImageToWidth = (width, ) => {
         return {

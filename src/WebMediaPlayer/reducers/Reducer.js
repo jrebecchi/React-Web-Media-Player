@@ -49,7 +49,7 @@ import channelsContinue from '../actions/ChannelsContinue';
 import vinylReady from '../actions/VinylReady';
 
 const reducer = (state, action) => {
-    console.log(action.type);
+    //console.log(action.type);
     if (action === undefined) {
         return state;
     }
@@ -89,7 +89,6 @@ const reducer = (state, action) => {
         case 'AUDIO_IS_READY':
             return audioReady(state);
         case 'VIDEO_IS_NOT_READY':
-            console.log("nott readdyyyyyyyyyyy");
             return videoNotReady(state);
         case 'VIDEO_IS_READY':
             return videoReady(state);
