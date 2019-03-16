@@ -13,6 +13,10 @@ import Button from "./Button";
 
 class MenuBar extends Component {
 
+    handleClick = (e) => {
+        e.stopPropagation();
+    }
+
     render = () => {
         let volumeControl, previousButton, nextButton, logo
         let buttons = [];
@@ -35,7 +39,7 @@ class MenuBar extends Component {
                 <div className="wmp-bottom-shading"></div>
                 <div className="wmp-menu-bar-offset-left"></div>
                 <div className="wmp-menu-bar-offset-right"></div>
-                <div className="wmp-menu-bar">
+                <div className="wmp-menu-bar" onClick={this.handleClick}>
                     <div className="wmp-tool-constainer">
                         <div className="wmp-tool-constainer-left">
                             <PlayButton />

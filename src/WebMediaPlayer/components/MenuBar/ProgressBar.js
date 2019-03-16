@@ -68,6 +68,10 @@ class ProgressBar extends Component {
         this.updateSizeProgressBarDesired(0);
     }
 
+    handleClick = (e) => {
+        e.stopPropagation();
+    }
+
     handleMouseMove = (e) => {
         e.stopPropagation();
         this.updateSizeProgressBarDesired(e.clientX - this.progressBarDesired.getBoundingClientRect().left);
@@ -103,7 +107,7 @@ class ProgressBar extends Component {
         }
 
         return (
-            <div className={progressBarWrappper} ref={progressBarWrapper => (this.progressBarWrapper = progressBarWrapper)} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onMouseMove={this.handleMouseMove} onMouseDown={this.handleMouseDown}>
+            <div className={progressBarWrappper} ref={progressBarWrapper => (this.progressBarWrapper = progressBarWrapper)} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave} onMouseMove={this.handleMouseMove} onMouseDown={this.handleMouseDown} onClick={this.handleClick}>
                 <div className={progressBarClassName}></div>
                 <div className={progressBarLoadedClassName} style={{ width: loadedBarLeftMargin}}></div>
                 <div className={progressBarProgressionClassName} style={{ width: progressBarLeftMargin, backgroundColor: this.props.color }}></div>

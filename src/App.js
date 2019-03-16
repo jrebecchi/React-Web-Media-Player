@@ -19,14 +19,20 @@ Bugs:
 - //Audio & video not working on IE
 - //Appeler this.video.load sur IE pour tenter de relire la video
 - //Slideshow can't replay on Chrome previous button when isreading terminated should change the replay arow
-
+- enlever le alt du logo
+- bug au replay
+- bug changetime
 Dev:
-- lire de l'audio sans vinyle qui tourne
-- play/pause au click sur le container
-- cacher souris après 3 secondes
+- //Player audio en mode vinyle
+- //play/pause au click sur le container
+- //cacher souris après 3 secondes
 - Slideshow plus long que l'audio
 - adapter menu icon size au fullscreen
-- //Player audio en mode vinyle
+- lire de l'audio sans vinyle qui tourne
+
+- Packager le composant en package npm (ce qui sera publié sur github)
+- faire un readme
+- avoir un serveur de démo
 
 - Permettre d'avoir différentes sources
 - récupérer le niveau de scroll à la sortie du fullscreen pour le réappliquer
@@ -37,9 +43,6 @@ Dev:
 - autoplay option
 
 - 100% test cover
-- Packager le composant en package npm (ce qui sera publié sur github)
-- faire un readme
-- avoir un serveur de démo
 - Option pour réduire le volume à la fin et au début pour audio slideshow
 
 
@@ -70,22 +73,22 @@ class App extends Component {
         <WebMediaPlayer
           title="Slideshow Player"
           link="https://google.com"
-          thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg"
+          thumbnail="https://nusid.net/slide6.jpg"
           slideshow={
             [{
-              src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg",
+              src: "https://nusid.net/slide1.jpg",
               endTime: 2.0
             }, {
-              src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide2.jpg",
+              src: "https://nusid.net/slide2.jpg",
               endTime: 4.0
             }, {
-              src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide3.jpg",
+              src: "https://nusid.net/slide3.jpg",
               endTime: 6.0
             }, {
-              src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide455.jpg",
+              src: "https://nusid.net/slide4.jpg",
               endTime: 8.0
             }, {
-              src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide5.jpg",
+              src: "https://nusid.net/slide5.jpg",
               endTime: 120.0//durantion is better
             }]}
           logo={{ img: logo, href: "https://google.com" }}
@@ -99,24 +102,24 @@ class App extends Component {
         <WebMediaPlayer
           title="Audio Slideshow Player"
           link="https://google.com"
-          thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg"
+          thumbnail="https://nusid.net/slide1.jpg"
           audio="https://nusid.net/audio.mp3"
           slideshow={
             [{
-              src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide1.jpg",
+              src: "https://nusid.net/slide1.jpg",
               endTime: 2.0
             }, {
-              src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide2.jpg",
+              src: "https://nusid.net/slide2.jpg",
               endTime: 4.0
             }, {
-              src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide3.jpg",
+              src: "https://nusid.net/slide3.jpg",
               endTime: 6.0
             }, {
-              src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide455.jpg",
+              src: "https://nusid.net/slide4.jpg",
               endTime: 8.0
             }, {
-              src: "https://slideshowexemple1-djlttrqvkb.now.sh/slide5.jpg",
-              endTime: 120.0
+              src: "https://nusid.net/slide5.jpg",
+              endTime: 120.0//durantion is better
             }]}
           logo={{ img: bande, href: "https://google.com" }}
         />

@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import './TitleBar.css';
 
 class TitleBar extends Component {
+    handleClick = (e) => {
+        e.stopPropagation();
+    }
 
     render = () => {
         let title
@@ -19,7 +22,7 @@ class TitleBar extends Component {
             </div>
         */
         return (
-            <div className="wmp-title-container">
+            <div className="wmp-title-container" onClick={this.handleClick}>
                 {title}
                 <div className="wmp-top-shading"></div>
             </div>
