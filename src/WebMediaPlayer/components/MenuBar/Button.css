@@ -5,11 +5,10 @@
     height: 36px;
     vertical-align: middle;
     padding-right: 4px;
-    margin-bottom: -4px;
 }
 
 .logo-padding-small { 
-    padding-top: 1px;
+    padding-bottom: 1px;
 }
 
 .logo-padding-medium { 

@@ -28,8 +28,8 @@ Dev:
 - //play/pause au click sur le container
 - //cacher souris après 3 secondes
 - //lire de l'audio sans vinyle qui tourne
-- Slideshow plus long que l'audio
 - adapter menu icon size au fullscreen
+- Slideshow plus long que l'audio
 
 - Packager le composant en package npm (ce qui sera publié sur github)
 - faire un readme
