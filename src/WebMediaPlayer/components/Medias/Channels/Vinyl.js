@@ -39,12 +39,9 @@ class Vinyl extends Component {
     };
 
     render = () => {
-        console.log()
-        let angle = this.props.rpm * 360 / 60 * this.props.currentTime;
-        //let angle =90;
-        let width, height
+        let width, height;
         let imageSliderStyle = {};
-        let blackHoleSize;
+        let blackHole, blackHoleSize;
         if (this.vinyl !== null && this.props.isVinylReady) {
             if (this.props.isFullscreenActivated) {
                 width = this.props.fullscreenWidth;
@@ -74,27 +71,33 @@ class Vinyl extends Component {
                 }
             }
         }
-        imageSliderStyle.transform = `rotate(${angle}deg)`;
-        imageSliderStyle.borderRadius = "100%";
-        imageSliderStyle.overflow = "hidden";
+        if (this.props.rpm !== 0) {
+            let angle = this.props.rpm * 360 / 60 * this.props.currentTime;
+            imageSliderStyle.transform = `rotate(${angle}deg)`;
+            imageSliderStyle.borderRadius = "100%";
+            imageSliderStyle.overflow = "hidden";
+            blackHole = (
+                <div style={{
+                    marginLeft: "-" + blackHoleSize / 20 + "px",
+                    marginTop: "-" + blackHoleSize / 20 + "px",
+                    height: "" + blackHoleSize / 10 + "px",
+                    width: "" + blackHoleSize / 10 + "px",
+                    backgroundColor: "black",
+                    borderRadius: "100%",
+                    position: "absolute",
+                    left: "50%",
+                    top: "50%",
+                    zIndex: "10"
+                }}/>
+            );
+        }
 
         return (
             <span>
-                <div style={{
-                    marginLeft:"-"+blackHoleSize/20+"px",
-                    marginTop:"-"+blackHoleSize/20+"px",
-                    height:""+blackHoleSize/10+"px", 
-                    width:""+blackHoleSize/10+"px", 
-                    backgroundColor:"black",
-                    borderRadius:"100%",
-                    position:"absolute",
-                    left: "50%",
-                    top: "50%",
-                    zIndex:"10"
-                }}></div>
+                {blackHole}
                 <img style={imageSliderStyle} src={this.props.vinyl} alt=""></img>
             </span>
-            
+
         );
     }
 }

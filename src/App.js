@@ -21,14 +21,15 @@ Bugs:
 - //Slideshow can't replay on Chrome previous button when isreading terminated should change the replay arow
 - //enlever le alt du logo
 - //Les bouton du menu bar et progress bar actionnent le play pause
-- bug au replay
+- //bug au replay
+
 Dev:
 - //Player audio en mode vinyle
 - //play/pause au click sur le container
 - //cacher souris après 3 secondes
+- //lire de l'audio sans vinyle qui tourne
 - Slideshow plus long que l'audio
 - adapter menu icon size au fullscreen
-- lire de l'audio sans vinyle qui tourne
 
 - Packager le composant en package npm (ce qui sera publié sur github)
 - faire un readme
@@ -59,7 +60,7 @@ class App extends Component {
       <div className="App">
 
         <iframe title="fsqfdsqf" width="560" height="315" src="https://www.youtube.com/embed/aqz-KE-bpKQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    
+
         <WebMediaPlayer
           title="Video Player"
           thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg"
@@ -133,6 +134,14 @@ class App extends Component {
             img:"https://1.bp.blogspot.com/-_YpihVbzDdI/WJh6cts82ZI/AAAAAAAAAUY/JscaeB6qRlEPW0DTnoRIspFiqAlU2T9lACLcB/s1600/Peace%2BIs%2BThe%2BMission%2B%2528Extended%2529%2B-%2B2015%2B.jpg", 
             rpm: 33
           }}
+          audio="https://nusid.net/audio.mp3"
+        />
+        <WebMediaPlayer
+          width="400"
+          height="400"
+          title="Major Lazer - Thunder & Lightning"
+          link="https://google.com"
+          thumbnail="https://1.bp.blogspot.com/-_YpihVbzDdI/WJh6cts82ZI/AAAAAAAAAUY/JscaeB6qRlEPW0DTnoRIspFiqAlU2T9lACLcB/s1600/Peace%2BIs%2BThe%2BMission%2B%2528Extended%2529%2B-%2B2015%2B.jpg"
           audio="https://nusid.net/audio.mp3"
         />
       </div>

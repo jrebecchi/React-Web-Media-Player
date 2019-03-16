@@ -61,16 +61,30 @@ const initAudioVinylPlayerState = (options) => {
     state.isVinylReady = false;
     state.duration = 0;
     state.audio = options.audio;
-    if (!options.vinyl.hasOwnProperty("img")) { 
+    if (!options.vinyl.hasOwnProperty("img")) {
         throw new Error("Please pass an image link through the img property of the vinyl option");
     }
-    if (options.vinyl.hasOwnProperty("rpm")) { 
+    if (options.vinyl.hasOwnProperty("rpm")) {
         state.rpm = options.vinyl.rpm;
     } else {
         state.rpm = DEFAULT_VINYL_RPM;
     }
     state.vinyl = options.vinyl.img;
+    return state;
+}
 
+const initAudioPlayerState = (options) => {
+    let state = {};
+    state.hasAudio = true;
+    state.hasSlideshow = false;
+    state.hasVideo = false;
+    state.hasVinyl = true;
+    state.isAudioReady = true;
+    state.isVinylReady = false;
+    state.duration = 0;
+    state.audio = options.audio;
+    state.rpm = 0;
+    state.vinyl = options.thumbnail;
     return state;
 }
 
@@ -79,34 +93,31 @@ const getInitState = (options) => {
         throw new Error("No options given to the player !");
     }
     let state = {};
-    if (options.hasOwnProperty("video")) {
-        if (options.hasOwnProperty("audio")) {
-            throw new Error("Combination impossible");
-        } else if (options.hasOwnProperty("imageSequence")) {
-            throw new Error("Combination impossible");
-        } else if (options.hasOwnProperty("vinyl")) {
-            throw new Error("Combination impossible");
-        } else {
-            state = initVideoPlayerState(options);
-        }
-    } else if (options.hasOwnProperty("slideshow")) {
-        if (options.hasOwnProperty("audio")) {
-            state = initAudioSlideshowPlayerState(options);
-        } else if (options.hasOwnProperty("video")) {
-            throw new Error("Combination impossible");
-        } else if (options.hasOwnProperty("vinyl")) {
-            throw new Error("Combination impossible");
-        } else {
-            state = initSlideshowPlayerState(options);
-        }
-    } else if (options.hasOwnProperty("vinyl")) {
-        if (options.hasOwnProperty("audio")) {
-            state = initAudioVinylPlayerState(options);
-        } else if (options.hasOwnProperty("video")) {
-            throw new Error("Combination impossible");
-        } else if (!options.hasOwnProperty("audio")) {
-            throw new Error("Combination impossible");
-        }
+    if (options.hasOwnProperty("video")
+        && !options.hasOwnProperty("slideshow")
+        && !options.hasOwnProperty("audio")
+        && !options.hasOwnProperty("vinyl")) {
+        state = initVideoPlayerState(options);
+    } else if (!options.hasOwnProperty("video")
+        && options.hasOwnProperty("slideshow")
+        && options.hasOwnProperty("audio")
+        && !options.hasOwnProperty("vinyl")) {
+        state = initAudioSlideshowPlayerState(options);
+    } else if (!options.hasOwnProperty("video")
+        && options.hasOwnProperty("slideshow")
+        && !options.hasOwnProperty("audio")
+        && !options.hasOwnProperty("vinyl")) {
+        state = initSlideshowPlayerState(options);
+    } else if (!options.hasOwnProperty("video")
+        && !options.hasOwnProperty("slideshow")
+        && options.hasOwnProperty("audio")
+        && options.hasOwnProperty("vinyl")) {
+        state = initAudioVinylPlayerState(options);
+    } else if (!options.hasOwnProperty("video")
+        && !options.hasOwnProperty("slideshow")
+        && options.hasOwnProperty("audio")
+        && !options.hasOwnProperty("vinyl")) {
+        state = initAudioPlayerState(options);
     } else {
         throw new Error("Combination impossible");
     }
@@ -155,7 +166,11 @@ const getInitState = (options) => {
     } else {
         state.color = DEFAULT_COLOR;
     }
-    state.thumbnail = options.thumbnail;
+    if (options.hasOwnProperty("thumbnail")) {
+        state.thumbnail = options.thumbnail;
+    } else {
+        throw new Error("You need to specify the thumbnail property");
+    }
     state.title = options.title;
     state.link = options.link;
     state.isLoading = true;
