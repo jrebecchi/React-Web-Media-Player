@@ -262,7 +262,7 @@ class Mixer extends Component {
         if (prevprops.askedTime !== this.props.askedTime && this.props.duration !== 0 && this.props.askedTime !== ASKED_TIME_TREATED) {
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.props.askedTime } });
             this.changeTime(this.props.askedTime);
-            if (this.props.isReadingTerminated) {
+            if (this.props.isReadingTerminated && this.props.askedTime < this.props.duration - 0.1) {
                 if (isIE() && this.props.hasVideo && this.props.askedTime === 0) {
                     this.props.dispatch({ type: 'LOADING' });
                     this.video.reset();
