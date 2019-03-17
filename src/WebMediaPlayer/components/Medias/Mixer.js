@@ -24,7 +24,7 @@ class Mixer extends Component {
                 }
             } else {
                 if (this.props.hasAudio && this.props.hasSlideshow) {
-                    if (this.audio.getDuration() > this.props.currentTime) {
+                    if (this.audio.getDuration() > (this.props.currentTime) + IE_IMPRECISION) {
                         let currentTime = this.audio.getCurrentTime();
                         if (currentTime <= this.audio.getDuration() + IE_IMPRECISION) {
                             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: currentTime } });
@@ -70,7 +70,7 @@ class Mixer extends Component {
             if (this.props.hasAudio && this.props.hasSlideshow) {
                 let audioTimeRangeBuffered = this.audio.timeRangeBuffered(this.props.currentTime);
                 let slideshowTimeRangeBuffered = this.slideshow.timeRangeBuffered(this.props.currentTime);
-                if (this.audio.getDuration() < this.props.currentTime || audioTimeRangeBuffered === this.audio.getDuration()) {
+                if (this.audio.getDuration() < (this.props.currentTime - IE_IMPRECISION) || audioTimeRangeBuffered === this.audio.getDuration()) {
                     timeRangeBuffered = this.slideshow.timeRangeBuffered(this.props.currentTime);
                 } else {
                     timeRangeBuffered = (audioTimeRangeBuffered < slideshowTimeRangeBuffered) ? audioTimeRangeBuffered : slideshowTimeRangeBuffered;
@@ -108,8 +108,8 @@ class Mixer extends Component {
             this.video.play();
         }
         if (this.props.hasAudio) {
-            //if (this.props.currentTime < this.audio.getDuration())
-            this.audio.play();
+            if (this.props.currentTime < (this.audio.getDuration() - IE_IMPRECISION))
+                this.audio.play();
         }
         if (this.props.hasSlideshow) {
             this.slideshow.play();
@@ -154,7 +154,7 @@ class Mixer extends Component {
         if (this.props.hasVideo) {
             this.video.changeTime(time);
         }
-        if (this.props.hasAudio && time < this.audio.getDuration()) {
+        if (this.props.hasAudio && (time + IE_IMPRECISION) < this.audio.getDuration()) {
             this.audio.changeTime(time);
         }
         if (this.props.hasSlideshow) {
@@ -187,7 +187,7 @@ class Mixer extends Component {
     hasEnoughBuffered = () => {
         if (this.props.hasVideo)
             return this.props.isVideoReady;
-        else if (this.props.hasAudio && this.props.hasSlideshow)
+        else if (this.props.hasAudio && this.props.hasSlideshow && this.props.currentTime < (this.audio.getDuration() - IE_IMPRECISION))
             return this.props.isAudioReady && this.props.isSlideshowReady;
         else if (this.props.hasAudio && this.props.hasVinyl)
             return this.props.isAudioReady && this.props.isVinylReady;

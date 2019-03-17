@@ -22,6 +22,8 @@ Bugs:
 - //enlever le alt du logo
 - //Les bouton du menu bar et progress bar actionnent le play pause
 - //bug au replay
+- // bug au changetime si je le positionne au replay
+- // Image du vinyle affichée en grand au chargement
 
 Dev:
 - //Player audio en mode vinyle
@@ -90,7 +92,7 @@ class App extends Component {
               endTime: 8.0
             }, {
               src: "https://nusid.net/slide5.jpg",
-              endTime: 120.0//durantion is better
+              endTime: 120.0
             }]}
           logo={{ img: logo, href: "https://google.com" }}
           buttons={[
@@ -120,7 +122,7 @@ class App extends Component {
               endTime: 8.0
             }, {
               src: "https://nusid.net/slide5.jpg",
-              endTime: 120.0//durantion is better
+              endTime: 1000.0//durantion is better
             }]}
           logo={{ img: bande, href: "https://google.com" }}
         />
