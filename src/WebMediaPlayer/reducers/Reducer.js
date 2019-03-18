@@ -102,7 +102,7 @@ const reducer = (state, action) => {
             return showCursor(state);
         case 'HIDE_CURSOR':
             return hideCursor(state);
-        case 'UPDATE_CURRENT_TIME':   
+        case 'UPDATE_CURRENT_TIME':
             return updateCurrentTime(state, action);
         case 'SHOW_MENUS':
             return showMenus(state);

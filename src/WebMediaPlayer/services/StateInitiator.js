@@ -28,7 +28,7 @@ const initAudioSlideshowPlayerState = (options) => {
     state.hasVideo = false;
     state.hasVinyl = false;
     state.isSlideshowReady = false;
-    state.isAudioReady = true;
+    state.isAudioReady = false;
     state.imageDisplayed = null;
     if (options.slideshow.slice(-1)[0].endTime === undefined) {
         throw new Error("No time specified for slideshow");
@@ -45,7 +45,7 @@ const initVideoPlayerState = (options) => {
     state.hasAudio = false;
     state.hasSlideshow = false;
     state.hasVinyl = false;
-    state.isVideoReady = true;
+    state.isVideoReady = false;
     state.duration = 0;
     state.video = options.video;
     return state;
@@ -57,7 +57,7 @@ const initAudioVinylPlayerState = (options) => {
     state.hasSlideshow = false;
     state.hasVideo = false;
     state.hasVinyl = true;
-    state.isAudioReady = true;
+    state.isAudioReady = false;
     state.isVinylReady = false;
     state.duration = 0;
     state.audio = options.audio;
@@ -79,7 +79,7 @@ const initAudioPlayerState = (options) => {
     state.hasSlideshow = false;
     state.hasVideo = false;
     state.hasVinyl = true;
-    state.isAudioReady = true;
+    state.isAudioReady = false;
     state.isVinylReady = false;
     state.duration = 0;
     state.audio = options.audio;

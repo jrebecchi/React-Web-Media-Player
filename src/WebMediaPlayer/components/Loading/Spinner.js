@@ -4,10 +4,6 @@ import './Spinner.css';
 
 class Spinner extends Component {
 
-    componentDidUpdate = () => {
-        this.props.dispatch({ type: 'AUDIO_IS_READY' });
-    }
-
     render = () => {
         return( 
             <div className="wmp-spinner" hidden={!this.props.isLoading}>

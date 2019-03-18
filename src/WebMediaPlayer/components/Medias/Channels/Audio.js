@@ -11,16 +11,10 @@ class Audio extends Component {
 
     getCurrentTime = () => this.audio.currentTime;
 
-    load = (startTime) => {
-        if (this.isPlaying()) this.pause();
-        //this.props.dispatch({ type: 'AUDIO_IS_NOT_READY' });
-        if (startTime === undefined || startTime < 0 || startTime === 0) {
-            console.log("audio load");
-            this.audio.load();
-        } else {
-            this.audio.currentTime = startTime;
-        }
-        //if (!this.updateTimer) this.updateTimer = window.setInterval(this.enoughBuffered.bind(this), 100)
+    load = () => {
+        this.audio.currentTime = 0;
+        console.log("audio load");
+        this.audio.load();
     };
 
     play = () => {
@@ -44,8 +38,7 @@ class Audio extends Component {
         this.audio.currentTime = time;
     };
 
-    pause = (time) => {
-        if (time !== undefined) this.currentTime = time;
+    pause = () => {
         console.log("audio pause");
         if (this.isPlaying()) this.audio.pause();
     };
@@ -108,8 +101,9 @@ class Audio extends Component {
 
     handlePlay = () => {
         console.log("played");
-        if (isIE())
-            this.props.dispatch({ type: 'NOT_LOADING' });
+        if (isIE()){
+            this.props.dispatch({ type: 'AUDIO_IS_READY' });
+        }
     }
 
     handleLoadedMetaData = () => {

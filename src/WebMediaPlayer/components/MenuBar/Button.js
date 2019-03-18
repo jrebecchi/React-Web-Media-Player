@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './Button.css';
 
 class Button extends Component {
 
     handleClick = (e) => {
+        this.props.dispatch({ type: 'USER_ACTIVE' });
         if(this.props.callback)
             this.props.callback(e);
     }
@@ -26,4 +28,9 @@ class Button extends Component {
     }
 }
 
-export default Button;
+const mapStateToProps = (state) => {
+    return {
+    };
+};
+
+export default connect(mapStateToProps)(Button);

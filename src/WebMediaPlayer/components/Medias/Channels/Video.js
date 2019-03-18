@@ -12,6 +12,12 @@ class Video extends Component {
 
     reset = () => {
         this.video.currentTime = 0;
+        console.log("reload video");
+        this.video.load();
+    };
+
+    load = () => {
+        this.video.currentTime = 0;
         console.log("load video");
         this.video.load();
     };
@@ -35,9 +41,7 @@ class Video extends Component {
         this.video.currentTime = time;
     };
 
-    pause = (time) => {
-        if (time !== undefined) this.currentTime = time;
-        console.log("pause video");
+    pause = () => {
         if (this.isPlaying()) this.video.pause();
     };
 
@@ -119,14 +123,10 @@ class Video extends Component {
 
     handlePlay = () => {
         console.log("played");
-        if (isIE() && this.video.currentTime !==0)
-            this.props.dispatch({ type: 'NOT_LOADING' });
+        if (isIE()){
+            this.props.dispatch({ type: 'VIDEO_IS_READY' });
+        }
     }
-    /*
-    handleEnded = () => {
-        this.props.dispatch({ type: 'READING_TERMINATED' });
-        this.props.dispatch({ type: 'NOT_LOADING' });
-    }*/
 
     adaptImageToWidth = (width, ) => {
         return {

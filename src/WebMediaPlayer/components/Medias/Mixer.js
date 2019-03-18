@@ -10,6 +10,10 @@ const MAX_DIFFERENCE_AUDIO_SLIDESHOW = 0.1; //in seconds
 const BUFFER_UPDATE_PRECISION = 0.1; //in seconds
 const IE_IMPRECISION = 1
 const ASKED_TIME_TREATED = "isTreated";
+Number.isNaN = Number.isNaN || function (value) {
+    // eslint-disable-next-line
+    return value !== value;
+}
 
 class Mixer extends Component {
 
@@ -24,7 +28,7 @@ class Mixer extends Component {
                 }
             } else {
                 if (this.props.hasAudio && this.props.hasSlideshow) {
-                    if (this.audio.getDuration() > (this.props.currentTime) + IE_IMPRECISION) {
+                    if (this.audio.getDuration() > this.props.currentTime) {
                         let currentTime = this.audio.getCurrentTime();
                         if (currentTime <= this.audio.getDuration() + IE_IMPRECISION) {
                             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: currentTime } });
@@ -39,7 +43,7 @@ class Mixer extends Component {
                     }
                 } else if (this.props.hasAudio && this.props.hasVinyl) {
                     let currentTime = this.audio.getCurrentTime();
-                    if (currentTime <= this.audio.getDuration() + IE_IMPRECISION) {
+                    if (currentTime <= this.audio.getDuration()) {
                         this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: currentTime } });
                     } else {
                         return;
@@ -49,9 +53,11 @@ class Mixer extends Component {
                 }
             }
         }
-        if (isIE() && this.props.currentTime > 0.3) {
+        
+        if (this.props.hasVideo && this.props.currentTime > 0.1) {
             this.props.dispatch({ type: 'NOT_LOADING' });
         }
+        
         if (this.props.currentTime >= this.props.duration && this.props.duration > 0) {
             this.stop();
             this.props.dispatch({ type: 'READING_TERMINATED' });
@@ -70,7 +76,7 @@ class Mixer extends Component {
             if (this.props.hasAudio && this.props.hasSlideshow) {
                 let audioTimeRangeBuffered = this.audio.timeRangeBuffered(this.props.currentTime);
                 let slideshowTimeRangeBuffered = this.slideshow.timeRangeBuffered(this.props.currentTime);
-                if (this.audio.getDuration() < (this.props.currentTime - IE_IMPRECISION) || audioTimeRangeBuffered === this.audio.getDuration()) {
+                if (this.audio.getDuration() < this.props.currentTime || audioTimeRangeBuffered > this.audio.getDuration() - 0.1) {
                     timeRangeBuffered = this.slideshow.timeRangeBuffered(this.props.currentTime);
                 } else {
                     timeRangeBuffered = (audioTimeRangeBuffered < slideshowTimeRangeBuffered) ? audioTimeRangeBuffered : slideshowTimeRangeBuffered;
@@ -108,7 +114,7 @@ class Mixer extends Component {
             this.video.play();
         }
         if (this.props.hasAudio) {
-            if (this.props.currentTime < (this.audio.getDuration() - IE_IMPRECISION))
+            if (this.props.currentTime < this.audio.getDuration())
                 this.audio.play();
         }
         if (this.props.hasSlideshow) {
@@ -154,7 +160,7 @@ class Mixer extends Component {
         if (this.props.hasVideo) {
             this.video.changeTime(time);
         }
-        if (this.props.hasAudio && (time + IE_IMPRECISION) < this.audio.getDuration()) {
+        if (this.props.hasAudio && time < this.audio.getDuration()) {
             this.audio.changeTime(time);
         }
         if (this.props.hasSlideshow) {
@@ -165,7 +171,6 @@ class Mixer extends Component {
     stop = () => {
         window.clearInterval(this.timer);
         window.clearInterval(this.bufferTimer);
-        //this.props.currentTime = this.props.duration;
         if (this.props.hasVideo) {
             this.video.stop();
         }
@@ -185,9 +190,11 @@ class Mixer extends Component {
     };
 
     hasEnoughBuffered = () => {
+        if (this.props.duration === 0)
+            return false;
         if (this.props.hasVideo)
             return this.props.isVideoReady;
-        else if (this.props.hasAudio && this.props.hasSlideshow && this.props.currentTime < (this.audio.getDuration() - IE_IMPRECISION))
+        else if (this.props.hasAudio && this.props.hasSlideshow && this.props.currentTime < this.audio.getDuration())
             return this.props.isAudioReady && this.props.isSlideshowReady;
         else if (this.props.hasAudio && this.props.hasVinyl)
             return this.props.isAudioReady && this.props.isVinylReady;
@@ -197,16 +204,14 @@ class Mixer extends Component {
 
     handleChannelsBufferStateChange = () => {
         if ((this.props.hasVideo && !this.props.isVideoReady)
-            || (this.props.hasAudio && !this.props.isAudioReady) /*|| this.props.currentTime > this.audio.getDuration()*/
+            || (this.props.hasAudio && !this.props.isAudioReady)// || this.props.currentTime > this.audio.getDuration()
             || (this.props.hasSlideshow && !this.props.isSlideshowReady)
             || (this.props.hasVinyl && !this.props.hasVinyl)) {
-            if (!isIE() || !this.props.hasAudio || this.props.currentTime < this.props.duration)
-                this.props.dispatch({ type: 'LOADING' });
+            this.props.dispatch({ type: 'LOADING' });
             console.log("isLoading");
             this.pause();
         } else {
-            if (!isIE() || !this.props.hasAudio)
-                this.props.dispatch({ type: 'NOT_LOADING' });
+            this.props.dispatch({ type: 'NOT_LOADING' });
             if (this.props.isPlaying && !this.props.channelsWait) this.play();
         }
     }
@@ -218,9 +223,20 @@ class Mixer extends Component {
 
     componentDidUpdate = (prevprops) => {
 
+        if (prevprops.isInitialized === false && this.props.isInitialized === true) {
+            this.props.dispatch({ type: 'LOADING' });
+            if(this.props.hasAudio && Number.isNaN(this.audio.getDuration())){
+                this.audio.load();
+            } else if (this.props.hasVideo && Number.isNaN(this.video.getDuration())){
+                this.video.load();
+            } else{
+                this.play();
+            }
+            return;
+        }
+
         if (prevprops.askNextImage !== this.props.askNextImage) {
             let time = this.slideshow.getTimeNextImage();
-            this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: time } });
             this.changeTime(time);
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: time } });
         }
@@ -230,20 +246,6 @@ class Mixer extends Component {
             || prevprops.isSlideshowReady !== this.props.isSlideshowReady
             || prevprops.isVinylReady !== this.props.isVinylReady) {
             this.handleChannelsBufferStateChange();
-        }
-
-        if (prevprops.isInitialized === false && this.props.isInitialized === true) {
-            this.props.dispatch({ type: 'LOADING' });
-            if (this.props.duration > 0) {
-                if (!isIE())
-                    this.props.dispatch({ type: 'NOT_LOADING' });
-                this.play();
-            }
-        }
-
-        if (prevprops.duration === 0 && this.props.duration > 0) {
-            if (this.props.isInitialized)
-                this.play();
         }
 
         if (prevprops.isPlaying !== this.props.isPlaying) {
@@ -260,7 +262,6 @@ class Mixer extends Component {
         }
 
         if (prevprops.askedTime !== this.props.askedTime && this.props.duration !== 0 && this.props.askedTime !== ASKED_TIME_TREATED) {
-            this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: this.props.askedTime } });
             this.changeTime(this.props.askedTime);
             if (this.props.isReadingTerminated && this.props.askedTime < this.props.duration - 0.1) {
                 if (isIE() && this.props.hasVideo && this.props.askedTime === 0) {
@@ -285,7 +286,6 @@ class Mixer extends Component {
             if (this.props.isReadingTerminated)
                 this.props.dispatch({ type: 'READING_NOT_TERMINATED' });
             let time = this.slideshow.getTimePreviousImage();
-            this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: time } });
             this.changeTime(time);
             this.props.dispatch({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: time } });
         }
@@ -306,7 +306,7 @@ class Mixer extends Component {
             vinyl = <Vinyl />
         }
         return (
-            <div style={{overflow: "hidden"}}>
+            <div style={{ overflow: "hidden" }}>
                 {video}
                 {audio}
                 {slideshow}

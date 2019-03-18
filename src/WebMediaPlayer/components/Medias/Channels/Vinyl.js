@@ -39,10 +39,12 @@ class Vinyl extends Component {
     };
 
     render = () => {
+        if (!this.props.isVinylReady)
+            return '';
         let width, height;
         let imageSliderStyle = {};
         let blackHole, blackHoleSize;
-        if (this.vinyl !== null && this.props.isVinylReady) {
+        if (this.vinyl !== null) {
             if (this.props.isFullscreenActivated) {
                 width = this.props.fullscreenWidth;
                 height = this.props.fullscreenHeight;
