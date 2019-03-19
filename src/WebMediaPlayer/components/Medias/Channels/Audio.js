@@ -12,7 +12,6 @@ class Audio extends Component {
     getCurrentTime = () => this.audio.currentTime;
 
     load = () => {
-        this.audio.currentTime = 0;
         console.log("audio load");
         this.audio.load();
     };

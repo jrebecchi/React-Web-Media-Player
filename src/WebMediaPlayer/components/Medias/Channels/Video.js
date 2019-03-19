@@ -10,14 +10,7 @@ class Video extends Component {
 
     getCurrentTime = () => this.video.currentTime;
 
-    reset = () => {
-        this.video.currentTime = 0;
-        console.log("reload video");
-        this.video.load();
-    };
-
     load = () => {
-        this.video.currentTime = 0;
         console.log("load video");
         this.video.load();
     };

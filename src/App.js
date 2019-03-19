@@ -91,7 +91,7 @@ class App extends Component {
               src: "https://nusid.net/slide4.jpg",
               endTime: 8.0
             }, {
-              src: "https://nusid.net/slide5f.jpg",
+              src: "https://nusid.net/slide5.jpg",
               endTime: 120.0
             }]}
           logo={{ img: logo, href: "https://google.com" }}

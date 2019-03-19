@@ -30,7 +30,7 @@ class Container extends Component {
             this.handlePropsChanges(this.props);
         }
 
-        if (prevProps.timeLastUserAction !== this.props.timeLastUserAction) {
+        if (prevProps.timeLastUserAction !== this.props.timeLastUserAction && this.node !== undefined) {
             this.waitUserToBeInactive();
         }
     }
@@ -109,7 +109,6 @@ class Container extends Component {
     }
 
     waitUserToBeInactive = () => {
-        //this.props.dispatch({ type: 'SHOW_CURSOR' });
         this.props.dispatch({ type: 'SHOW_MENUS' });
         this.node.style.cursor = "";
         if (this.mouseStopTimer) {
@@ -120,9 +119,6 @@ class Container extends Component {
                 this.props.dispatch({ type: 'HIDE_MENUS' });
                 this.node.style.cursor = "none";
             }
-            /*if (this.props.isFullScreen) {
-                this.props.dispatch({ type: 'HIDE_CURSOR' });
-            }*/
         }, TIME_TO_HIDE_MENU_IN_MILLISECONDS);
     }
 
