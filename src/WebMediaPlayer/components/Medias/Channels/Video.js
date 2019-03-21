@@ -23,7 +23,7 @@ class Video extends Component {
                 playPromise.then(_ => {
                     // Automatic playback started!
                 }).catch(e => {
-                    console.log(e);
+                    // Auto-play was prevented
                 });
             }
         }

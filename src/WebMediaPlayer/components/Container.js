@@ -134,14 +134,13 @@ class Container extends Component {
             style.height = "100%";
         }
 
-
         let thumbnail, largePlayButton, menuBar, titleBar, spinner;
-        if (this.props.thumbnail && !this.props.isInitialized)
+        if (this.props.thumbnail && !this.props.isInitialized && !this.props.autoplay)
             thumbnail = <Thumbnail />;
         if (this.props.isInitialized && this.props.showMenus) {
             menuBar = <MenuBar />
         }
-        if (!this.props.isInitialized) {
+        if (!this.props.isInitialized && !this.props.autoplay) {
             largePlayButton = <LargePlayButton />;
         }
         if (!this.props.isInitialized || this.props.showMenus) {
@@ -186,12 +185,8 @@ const mapStateToProps = (state) => {
         allowMenuHiding: state.allowMenuHiding,
         isLoading: state.isLoading,
         isFullscreenActivated: state.isFullscreenActivated,
+        autoplay: state.autoplay,
     };
 };
 
 export default connect(mapStateToProps)(Container);
-/*
-          <video width="560" height="315">
-              <source src="https://nusid.net/video.mp4" />
-          </video>
-*/

@@ -23,7 +23,7 @@ Bugs:
 - //Les bouton du menu bar et progress bar actionnent le play pause
 - //bug au replay
 - //bug au changetime si je le positionne au replay
-- Image du vinyle affichée en grand au chargement
+- //Image du vinyle affichée en grand au chargement
 
 Dev:
 - //Player audio en mode vinyle
@@ -31,6 +31,7 @@ Dev:
 - //cacher souris après 3 secondes
 - //lire de l'audio sans vinyle qui tourne
 - //Slideshow plus long que l'audio
+- //autoplay option
 
 - Packager le composant en package npm (ce qui sera publié sur github)
 - faire un readme
@@ -43,11 +44,9 @@ Dev:
 - avoir une preview quand on passe sur la progress bar avec le scrubber button
 - allowfullscreen option
 - init function where we say when to actually init the player
-- autoplay option
 
 - 100% test cover
 - Option pour réduire le volume à la fin et au début pour audio slideshow
-
 
 Refactorings:
 - //moving the reducer include in WebMediaPlayer.js in a separate file
@@ -72,7 +71,6 @@ class App extends Component {
           logo={{ img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Arte-Logo.svg/1280px-Arte-Logo.svg.png", href: "http://zrte.fr" }}
           color="rgb(222, 119, 18)"
         />
-
         <WebMediaPlayer
           title="Slideshow Player"
           link="https://google.com"
@@ -101,7 +99,6 @@ class App extends Component {
           ]}
           color="red"
         />
-
         <WebMediaPlayer
           title="Audio Slideshow Player"
           link="https://google.com"
@@ -118,7 +115,7 @@ class App extends Component {
               src: "https://nusid.net/slide3.jpg",
               endTime: 6.0
             }, {
-              src: "https://nusid.net/slide4f.jpg",
+              src: "https://nusid.net/slide4.jpg",
               endTime: 8.0
             }, {
               src: "https://nusid.net/slide5.jpg",
@@ -143,7 +140,7 @@ class App extends Component {
               src: "https://nusid.net/slide3.jpg",
               endTime: 6.0
             }, {
-              src: "https://nusid.net/slide4f.jpg",
+              src: "https://nusid.net/slide4.jpg",
               endTime: 8.0
             }, {
               src: "https://nusid.net/slide5.jpg",
@@ -151,6 +148,7 @@ class App extends Component {
             }]}
           logo={{ img: bande, href: "https://google.com" }}
         />
+
         <WebMediaPlayer
           width="400"
           height="400"
@@ -163,6 +161,8 @@ class App extends Component {
           }}
           audio="https://nusid.net/audio.mp3"
         />
+
+
         <WebMediaPlayer
           width="400"
           height="400"
@@ -171,6 +171,7 @@ class App extends Component {
           thumbnail="https://1.bp.blogspot.com/-_YpihVbzDdI/WJh6cts82ZI/AAAAAAAAAUY/JscaeB6qRlEPW0DTnoRIspFiqAlU2T9lACLcB/s1600/Peace%2BIs%2BThe%2BMission%2B%2528Extended%2529%2B-%2B2015%2B.jpg"
           audio="https://nusid.net/audio.mp3"
         />
+
       </div>
     );
   }

@@ -55,7 +55,7 @@ class Mixer extends Component {
         if (this.props.hasVideo && this.props.currentTime > 0.1) {
             this.props.dispatch({ type: 'NOT_LOADING' });
         }
-        
+
         if (this.props.currentTime >= this.props.duration && this.props.duration > 0) {
             this.stop();
             this.props.dispatch({ type: 'READING_TERMINATED' });
@@ -206,7 +206,7 @@ class Mixer extends Component {
             this.props.dispatch({ type: 'LOADING' });
             console.log("isLoading");
             this.pause();
-        } 
+        }
     }
 
     componentDidMount = () => {
@@ -214,23 +214,34 @@ class Mixer extends Component {
         this.setVolume(this.props.volume);
     }
 
+    componentWillMount = () => {
+        if (this.props.autoplay) {
+            window.onload = () => {
+                this.props.dispatch({ type: 'INITIALIZE_PLAYER' });
+                this.props.dispatch({ type: 'PLAY' });
+                this.props.dispatch({ type: 'USER_ACTIVE' });
+            }
+        }
+    }
+
     componentDidUpdate = (prevprops) => {
+
         if (prevprops.isInitialized === false && this.props.isInitialized === true) {
             this.props.dispatch({ type: 'LOADING' });
-            if(this.props.hasAudio && isNaN(this.audio.getDuration())){
+            if (this.props.hasAudio && isNaN(this.audio.getDuration())) {
                 this.audio.load();
-            } else if (this.props.hasVideo && isNaN(this.video.getDuration())){
+            } else if (this.props.hasVideo && isNaN(this.video.getDuration())) {
                 this.video.load();
-            } else{
+            } else {
                 this.play();
             }
             return;
         }
 
         //Prevent other functions based on the audio track duration or the video track duration to generate undesired side-effects
-        if(this.props.hasAudio && isNaN(this.audio.getDuration())){
+        if (this.props.hasAudio && isNaN(this.audio.getDuration())) {
             return;
-        } else if (this.props.hasVideo && isNaN(this.video.getDuration())){
+        } else if (this.props.hasVideo && isNaN(this.video.getDuration())) {
             return;
         }
 
@@ -335,6 +346,7 @@ const mapStateToProps = (state) => {
         isVinylReady: state.isVinylReady,
         isReadingTerminated: state.isReadingTerminated,
         allowUnhighlightProgressBar: state.allowUnhighlightProgressBar,
+        autoplay: state.autoplay,
     };
 };
 

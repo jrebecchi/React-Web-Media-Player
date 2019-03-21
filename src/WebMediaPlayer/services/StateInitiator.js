@@ -1,3 +1,4 @@
+import { isIE, isChrome } from './Utils';
 const DEFAULT_WIDTH = 560 //560;
 const DEFAULT_HEIGHT = 315 //315;
 const DEFAULT_ALLOW_FULL_FRAME = true;
@@ -170,6 +171,16 @@ const getInitState = (options) => {
         state.thumbnail = options.thumbnail;
     } else {
         throw new Error("You need to specify the thumbnail property");
+    }
+    if (options.hasOwnProperty("autoplay")) {
+        //Autoplay of an audio track synchronized with a slideshow is blocked on Chrome-based browser 
+        if (options.autoplay && isChrome() && state.hasSlideshow && state.hasAudio) {
+            state.autoplay = false;
+        } else {
+            state.autoplay = options.autoplay;
+        }
+    } else {
+        state.autoplay = false;
     }
     state.title = options.title;
     state.link = options.link;
