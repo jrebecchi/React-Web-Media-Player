@@ -1,28 +1,47 @@
 {
-  "name": "reactjs",
-  "version": "0.1.0",
-  "private": true,
+  "name": "react-web-media-player",
+  "version": "1.0.0",
+  "description": "A React Player that can read video, audio, slideshow, with an easily cutomizable design",
+  "license": "MIT",
+  "author": {
+    "name": "Johann Corcuff",
+    "email": "johann.corcuff@gmail.com"
+  },
+  "main": "./lib/WebMediaPlayer.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "jest"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.6.0"
+  },
   "dependencies": {
     "fscreen": "^1.0.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "react-redux": "^6.0.0",
+    "react-redux": "^6.0.1",
     "react-scripts": "2.1.1",
     "redux": "^4.0.1"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.4.0",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.5.0",
+    "babel-loader": "^8.0.5",
+    "babel-preset-stage-0": "^6.24.1",
+    "jest": "^24.5.0",
+    "path": "^0.12.7",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-test-renderer": "^16.8.4",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.2.1"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 9",
-    "not op_mini all"
-  ]
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    }
+  }
 }
