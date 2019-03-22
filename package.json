@@ -30,6 +30,7 @@
     "babel-jest": "^24.5.0",
     "babel-loader": "^8.0.5",
     "babel-preset-stage-0": "^6.24.1",
+    "coveralls": "^3.0.3",
     "jest": "^24.5.0",
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
