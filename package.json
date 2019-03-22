@@ -1,7 +1,7 @@
 {
   "name": "react-web-media-player",
   "version": "1.0.0",
-  "description": "A React Player that can read video, audio, slideshow, with an easily cutomizable design",
+  "description": "A React Player that can play videos, audio tracks, slideshows, with an easily cutomizable design",
   "license": "MIT",
   "author": {
     "name": "Johann Corcuff",
