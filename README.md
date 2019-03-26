@@ -83,7 +83,7 @@ You can add an audio track, that will be synchronized with the slideshow by addi
   title="My own audio-slideshow player"
   audio="https://any-website.com/my-music-to-synchronize.mp3" 
   thumbnail="https://any-website.com/slideshow-thumbnail.jpg"
-  slideshow={/*...as above...*}
+  slideshow=...
 />
 ```
 
