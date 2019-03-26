@@ -12,12 +12,10 @@ class Audio extends Component {
     getCurrentTime = () => this.audio.currentTime;
 
     load = () => {
-        console.log("audio load");
         this.audio.load();
     };
 
     play = () => {
-        console.log("audio play");
         //this.audio.currentTime = time;
         if (!this.isPlaying()) {
             let playPromise = this.audio.play();
@@ -33,12 +31,10 @@ class Audio extends Component {
     };
 
     changeTime = (time) => {
-        console.log("audio changetime");
         this.audio.currentTime = time;
     };
 
     pause = () => {
-        console.log("audio pause");
         if (this.isPlaying()) this.audio.pause();
     };
 
@@ -75,31 +71,26 @@ class Audio extends Component {
     }
 
     handleWaiting = () => {
-        console.log("waiting");
         if (!isIE() && this.audio.currentTime < (this.audio.duration - FLOAT_IMPRECISION))
             this.props.dispatch({ type: 'AUDIO_IS_NOT_READY' });
     }
 
     handleCanPlayThrough = () => {
-        console.log("Can play through");
         if (!isIE())
             this.props.dispatch({ type: 'AUDIO_IS_READY' });
     }
 
     handleSeeking = () => {
-        console.log("seeking");
         if (isIE())
             this.props.dispatch({ type: 'AUDIO_IS_NOT_READY' });
     }
 
     handleSeeked = () => {
-        console.log("seeked");
         if (isIE())
             this.props.dispatch({ type: 'AUDIO_IS_READY' });
     }
 
     handlePlay = () => {
-        console.log("played");
         if (isIE()){
             this.props.dispatch({ type: 'AUDIO_IS_READY' });
         }

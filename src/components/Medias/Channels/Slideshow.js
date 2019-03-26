@@ -18,7 +18,6 @@ class Slideshow extends Component {
     getCurrentTime = () => this.currentTime;
 
     load = (time) => {
-        console.log("slideshow load");
         if (time === undefined || time < 0) {
             time = 0;
         }
@@ -51,7 +50,6 @@ class Slideshow extends Component {
         } else {
             this.props.dispatch({ type: 'SLIDESHOW_IS_READY' });
         }
-        console.log("slideshow play");
         this.load(this.currentTime)
         //this.currentTime = time;
         this.tempTime = new Date();
@@ -74,7 +72,6 @@ class Slideshow extends Component {
     };
 
     pause = (time) => {
-        console.log("slideshow pause");
         if (time !== undefined) this.currentTime = time;
         if (this.hasEnoughBuffered(time)) {
             this.updateView();
@@ -83,7 +80,6 @@ class Slideshow extends Component {
     };
 
     stop = () => {
-        console.log("slideshow stop");
         this.stopRefresh();
         this.currentTime = this.props.duration;
     };

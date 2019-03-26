@@ -6,7 +6,7 @@ import Container from './components/Container';
 
 import thereducer from './reducers/Reducer';
 
-class WebMediaPlayer extends Component {
+class ReactWebMediaPlayer extends Component {
 
   constructor(options) {
     super(options);
@@ -23,4 +23,4 @@ class WebMediaPlayer extends Component {
   }
 }
 
-export default WebMediaPlayer;
+export default ReactWebMediaPlayer;

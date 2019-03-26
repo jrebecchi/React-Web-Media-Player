@@ -11,7 +11,6 @@ class Video extends Component {
     getCurrentTime = () => this.video.currentTime;
 
     load = () => {
-        console.log("load video");
         this.video.load();
     };
 
@@ -30,7 +29,6 @@ class Video extends Component {
     }
 
     changeTime = (time) => {
-        console.log("changetime video");
         this.video.currentTime = time;
     };
 
@@ -39,7 +37,6 @@ class Video extends Component {
     };
 
     stop = () => {
-        console.log("stop video");
         if (this.isPlaying()) this.video.pause();
         this.video.currentTime = this.props.duration;
     };
@@ -85,13 +82,11 @@ class Video extends Component {
     }
 
     handleWaiting = () => {
-        console.log("waiting event");
         if (!isIE() && this.video.currentTime < (this.video.duration - FLOAT_IMPRECISION))
             this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
     }
 
     handleCanPlayThrough = () => {
-        console.log("Can play through event");
         this.props.dispatch({ type: 'VIDEO_IS_READY' });
     }
 
@@ -103,19 +98,16 @@ class Video extends Component {
     }
 
     handleSeeking = () => {
-        console.log("seeking");
         if (isIE() && (this.video.currentTime < (this.video.duration - FLOAT_IMPRECISION) && Math.round(this.video.currentTime*100)/100 !== 0))
             this.props.dispatch({ type: 'VIDEO_IS_NOT_READY' });
     }
 
     handleSeeked = () => {
-        console.log("seeked");
         if (isIE())
             this.props.dispatch({ type: 'VIDEO_IS_READY' });
     }
 
     handlePlay = () => {
-        console.log("played");
         if (isIE()){
             this.props.dispatch({ type: 'VIDEO_IS_READY' });
         }

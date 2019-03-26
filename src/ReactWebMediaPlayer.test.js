@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import WebMediaPlayer from './WebMediaPlayer';
+import ReactWebMediaPlayer from './ReactWebMediaPlayer';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<WebMediaPlayer
+  ReactDOM.render(<ReactWebMediaPlayer
     title="Video Player"
     thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg"
     video="https://nusid.net/video.mp4"
@@ -15,7 +15,7 @@ it('renders without crashing', () => {
   />, div);
   ReactDOM.unmountComponentAtNode(div);
 
-  ReactDOM.render(<WebMediaPlayer
+  ReactDOM.render(<ReactWebMediaPlayer
     title="Slideshow Player"
     link="https://google.com"
     thumbnail="https://nusid.net/slide6.jpg"
@@ -45,7 +45,7 @@ it('renders without crashing', () => {
   />, div);
   ReactDOM.unmountComponentAtNode(div);
 
-  ReactDOM.render(<WebMediaPlayer
+  ReactDOM.render(<ReactWebMediaPlayer
     title="Audio Slideshow Player"
     link="https://google.com"
     thumbnail="https://nusid.net/slide1.jpg"
@@ -71,7 +71,7 @@ it('renders without crashing', () => {
   />, div);
   ReactDOM.unmountComponentAtNode(div);
 
-  ReactDOM.render(<WebMediaPlayer
+  ReactDOM.render(<ReactWebMediaPlayer
     title="Audio Slideshow Player"
     link="https://google.com"
     thumbnail="https://nusid.net/slide1.jpg"
@@ -97,7 +97,7 @@ it('renders without crashing', () => {
   />, div);
   ReactDOM.unmountComponentAtNode(div);
 
-  ReactDOM.render(<WebMediaPlayer
+  ReactDOM.render(<ReactWebMediaPlayer
     width="400"
     height="400"
     title="Major Lazer - Thunder & Lightning"
@@ -111,7 +111,7 @@ it('renders without crashing', () => {
   />, div);
   ReactDOM.unmountComponentAtNode(div);
 
-  ReactDOM.render(<WebMediaPlayer
+  ReactDOM.render(<ReactWebMediaPlayer
     width="400"
     height="400"
     title="Major Lazer - Thunder & Lightning"

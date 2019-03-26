@@ -204,7 +204,6 @@ class Mixer extends Component {
             if (this.props.isPlaying && !this.props.channelsWait) this.play();
         } else {
             this.props.dispatch({ type: 'LOADING' });
-            console.log("isLoading");
             this.pause();
         }
     }

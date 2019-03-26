@@ -1,13 +1,13 @@
 {
   "name": "react-web-media-player",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A React Player that can play videos, audio tracks, slideshows, with an easily cutomizable design",
   "license": "MIT",
   "author": {
     "name": "Johann Corcuff",
     "email": "johann.corcuff@gmail.com"
   },
-  "main": "./lib/WebMediaPlayer.js",
+  "main": "./lib/ReactWebMediaPlayer.js",
   "scripts": {
     "build": "webpack",
     "test": "jest"
@@ -15,13 +15,11 @@
   "peerDependencies": {
     "prop-types": "^15.6.0"
   },
-  "dependencies": {
+  "devDependencies": {
     "fscreen": "^1.0.2",
     "react-redux": "^6.0.1",
     "react-scripts": "2.1.1",
-    "redux": "^4.0.1"
-  },
-  "devDependencies": {
+    "redux": "^4.0.1",
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.4.0",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
