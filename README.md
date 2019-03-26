@@ -19,9 +19,9 @@ import ReactWebMediaPlayer from 'react-web-media-player';
 class App extends Component {
   render() {
     return <ReactWebMediaPlayer
-        title="My own audio player"
-        audio="https://any-website.com/my-music.mp3" 
-        thumbnail="https://any-website.com/audio-thumbnail.jpg"
+        title="My own video player"
+        video="https://any-website.com/my-video.mp4" 
+        thumbnail="https://any-website.com/video-thumbnail.jpg"
     />
   }
 }
