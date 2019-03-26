@@ -49,7 +49,6 @@ import channelsContinue from '../actions/ChannelsContinue';
 import vinylReady from '../actions/VinylReady';
 
 const reducer = (state, action) => {
-    //console.log(action.type);
     if (action === undefined) {
         return state;
     }
