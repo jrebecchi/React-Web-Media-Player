@@ -12,6 +12,20 @@ npm install react-web-media-player --save
 # or
 yarn add react-web-media-player
 ```
+```javascript
+import React, { Component } from 'react';
+import ReactWebMediaPlayer from 'react-web-media-player';
+
+class App extends Component {
+  render() {
+    return <ReactWebMediaPlayer
+        title="My own audio player"
+        audio="https://any-website.com/my-music.mp3" 
+        thumbnail="https://any-website.com/audio-thumbnail.jpg"
+    />
+  }
+}
+```
 
 ## Video
 To play a video pass the following options:
@@ -22,8 +36,6 @@ To play a video pass the following options:
   video="https://any-website.com/my-video.mp4" 
   thumbnail="https://any-website.com/video-thumbnail.jpg"
 />
-  }
-}
 ```
 
 **Note:** not all the video formats are supported by each browser
@@ -37,8 +49,6 @@ To play an audio track, pass the following options:
   audio="https://any-website.com/my-music.mp3" 
   thumbnail="https://any-website.com/audio-thumbnail.jpg"
 />
-  }
-}
 ```
 **Note:** not all the audio formats are supported by each browser
 
