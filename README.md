@@ -26,8 +26,10 @@ class App extends Component {
   }
 }
 ```
+<center>[![Video not played](https://nusid.net/video-not-played.jpg)](#)</center>
 
 ## Video
+<center>[![Video not played](https://nusid.net/video-played.jpg)](#)</center>
 To play a video pass the following options:
 
 ```javascript
