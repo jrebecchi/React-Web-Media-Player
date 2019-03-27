@@ -27,10 +27,10 @@ class App extends Component {
 }
 ```
 ## Video
-[![Video mode](https://nusid.net/video-played.jpg)](#)
 
 To play a video pass the following options:
 
+[![Video mode](https://nusid.net/video-played.jpg)](#)
 
 ```javascript
 <ReactWebMediaPlayer
@@ -39,13 +39,13 @@ To play a video pass the following options:
   thumbnail="https://any-link.com/video-thumbnail.jpg"
 />
 ```
-
 **Note:** not all the video formats are supported by each browser
 
 ## Audio
-[![audio mode](https://nusid.net/audio.jpg)](#)
 
 To play an audio track, pass the following options:
+
+[![audio mode](https://nusid.net/audio.jpg)](#)
 
 ```javascript
 <ReactWebMediaPlayer
@@ -71,9 +71,9 @@ You can choose a vinyl display, by adding the `vinyl` property with the number o
 
 ## Slideshow
 
-[![slideshow mode](https://nusid.net/slideshow.jpg)](#)
-
 To play a slideshow, pass the following options:
+
+[![slideshow mode](https://nusid.net/slideshow.jpg)](#)
 
 ```javascript
 <ReactWebMediaPlayer
