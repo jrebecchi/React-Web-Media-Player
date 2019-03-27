@@ -20,8 +20,8 @@ class App extends Component {
   render() {
     return <ReactWebMediaPlayer
         title="My own video player"
-        video="https://any-website.com/my-video.mp4" 
-        thumbnail="https://any-website.com/video-thumbnail.jpg"
+        video="https://any-link.com/my-video.mp4" 
+        thumbnail="https://any-link.com/video-thumbnail.jpg"
     />
   }
 }
@@ -35,43 +35,61 @@ To play a video pass the following options:
 ```javascript
 <ReactWebMediaPlayer
   title="My own video player"
-  video="https://any-website.com/my-video.mp4" 
-  thumbnail="https://any-website.com/video-thumbnail.jpg"
+  video="https://any-link.com/my-video.mp4" 
+  thumbnail="https://any-link.com/video-thumbnail.jpg"
 />
 ```
 
 **Note:** not all the video formats are supported by each browser
 
 ## Audio
+[![audio mode](https://nusid.net/audio.jpg)](#)
+
 To play an audio track, pass the following options:
 
 ```javascript
 <ReactWebMediaPlayer
   title="My own audio player"
-  audio="https://any-website.com/my-music.mp3" 
-  thumbnail="https://any-website.com/audio-thumbnail.jpg"
+  audio="https://any-link.com/my-music.mp3" 
+  thumbnail="https://any-link.com/audio-thumbnail.jpg"
 />
 ```
+You can choose a vinyl display, by adding the `vinyl` property with the number of rounds per minut `rpm` and the image `img` to display:
+
+[![audio mode](https://nusid.net/vinyl.jpg)](#)
+
+```javascript
+<ReactWebMediaPlayer
+  title="My own vinyl player"
+  audio="https://any-link.com/my-music.mp3" 
+  thumbnail="https://any-link.com/audio-thumbnail.jpg"
+  vinyl={{img: "https://any-link.com/vinyl.jpg", rpm: 33 }}
+/>
+```
+
 **Note:** not all the audio formats are supported by each browser
 
 ## Slideshow
+
+[![slideshow mode](https://nusid.net/slideshow.jpg)](#)
+
 To play a slideshow, pass the following options:
 
 ```javascript
 <ReactWebMediaPlayer
   title="My own slideshow player"
-  thumbnail="https://any-website.com/slideshow-thumbnail.jpg"
+  thumbnail="https://any-link.com/slideshow-thumbnail.jpg"
   slideshow={[{
-      src: "https://any-website.com/slide1.jpg",
+      src: "https://any-link.com/slide1.jpg",
       endTime: 4.0
   }, {
-      src: "https://any-website.com/slide2.jpg",
+      src: "https://any-link.com/slide2.jpg",
       endTime: 8.0
   }, {
-      src: "https://any-website.com/slide3.jpg",
+      src: "https://any-link.com/slide3.jpg",
       endTime: 12.0
   }, {
-      src: "https://any-website.com/slide4.jpg",
+      src: "https://any-link.com/slide4.jpg",
       endTime: 16.0
   }]}
 />
@@ -83,8 +101,8 @@ You can add an audio track, that will be synchronized with the slideshow by addi
 ```javascript
 <ReactWebMediaPlayer
   title="My own audio-slideshow player"
-  audio="https://any-website.com/my-music-to-synchronize.mp3" 
-  thumbnail="https://any-website.com/slideshow-thumbnail.jpg"
+  audio="https://any-link.com/my-music-to-synchronize.mp3" 
+  thumbnail="https://any-link.com/slideshow-thumbnail.jpg"
   slideshow=...
 />
 ```
