@@ -42,5 +42,24 @@
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/src/__mocks__/styleMock.js"
     }
-  }
+  },
+  "keywords": [
+    "react",
+    "video",
+    "audio",
+    "music",
+    "slideshow",
+    "player",
+    "customize",
+    "media",
+    "play"
+  ],
+  "bugs": {
+    "url": "https://github.com/JohannC/React-Web-Media-Player/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JohannC/React-Web-Media-Player.git"
+  },
+  "homepage": "https://github.com/JohannC/React-Web-Media-Player#readme"
 }
