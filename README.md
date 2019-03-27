@@ -31,6 +31,7 @@ class App extends Component {
 
 To play a video pass the following options:
 
+
 ```javascript
 <ReactWebMediaPlayer
   title="My own video player"
