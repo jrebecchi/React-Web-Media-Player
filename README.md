@@ -27,7 +27,8 @@ class App extends Component {
 }
 ```
 ## Video
-<div style="text-align:center"><img src="https://nusid.net/video-played.jpg" /></div>
+[![Video mode](https://nusid.net/video-played.jpg)](#)
+
 To play a video pass the following options:
 
 ```javascript
