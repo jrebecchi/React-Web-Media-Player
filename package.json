@@ -1,48 +1,54 @@
 {
   "name": "react-web-media-player",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A React Player that can play videos, audio tracks, slideshows, with an easily cutomizable design",
   "license": "MIT",
-  "author": {
-    "name": "Johann Corcuff",
-    "email": "johann.corcuff@gmail.com"
-  },
-  "main": "./lib/ReactWebMediaPlayer.js",
+  "main": "lib/ReactWebMediaPlayer.js",
+  "module": "es/ReactWebMediaPlayer.js",
+  "files": [
+    "css",
+    "es",
+    "lib",
+    "umd"
+  ],
   "scripts": {
-    "build": "webpack",
-    "test": "jest"
+    "build": "nwb build-react-component",
+    "clean": "nwb clean-module && nwb clean-demo",
+    "prepublishOnly": "npm run build",
+    "start": "nwb serve-react-demo",
+    "test": "jest",
+    "test:coverage": "jest --watch",
+    "test:watch": "jest --coverage --watch"
   },
   "peerDependencies": {
-    "prop-types": "^15.6.0"
+    "react": "16.x"
   },
   "devDependencies": {
-    "fscreen": "^1.0.2",
-    "react-redux": "^6.0.1",
-    "react-scripts": "2.1.1",
-    "redux": "^4.0.1",
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.4.0",
     "@babel/plugin-proposal-class-properties": "^7.4.0",
     "@babel/preset-env": "^7.4.2",
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^24.5.0",
-    "babel-loader": "^8.0.5",
-    "babel-preset-stage-0": "^6.24.1",
-    "coveralls": "^3.0.3",
+    "fscreen": "^1.0.2",
     "jest": "^24.5.0",
-    "path": "^0.12.7",
-    "prop-types": "^15.7.2",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "react-test-renderer": "^16.8.4",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.1"
+    "nwb": "0.23.x",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^6.0.1",
+    "react-test-renderer": "^16.8.6",
+    "redux": "^4.0.1"
   },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(css|less)$": "<rootDir>/src/__mocks__/styleMock.js"
-    }
+  "author": {
+    "name": "Johann Corcuff",
+    "email": "johann.corcuff@gmail.com"
   },
+  "bugs": {
+    "url": "https://github.com/JohannC/React-Web-Media-Player/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JohannC/React-Web-Media-Player.git"
+  },
+  "homepage": "https://github.com/JohannC/React-Web-Media-Player#readme",
   "keywords": [
     "react",
     "video",
@@ -52,14 +58,15 @@
     "player",
     "customize",
     "media",
-    "play"
+    "play",
+    "react-component"
   ],
-  "bugs": {
-    "url": "https://github.com/JohannC/React-Web-Media-Player/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/JohannC/React-Web-Media-Player.git"
-  },
-  "homepage": "https://github.com/JohannC/React-Web-Media-Player#readme"
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "<rootDir>/jest.transform.js"
+    },
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/tests/__mocks__/styleMock.js"
+    }
+  }
 }

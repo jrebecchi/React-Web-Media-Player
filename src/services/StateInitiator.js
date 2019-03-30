@@ -197,7 +197,7 @@ const getInitState = (options) => {
     state.allowUnhighlightProgressBar = true;
     state.volumeSliderLeftMargin = "calculateMe!";
     state.allowMouseLeaveVolumeSlider = true;
-    state.showMenus = true;
+    state.showMenus = false;
     state.allowMenuHiding = true;
     state.showCursor = true;
     state.timeLastUserAction = new Date();

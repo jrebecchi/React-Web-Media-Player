@@ -21,8 +21,5 @@
 .wmp-central-play-arrow{
     color: white;
     cursor: pointer;
-}
-
-.material-icons.md-40{ 
-    font-size: 40px;
+    padding-top: 4px;
 }
