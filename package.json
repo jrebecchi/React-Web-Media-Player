@@ -1,6 +1,6 @@
 {
   "name": "react-web-media-player",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A React Player that can play videos, audio tracks, slideshows, with an easily cutomizable design",
   "license": "MIT",
   "main": "lib/ReactWebMediaPlayer.js",
@@ -18,7 +18,8 @@
     "start": "nwb serve-react-demo",
     "test": "jest",
     "test:coverage": "jest --watch",
-    "test:watch": "jest --coverage --watch"
+    "test:watch": "jest --coverage --watch",
+    "deploy": "gh-pages -d demo/dist"
   },
   "peerDependencies": {
     "react": "16.x"
@@ -29,6 +30,7 @@
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^24.5.0",
     "fscreen": "^1.0.2",
+    "gh-pages": "^2.0.1",
     "jest": "^24.5.0",
     "nwb": "0.23.x",
     "react": "^16.8.6",
