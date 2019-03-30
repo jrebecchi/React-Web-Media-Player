@@ -30,7 +30,6 @@
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^24.5.0",
     "fscreen": "^1.0.2",
-    "gh-pages": "^2.0.1",
     "jest": "^24.5.0",
     "nwb": "0.23.x",
     "react": "^16.8.6",
