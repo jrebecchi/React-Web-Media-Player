@@ -5,6 +5,7 @@ import ReactWebMediaPlayer from '../../src/ReactWebMediaPlayer';
 class Demo extends Component {
   render() {
     return <div style={{textAlign:"center"}}>
+      
       <ReactWebMediaPlayer
         title="Big Buck Bunny - 2008"
         thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg"
@@ -17,10 +18,7 @@ class Demo extends Component {
         title="Key Notez - Summer"
         link="https://google.com"
         thumbnail={"https://nusid.net/album-cover.jpg"}
-        vinyl={{
-          img: "https://nusid.net/album-cover.jpg",
-          rpm: 10
-        }}
+        vinyl={{ img: "https://nusid.net/album-cover.jpg", rpm: 10}}
         audio="https://nusid.net/audio.mp3"
         logo={{ img: "https://nusid.net/your-logo.png", src:"https://www.npmjs.com/package/react-web-media-player"}}
       />

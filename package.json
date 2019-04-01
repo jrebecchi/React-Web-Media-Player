@@ -12,7 +12,7 @@
     "umd"
   ],
   "scripts": {
-    "build": "nwb build-react-component",
+    "build": "nwb build-react-component --copy-files",
     "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run build",
     "start": "nwb serve-react-demo",
@@ -20,6 +20,11 @@
     "test:coverage": "jest --watch",
     "test:watch": "jest --coverage --watch",
     "deploy": "gh-pages -d demo/dist"
+  },
+  "dependencies": {
+    "fscreen": "^1.0.2",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.1"
   },
   "peerDependencies": {
     "react": "16.x"
@@ -29,14 +34,11 @@
     "@babel/preset-env": "^7.4.2",
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^24.5.0",
-    "fscreen": "^1.0.2",
     "jest": "^24.5.0",
     "nwb": "0.23.x",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-redux": "^6.0.1",
-    "react-test-renderer": "^16.8.6",
-    "redux": "^4.0.1"
+    "react-test-renderer": "^16.8.6"
   },
   "author": {
     "name": "Johann Corcuff",

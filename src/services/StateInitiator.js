@@ -182,6 +182,11 @@ const getInitState = (options) => {
     } else {
         state.autoplay = false;
     }
+    if (options.hasOwnProperty("style")) {
+        state.style = options.style;
+    } else {
+        state.style = {};
+    }
     state.title = options.title;
     state.link = options.link;
     state.isLoading = true;

@@ -124,10 +124,11 @@ class Container extends Component {
 
     render = () => {
         const className = ["wmp-container", "fullscreen"];
-        const style = {
-            width: this.props.width + "px",
-            height: this.props.height + "px"
-        }
+        const style = {};
+        Object.assign(style, this.props.style);
+        
+        style.width = this.props.width + "px",
+        style.height = this.props.height + "px"
         if (this.props.isFullscreenActivated) {
             className.push("fullscreen-enabled");
             style.width = "100%";
@@ -186,6 +187,7 @@ const mapStateToProps = (state) => {
         isLoading: state.isLoading,
         isFullscreenActivated: state.isFullscreenActivated,
         autoplay: state.autoplay,
+        style: state.style
     };
 };
 

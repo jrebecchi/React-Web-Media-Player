@@ -47,6 +47,7 @@ class Slideshow extends Component {
         if(!this.hasEnoughBuffered(this.currentTime)){
             this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
             this.load(this.currentTime);
+            return;
         } else {
             this.props.dispatch({ type: 'SLIDESHOW_IS_READY' });
         }
