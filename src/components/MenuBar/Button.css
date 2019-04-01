@@ -8,11 +8,11 @@
 }
 
 .logo-padding-small { 
-    padding-bottom: 0px;
+    padding-bottom: 1px;
 }
 
 .logo-padding-medium { 
-    padding-top: 1px; 
+    padding-bottom: 2px;
 }
 
 .logo-padding-big { 
