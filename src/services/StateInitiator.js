@@ -188,7 +188,7 @@ const getInitState = (options) => {
         state.style = {};
     }
     state.title = options.title;
-    state.link = options.link;
+    state.link = options.titleHref;
     state.isLoading = true;
     state.isPlayerHighlighted = false;
     state.isInitialized = false;
