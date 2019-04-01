@@ -26,6 +26,10 @@ class App extends Component {
   }
 }
 ```
+## Demo
+
+Please find the demo [here](https://johannc.github.io/Demo-React-Web-Media-Player/).
+
 ## Video
 
 To play a video pass the following options:
