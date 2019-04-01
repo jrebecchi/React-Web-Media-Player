@@ -253,7 +253,8 @@ class Mixer extends Component {
         if (prevprops.isAudioReady !== this.props.isAudioReady
             || prevprops.isVideoReady !== this.props.isVideoReady
             || prevprops.isSlideshowReady !== this.props.isSlideshowReady
-            || prevprops.isVinylReady !== this.props.isVinylReady) {
+            || prevprops.isVinylReady !== this.props.isVinylReady
+            || prevprops.channelsWait !== this.props.channelsWait) {
             this.handleChannelsBufferStateChange();
         }
 
