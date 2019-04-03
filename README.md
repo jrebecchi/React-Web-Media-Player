@@ -3,7 +3,8 @@
 
 [![React Web Media Player Logo](https://nusid.net/banner-title-medium.jpg)](#)
 
-A React Player that can play videos, audio tracks, slideshows, with an easily cutomizable design.  
+A React Player that can play videos, audio tracks, slideshows, with an easily cutomizable design.
+
 Please find the demo [here](https://johannc.github.io/Demo-React-Web-Media-Player/).
 
 ## Installation
