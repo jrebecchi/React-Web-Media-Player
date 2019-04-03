@@ -237,6 +237,10 @@ class Mixer extends Component {
             return;
         }
 
+        if (prevprops.duration !== this.props.duration && this.props.isInitialized) {
+            this.play();
+        }
+
         //Prevent other functions based on the audio track duration or the video track duration to generate undesired side-effects
         if (this.props.hasAudio && isNaN(this.audio.getDuration())) {
             return;
