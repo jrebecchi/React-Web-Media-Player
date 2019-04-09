@@ -153,6 +153,7 @@ class Video extends Component {
         }
         return (
             <video
+            autoplay muted
                 width={dimensions.width}
                 style={{ marginLeft: dimensions.marginLeft, marginTop: dimensions.marginTop }}
                 ref={video => (this.video = video)}
@@ -183,7 +184,8 @@ const mapStateToProps = (state) => {
         video: state.video,
         width: state.width,
         height: state.height,
-        isReadingTerminated: state.isReadingTerminated
+        isReadingTerminated: state.isReadingTerminated,
+        muted: state.muted
     };
 };
 

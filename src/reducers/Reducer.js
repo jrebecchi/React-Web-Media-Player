@@ -47,12 +47,19 @@ import updateTimeRangeBuffered from '../actions/UpdateTimeRangeBuffered';
 import channelsWait from '../actions/ChannelsWait';
 import channelsContinue from '../actions/ChannelsContinue';
 import vinylReady from '../actions/VinylReady';
+import mute from '../actions/Mute';
+import unmute from '../actions/Unmute';
 
 const reducer = (state, action) => {
+    console.log(action);
     if (action === undefined) {
         return state;
     }
     switch (action.type) {
+        case "UNMUTE":
+            return unmute(state);
+        case "MUTE":
+            return mute(state);
         case "VINYL_IS_READY":
             return vinylReady(state);
         case "CHANNELS_CONTINUE":

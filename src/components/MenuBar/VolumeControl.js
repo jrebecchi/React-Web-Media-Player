@@ -6,20 +6,20 @@ import { isInsideElement } from '../../services/Utils';
 
 const volumeDownLogo =
     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24">
-        <path className="wmp-tool-button-logo" fill="#e4e5e8" d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z"/>
-        <path d="M0 0h24v24H0z" fill="none"/>
+        <path className="wmp-tool-button-logo" fill="#e4e5e8" d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z" />
+        <path d="M0 0h24v24H0z" fill="none" />
     </svg>
 
 const volumeOffLogo =
     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24">
-        <path className="wmp-tool-button-logo" fill="#e4e5e8" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-        <path d="M0 0h24v24H0z" fill="none"/>
+        <path className="wmp-tool-button-logo" fill="#e4e5e8" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+        <path d="M0 0h24v24H0z" fill="none" />
     </svg>
 
 const volumeUpLogo =
     <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24">
-        <path className="wmp-tool-button-logo" fill="#e4e5e8" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
-        <path d="M0 0h24v24H0z" fill="none"/>
+        <path className="wmp-tool-button-logo" fill="#e4e5e8" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+        <path d="M0 0h24v24H0z" fill="none" />
     </svg>
 
 
@@ -43,7 +43,10 @@ class VolumeControl extends Component {
     handleClick = (e) => {
         e.stopPropagation();
         this.props.dispatch({ type: 'USER_ACTIVE' });
-        if (this.props.volume === 0) {
+        if (this.props.muted) {
+            this.props.dispatch({ type: 'UNMUTE' });
+            this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: this.props.volume } });
+        } else if (this.props.volume === 0) {
             this.props.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: this.props.pastVolume } });
         } else {
             this.props.dispatch({ type: 'SAVE_ACTUAL_VOLUME_AS_PAST_VOLUME' });
@@ -55,6 +58,8 @@ class VolumeControl extends Component {
     handleMouseDownVolumeBar = (e) => {
         e.stopPropagation();
         this.props.dispatch({ type: 'USER_ACTIVE' });
+        if (this.props.muted)
+            this.props.dispatch({ type: 'UNMUTE' });
         this.animateVolumeScrubberButton(e);
     }
 
@@ -89,7 +94,10 @@ class VolumeControl extends Component {
     };
 
     calculateVolumeSliderLeftMargin = (volume) => {
-        return volume * (100 - this.nodeScrubberButton.clientWidth / this.nodeTotalBar.clientWidth * 100) + "%";
+        if (this.props.muted)
+            return "0%";
+        else
+            return volume * (100 - this.nodeScrubberButton.clientWidth / this.nodeTotalBar.clientWidth * 100) + "%";
     }
 
     calculateVolumeFromXCoord = (clientX) => {
@@ -101,9 +109,6 @@ class VolumeControl extends Component {
         if (x > maxX) x = maxX;
         if (x <= 0) {
             x = 0;
-            this.props.dispatch({ type: 'MUTE' });
-        } else if (this.props.isMuted) {
-            this.props.dispatch({ type: 'UNMUTE' });
         }
         return x / maxX;
     }
@@ -116,14 +121,14 @@ class VolumeControl extends Component {
     }
 
     componentDidUpdate = (prevProps) => {
-        if (prevProps.volume !== this.props.volume) {
+        if (prevProps.volume !== this.props.volume || prevProps.muted !== this.props.muted) {
             this.props.dispatch({ type: 'UPDATE_VOLUME_SLIDER_LEFT_MARGIN', payload: { volumeSliderLeftMargin: this.calculateVolumeSliderLeftMargin(this.props.volume) } });
         }
     }
 
     render = () => {
         let icon, volumeSlider;
-        if (this.props.volume === 0) {
+        if (this.props.volume === 0 || this.props.muted) {
             icon = volumeOffLogo;
         } else if (this.props.volume < 0.5) {
             icon = volumeDownLogo;
@@ -159,10 +164,10 @@ const mapStateToProps = (state) => {
         volume: state.volume,
         isInitialized: state.isInitialized,
         pastVolume: state.pastVolume,
-        isMuted: state.isMuted,
         volumeSliderLeftMargin: state.volumeSliderLeftMargin,
         showVolumeSlider: state.showVolumeSlider,
         allowMouseLeaveVolumeSlider: state.allowMouseLeaveVolumeSlider,
+        muted: state.muted
     };
 };
 

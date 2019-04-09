@@ -187,6 +187,20 @@ class Mixer extends Component {
             this.audio.setVolume(volume);
     };
 
+    mute = () => {
+        if (this.props.hasVideo)
+            this.video.mute();
+        else if (this.props.hasAudio)
+            this.audio.mute();
+    };
+
+    unmute = () => {
+        if (this.props.hasVideo)
+            this.video.unMute();
+        else if (this.props.hasAudio)
+            this.audio.unMute();
+    };
+
     hasEnoughBuffered = () => {
         if (this.props.hasVideo)
             return this.props.isVideoReady;
@@ -227,6 +241,9 @@ class Mixer extends Component {
 
         if (prevprops.isInitialized === false && this.props.isInitialized === true) {
             this.props.dispatch({ type: 'LOADING' });
+            if (this.props.hasSlideshow) {
+                this.slideshow.load();
+            }
             if (this.props.hasAudio && isNaN(this.audio.getDuration())) {
                 this.audio.load();
             } else if (this.props.hasVideo && isNaN(this.video.getDuration())) {
@@ -246,6 +263,15 @@ class Mixer extends Component {
             return;
         } else if (this.props.hasVideo && isNaN(this.video.getDuration())) {
             return;
+        }
+
+        if (prevprops.muted !== this.props.muted) {
+            if(this.props.muted){
+                this.mute()
+                this.play();
+            } else {
+                this.unmute()
+            }
         }
 
         if (prevprops.askNextImage !== this.props.askNextImage) {
@@ -334,7 +360,6 @@ const mapStateToProps = (state) => {
         askNextImage: state.askNextImage,
         askPreviousImage: state.askPreviousImage,
         volume: state.volume,
-        isMuted: state.isMuted,
         hasVideo: state.hasVideo,
         isVideoReady: state.isVideoReady,
         hasAudio: state.hasAudio,
@@ -351,6 +376,7 @@ const mapStateToProps = (state) => {
         isReadingTerminated: state.isReadingTerminated,
         allowUnhighlightProgressBar: state.allowUnhighlightProgressBar,
         autoplay: state.autoplay,
+        muted: state.muted
     };
 };
 

@@ -35,7 +35,7 @@ class Slideshow extends Component {
                         this.props.dispatch({ type: 'SLIDESHOW_IS_READY' });
                     }
                 }
-                image.src = this.props.slideshow[i].src;
+                image.src = this.props.slideshow[i].img;
                 this.props.dispatch({ type: 'ADD_IMAGE', payload: { index: i, image: image } });
 
             }
@@ -285,7 +285,7 @@ class Slideshow extends Component {
                     imageSliderStyle = this.adaptImageToHeight(width, height);
                 }
             }            
-            src = this.props.imageDisplayed.src;
+            src = this.props.imageDisplayed.img;
         }
         
         return (

@@ -106,6 +106,7 @@ class Audio extends Component {
     render = () => {
         return (
             <audio
+                autoplay muted
                 src={this.props.audio}
                 ref={audio => this.audio = audio}
                 onWaiting={this.handleWaiting}
@@ -124,6 +125,7 @@ const mapStateToProps = (state) => {
         duration: state.duration,
         audio: state.audio,
         hasVinyl: state.hasVinyl,
+        muted: state.muted
     };
 };
 

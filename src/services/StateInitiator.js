@@ -1,6 +1,6 @@
-import { isIE, isChrome } from './Utils';
-const DEFAULT_WIDTH = 560 //560;
-const DEFAULT_HEIGHT = 315 //315;
+import { isChrome } from './Utils';
+const DEFAULT_WIDTH = 560;
+const DEFAULT_HEIGHT = 315;
 const DEFAULT_ALLOW_FULL_FRAME = true;
 const DEFAULT_VOLUME = 1.0;
 const DEFAULT_COLOR = 'rgb(96, 157, 255)';
@@ -149,7 +149,7 @@ const getInitState = (options) => {
     if (options.hasOwnProperty("currentTime")) {
         state.currentTime = options.currentTime;
     } else {
-        state.currentTime = 0;
+        state.currentTime = 0.0;
     }
     if (options.hasOwnProperty("logo")) {
         state.logo = options.logo;
@@ -169,16 +169,16 @@ const getInitState = (options) => {
     }
     if (options.hasOwnProperty("thumbnail")) {
         state.thumbnail = options.thumbnail;
-    } else {
-        throw new Error("You need to specify the thumbnail property");
     }
+    
+    state.muted = false;
     if (options.hasOwnProperty("autoplay")) {
         //Autoplay of an audio track synchronized with a slideshow is blocked on Chrome-based browser 
-        if (options.autoplay && isChrome() && state.hasSlideshow && state.hasAudio) {
-            state.autoplay = false;
-        } else {
-            state.autoplay = options.autoplay;
+        if (options.autoplay && isChrome()) {
+          state.muted = true;
         }
+        state.autoplay = options.autoplay;
+        //}
     } else {
         state.autoplay = false;
     }
