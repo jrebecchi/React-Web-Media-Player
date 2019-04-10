@@ -14,6 +14,7 @@ class Demo extends Component {
         video="https://nusid.net/video.mp4"
         autoplay={true}
         muted={true}
+        volume={0.5}
       />
        
       
@@ -26,6 +27,7 @@ class Demo extends Component {
         vinyl={{ img: "https://nusid.net/album-cover.jpg", rpm: 10}}
         audio="https://nusid.net/audio.mp3"
         logo={{ img: "https://nusid.net/your-logo.png", href:"https://www.npmjs.com/package/react-web-media-player"}}
+        volume={0.5}
       />
       
       <ReactWebMediaPlayer
@@ -36,6 +38,7 @@ class Demo extends Component {
         thumbnail={"https://nusid.net/album-cover.jpg"}
         audio="https://nusid.net/audio.mp3"
         logo={{ img: "https://nusid.net/your-logo.png", href:"https://www.npmjs.com/package/react-web-media-player"}}
+        volume={0.5}
       />
        
       <ReactWebMediaPlayer
@@ -66,6 +69,7 @@ class Demo extends Component {
             endTime: 28.0
           }]}
           logo={{ img: "https://nusid.net/your-logo.png", href:"https://www.npmjs.com/package/react-web-media-player"}}
+          volume={0.5}
       />
       
       <ReactWebMediaPlayer
@@ -99,7 +103,8 @@ class Demo extends Component {
         logo={{ img: "https://nusid.net/your-logo.png", href:"https://www.npmjs.com/package/react-web-media-player"}}
         autoplay={true}
         muted={true}
-        />{/**/}
+        volume={0.5}
+        />
 
     </div>
   }

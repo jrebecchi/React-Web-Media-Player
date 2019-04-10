@@ -5,7 +5,7 @@
 
 A React Player that can play videos, audio tracks, slideshows, with an easily customizable design.
 
-Please find the demo [here](https://johannc.github.io/Demo-React-Web-Media-Player/).
+Please find the demo [here](https://react-web-media-player.herokuapp.com/) and the full API docs [here](https://react-web-media-player.herokuapp.com/docs).
 
 ## Installation
 
@@ -111,3 +111,15 @@ You can add an audio track, that will be synchronized with the slideshow by addi
 ```
 
 **Note:** the duration of the slideshow will be the duration of the player
+
+## Customization
+
+<center><img src="https://react-web-media-player.herokuapp.com//static/media/custom.f8638e76.png" /></center>
+
+- Choose the menu color
+- Choose the player title
+- Choose thethumbnail
+- Add your custom buttons
+- Add your logo
+
+To find how, look at the component properties explained [here](https://react-web-media-player.herokuapp.com/docs).

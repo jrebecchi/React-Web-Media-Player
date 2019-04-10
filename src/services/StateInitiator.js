@@ -1,4 +1,3 @@
-import { isChrome } from './Utils';
 const DEFAULT_WIDTH = 560;
 const DEFAULT_HEIGHT = 315;
 const DEFAULT_ALLOW_FULL_FRAME = true;
