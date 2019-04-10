@@ -16,7 +16,6 @@ class Audio extends Component {
     };
 
     play = () => {
-        //this.audio.currentTime = time;
         if (!this.isPlaying()) {
             let playPromise = this.audio.play();
             if (playPromise !== undefined) {
@@ -103,10 +102,14 @@ class Audio extends Component {
         }
     }
 
+    componentDidMount = () => {
+        if(this.props.muted)
+            this.mute();
+    }
+
     render = () => {
         return (
             <audio
-                autoplay muted
                 src={this.props.audio}
                 ref={audio => this.audio = audio}
                 onWaiting={this.handleWaiting}

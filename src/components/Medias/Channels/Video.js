@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isIE } from '../../../services/Utils';
 const FLOAT_IMPRECISION = 0.1;
+
 class Video extends Component {
 
     isPlaying = () => {
@@ -15,13 +16,12 @@ class Video extends Component {
     };
 
     play = () => {
-        //this.video.currentTime = time;
         if (!this.isPlaying()) {
             let playPromise = this.video.play();
             if (playPromise !== undefined) {
                 playPromise.then(_ => {
                     // Automatic playback started!
-                }).catch(e => {
+                }).catch(_ => {
                     // Auto-play was prevented
                 });
             }
@@ -129,6 +129,11 @@ class Video extends Component {
         }
     };
 
+    componentDidMount = () => {
+        if(this.props.muted)
+            this.mute();
+    }
+
     render = () => {
         let dimensions;
         if (this.props.isFullscreenActivated) {
@@ -152,8 +157,8 @@ class Video extends Component {
             }
         }
         return (
+
             <video
-            autoplay muted
                 width={dimensions.width}
                 style={{ marginLeft: dimensions.marginLeft, marginTop: dimensions.marginTop }}
                 ref={video => (this.video = video)}

@@ -51,7 +51,6 @@ import mute from '../actions/Mute';
 import unmute from '../actions/Unmute';
 
 const reducer = (state, action) => {
-    console.log(action);
     if (action === undefined) {
         return state;
     }

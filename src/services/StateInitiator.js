@@ -170,15 +170,15 @@ const getInitState = (options) => {
     if (options.hasOwnProperty("thumbnail")) {
         state.thumbnail = options.thumbnail;
     }
+
+    if (options.hasOwnProperty("muted")) {
+        state.muted = options.muted;
+    } else {
+        state.muted = false;
+    }
     
-    state.muted = false;
     if (options.hasOwnProperty("autoplay")) {
-        //Autoplay of an audio track synchronized with a slideshow is blocked on Chrome-based browser 
-        if (options.autoplay && isChrome()) {
-          state.muted = true;
-        }
         state.autoplay = options.autoplay;
-        //}
     } else {
         state.autoplay = false;
     }

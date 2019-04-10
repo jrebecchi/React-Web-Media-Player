@@ -229,11 +229,11 @@ class Mixer extends Component {
 
     componentWillMount = () => {
         if (this.props.autoplay) {
-            window.onload = () => {
+            window.addEventListener('load', () => {
                 this.props.dispatch({ type: 'INITIALIZE_PLAYER' });
                 this.props.dispatch({ type: 'PLAY' });
                 this.props.dispatch({ type: 'USER_ACTIVE' });
-            }
+            });
         }
     }
 
