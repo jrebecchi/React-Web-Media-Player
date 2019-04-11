@@ -5,7 +5,7 @@
 
 A React Player that can play videos, audio tracks, slideshows, with an easily customizable design.
 
-Please find the demo [here](https://react-web-media-player.herokuapp.com/) and the full API docs [here](https://react-web-media-player.herokuapp.com/docs).
+Please find the demo [here](https://react-web-media-player.herokuapp.com/) and the full API documentation [here](https://react-web-media-player.herokuapp.com/docs).
 
 ## Installation
 
