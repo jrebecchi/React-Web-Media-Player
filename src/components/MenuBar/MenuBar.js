@@ -31,7 +31,7 @@ class MenuBar extends Component {
         }
         if (this.props.buttons) {
             for (let i = 0; i < this.props.buttons.length; ++i) {
-                buttons.push(<Button img={this.props.buttons[i].img} href={this.props.buttons[i].href} style={this.props.buttons[i].style} callback={this.props.buttons[i].callback} />)
+                buttons.push(<Button img={this.props.buttons[i].img} key={i} href={this.props.buttons[i].href} style={this.props.buttons[i].style} callback={this.props.buttons[i].callback} />)
             }
         }
         if (this.props.allowFullFrame) {

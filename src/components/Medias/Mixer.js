@@ -112,8 +112,7 @@ class Mixer extends Component {
             this.video.play();
         }
         if (this.props.hasAudio) {
-            if (this.props.currentTime < this.audio.getDuration())
-                this.audio.play();
+            this.audio.play();
         }
         if (this.props.hasSlideshow) {
             this.slideshow.play();
