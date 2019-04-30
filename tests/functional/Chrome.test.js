@@ -5,7 +5,7 @@ require('chromedriver')
 require('geckodriver')
 import { querySelector } from './Utils';
 import 'babel-polyfill';
-import { By, until} from 'selenium-webdriver';
+import { By, until } from 'selenium-webdriver';
 const waitUntilTime = 80000
 
 const rootURL = 'http://localhost:3000/'
@@ -23,54 +23,87 @@ it('initialises the context', async () => {
 })
 
 it('test the video player', async () => {
-  const id = "video";
+  await testBasicPlayerFunctions("video");
+
+})
+
+it('test the audio player', async () => {
+  await testBasicPlayerFunctions("audio");
+
+})
+
+it('test the vinyl player', async () => {
+  await testBasicPlayerFunctions("vinyl");
+})
+
+
+it('test the slideshow player', async () => {
+  const isSlideshow = true;
+  await testBasicPlayerFunctions("slideshow", isSlideshow);
+})
+
+it('test the audioslideshow player', async () => {
+  await testBasicPlayerFunctions("audioslideshow");
+})
+
+const testBasicPlayerFunctions = async (id, isSlideshow = false) => {
   await testLaunchPlayer(id);
   await testReadingTerminated(id);
   await testRelaunchPlayer(id);
   await testEnterFullScreen(id);
   await testLeaveFullScreen(id);
-  await testMute(id);
-  await testUnmute(id);
-})
+  if (isSlideshow) {
+  
+  } else {
+    await testMute(id);
+    await testUnmute(id);
+  }
+  await testPausePlayer(id);
+}
 
 const testLaunchPlayer = async (id) => {
-  const player = await querySelector('[id="'+id+'"]', driver);
-  const timer = await querySelector('div#'+id+' [class=\'wmp-tool-button button-time wmp-time-display\']', driver);
+  const player = await querySelector('[id="' + id + '"]', driver);
+  const timer = await querySelector('div#' + id + ' [class=\'wmp-tool-button button-time wmp-time-display\']', driver);
   player.click();
   await driver.wait(until.elementTextContains(timer, "0:01"), waitUntilTime);
 }
 
 const testReadingTerminated = async (id) => {
-  const progressBar = await querySelector('div#'+id+' [class=\'wmp-progress-bar-wrapper\']', driver);
+  const progressBar = await querySelector('div#' + id + ' [class=\'wmp-progress-bar-wrapper\']', driver);
   progressBar.click();
   const actions = driver.actions();
-  await actions.mouseMove({x: 265, y: 0}).click().perform();
+  await actions.mouseMove({ x: 265, y: 0 }).click().perform();
 }
 
 const testRelaunchPlayer = async (id) => {
-  const replayButton = await querySelector('div#'+id+' [class=\'replay-logo\']', driver);
-  const timer = await querySelector('div#'+id+' [class=\'wmp-tool-button button-time wmp-time-display\']', driver);
+  const replayButton = await querySelector('div#' + id + ' [class=\'replay-logo\']', driver);
+  const timer = await querySelector('div#' + id + ' [class=\'wmp-tool-button button-time wmp-time-display\']', driver);
   replayButton.click();
   await driver.wait(until.elementTextContains(timer, "0:01"), waitUntilTime);
 }
 
 const testEnterFullScreen = async (id) => {
-  const fullscreenButton = await querySelector('div#'+id+' [class=\'fullscreen-logo\']', driver);
+  const fullscreenButton = await querySelector('div#' + id + ' [class=\'fullscreen-logo\']', driver);
   fullscreenButton.click();
 }
 
 const testLeaveFullScreen = async (id) => {
-  const fullscreenExitButton = await querySelector('div#'+id+' [class=\'fullscreen-exit-logo\']', driver);
+  const fullscreenExitButton = await querySelector('div#' + id + ' [class=\'fullscreen-exit-logo\']', driver);
   fullscreenExitButton.click();
 }
 
 const testMute = async (id) => {
-  const volumeButton = await querySelector('div#'+id+' [class=\'volume-up-logo\']', driver);
+  const volumeButton = await querySelector('div#' + id + ' [class=\'volume-up-logo\']', driver);
   volumeButton.click();
 }
 
 const testUnmute = async (id) => {
-  const volumeButton = await querySelector('div#'+id+' [class=\'volume-off-logo\']', driver);
+  const volumeButton = await querySelector('div#' + id + ' [class=\'volume-off-logo\']', driver);
   volumeButton.click();
+}
+
+const testPausePlayer = async (id) => {
+  const pauseButton = await querySelector('div#' + id + ' [class=\'pause-logo\']', driver);
+  pauseButton.click();
 }
 

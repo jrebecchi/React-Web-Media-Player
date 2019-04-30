@@ -15,14 +15,12 @@ class Demo extends Component {
         id="video"
       />
 
-
       <ReactWebMediaPlayer
         width={560}
         height={560}
         title="Key Notez - Summer"
         titleHref="https://google.com"
         thumbnail={"https://nusid.net/album-cover.jpg"}
-        vinyl={{ img: "https://nusid.net/album-cover.jpg", rpm: 10 }}
         audio="https://nusid.net/audio.mp3"
         logo={{ img: "https://nusid.net/your-logo.png", href: "https://www.npmjs.com/package/react-web-media-player" }}
         volume={0.5}
@@ -35,6 +33,7 @@ class Demo extends Component {
         title="Key Notez - Summer"
         titleHref="https://google.com"
         thumbnail={"https://nusid.net/album-cover.jpg"}
+        vinyl={{ img: "https://nusid.net/album-cover.jpg", rpm: 10 }}
         audio="https://nusid.net/audio.mp3"
         logo={{ img: "https://nusid.net/your-logo.png", href: "https://www.npmjs.com/package/react-web-media-player" }}
         volume={0.5}
