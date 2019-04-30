@@ -23,40 +23,54 @@ it('initialises the context', async () => {
 })
 
 it('test the video player', async () => {
-  const player = await querySelector('[id="video"]', driver);
-  //const timer = await querySelector('[class=\'wmp-tool-button button-time wmp-time-display\']', driver);
-  const timer = await querySelector('div#video [class=\'wmp-tool-button button-time wmp-time-display\']', driver);
-  const progressBar = await querySelector('div#video [class=\'wmp-progress-bar-wrapper\']', driver);
-  //Test player launch 
+  const id = "video";
+  await testLaunchPlayer(id);
+  await testReadingTerminated(id);
+  await testRelaunchPlayer(id);
+  await testEnterFullScreen(id);
+  await testLeaveFullScreen(id);
+  await testMute(id);
+  await testUnmute(id);
+})
+
+const testLaunchPlayer = async (id) => {
+  const player = await querySelector('[id="'+id+'"]', driver);
+  const timer = await querySelector('div#'+id+' [class=\'wmp-tool-button button-time wmp-time-display\']', driver);
   player.click();
   await driver.wait(until.elementTextContains(timer, "0:01"), waitUntilTime);
-  
-  //Test change time by clicking on progress
+}
+
+const testReadingTerminated = async (id) => {
+  const progressBar = await querySelector('div#'+id+' [class=\'wmp-progress-bar-wrapper\']', driver);
   progressBar.click();
   const actions = driver.actions();
   await actions.mouseMove({x: 265, y: 0}).click().perform();
-  
-  //Test player reach reading terminated state
-  //await driver.wait(until.elementTextContains(timer, "9:55"), waitUntilTime);
-  const replayButton = await querySelector('div#video [class=\'replay-logo\']', driver);
-  
-  //Test relaunch player
+}
+
+const testRelaunchPlayer = async (id) => {
+  const replayButton = await querySelector('div#'+id+' [class=\'replay-logo\']', driver);
+  const timer = await querySelector('div#'+id+' [class=\'wmp-tool-button button-time wmp-time-display\']', driver);
   replayButton.click();
   await driver.wait(until.elementTextContains(timer, "0:01"), waitUntilTime);
+}
 
-  //Test enter fullscreen
-  const fullscreenButton = await querySelector('div#video [class=\'fullscreen-logo\']', driver);
+const testEnterFullScreen = async (id) => {
+  const fullscreenButton = await querySelector('div#'+id+' [class=\'fullscreen-logo\']', driver);
   fullscreenButton.click();
+}
 
-  //Test leave fullscreen
-  const fullscreenExitButton = await querySelector('div#video [class=\'fullscreen-exit-logo\']', driver);
+const testLeaveFullScreen = async (id) => {
+  const fullscreenExitButton = await querySelector('div#'+id+' [class=\'fullscreen-exit-logo\']', driver);
   fullscreenExitButton.click();
+}
 
-  //Test mute
-  let volumeButton = await querySelector('div#video [class=\'volume-up-logo\']', driver);
+const testMute = async (id) => {
+  const volumeButton = await querySelector('div#'+id+' [class=\'volume-up-logo\']', driver);
   volumeButton.click();
+}
 
-  //Test unmute
-  volumeButton = await querySelector('div#video [class=\'volume-off-logo\']', driver);
+const testUnmute = async (id) => {
+  const volumeButton = await querySelector('div#'+id+' [class=\'volume-off-logo\']', driver);
   volumeButton.click();
-})
+}
+

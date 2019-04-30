@@ -17,8 +17,8 @@ class Demo extends Component {
 
 
       <ReactWebMediaPlayer
-        width={400}
-        height={400}
+        width={560}
+        height={560}
         title="Key Notez - Summer"
         titleHref="https://google.com"
         thumbnail={"https://nusid.net/album-cover.jpg"}
@@ -30,8 +30,8 @@ class Demo extends Component {
       />
 
       <ReactWebMediaPlayer
-        width={400}
-        height={400}
+        width={560}
+        height={560}
         title="Key Notez - Summer"
         titleHref="https://google.com"
         thumbnail={"https://nusid.net/album-cover.jpg"}
