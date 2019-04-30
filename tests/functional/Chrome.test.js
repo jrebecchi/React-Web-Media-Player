@@ -36,7 +36,6 @@ it('test the vinyl player', async () => {
   await testBasicPlayerFunctions("vinyl");
 })
 
-
 it('test the slideshow player', async () => {
   const isSlideshow = true;
   await testBasicPlayerFunctions("slideshow", isSlideshow);
@@ -53,7 +52,7 @@ const testBasicPlayerFunctions = async (id, isSlideshow = false) => {
   await testEnterFullScreen(id);
   await testLeaveFullScreen(id);
   if (isSlideshow) {
-  
+    await testNextAndPreviousNavigation(id)
   } else {
     await testMute(id);
     await testUnmute(id);
@@ -105,5 +104,19 @@ const testUnmute = async (id) => {
 const testPausePlayer = async (id) => {
   const pauseButton = await querySelector('div#' + id + ' [class=\'pause-logo\']', driver);
   pauseButton.click();
+}
+
+const testNextAndPreviousNavigation = async (id) => {
+  const nextButton = await querySelector('div#' + id + ' [class=\'next-logo\']', driver);
+  const previousButton = await querySelector('div#' + id + ' [class=\'previous-logo\']', driver);
+  const timer = await querySelector('div#' + id + ' [class=\'wmp-tool-button button-time wmp-time-display\']', driver);
+  for (let i = 0; i < 8; ++i)
+    nextButton.click();
+  await querySelector('div#' + id + ' [class=\'replay-logo\']', driver);
+  for (let i = 0; i < 8; ++i)
+    previousButton.click();
+  const playButton = await querySelector('div#' + id + ' [class=\'play-logo\']', driver);
+  playButton.click();
+  await driver.wait(until.elementTextContains(timer, "0:01"), waitUntilTime);
 }
 

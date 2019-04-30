@@ -191,6 +191,10 @@ const getInitState = (options) => {
         state.id = options.id;
     }
 
+    if (options.hasOwnProperty("isTestEnvironment")) {
+        state.isTestEnvironment = options.isTestEnvironment;
+    }
+
     state.title = options.title;
     state.link = options.titleHref;
     state.isLoading = true;

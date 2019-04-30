@@ -139,9 +139,9 @@ class Container extends Component {
         let thumbnail, largePlayButton, menuBar, titleBar, spinner;
         if (this.props.thumbnail && !this.props.isInitialized && !this.props.autoplay)
             thumbnail = <Thumbnail />;
-        //if (this.props.isInitialized && this.props.showMenus) {
+        if (this.props.isInitialized && this.props.showMenus || this.props.isTestEnvironment) {
             menuBar = <MenuBar />
-        //}
+        }
         if (!this.props.isInitialized && !this.props.autoplay) {
             largePlayButton = <LargePlayButton />;
         }
@@ -191,6 +191,7 @@ const mapStateToProps = (state) => {
         autoplay: state.autoplay,
         style: state.style,
         id: state.id,
+        isTestEnvironment: state.isTestEnvironment,
     };
 };
 
