@@ -186,6 +186,11 @@ const getInitState = (options) => {
     } else {
         state.style = {};
     }
+
+    if (options.hasOwnProperty("id")) {
+        state.id = options.id;
+    }
+
     state.title = options.title;
     state.link = options.titleHref;
     state.isLoading = true;
