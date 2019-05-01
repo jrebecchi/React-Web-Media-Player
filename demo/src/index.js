@@ -5,42 +5,44 @@ import heart from './heart.svg';
 
 class Demo extends Component {
   render() {
-    return <div style={{textAlign:""}}>
-       
+    return <div style={{ textAlign: "" }}>
+
       <ReactWebMediaPlayer
         title="Big Buck Bunny - 2008"
         titleHref="http://google.com"
         thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg"
         video="https://nusid.net/video.mp4"
-        autoplay={true}
-        muted={true}
-        volume={0.5}
+        id="video"
+        isTestEnvironment={true}
       />
-       
-      
+
       <ReactWebMediaPlayer
-        width={400}
-        height={400}
-        title="Key Notez - Summer"
-        titleHref="https://google.com"
-        thumbnail={"https://nusid.net/album-cover.jpg"}
-        vinyl={{ img: "https://nusid.net/album-cover.jpg", rpm: 10}}
-        audio="https://nusid.net/audio.mp3"
-        logo={{ img: "https://nusid.net/your-logo.png", href:"https://www.npmjs.com/package/react-web-media-player"}}
-        volume={0.5}
-      />
-      
-      <ReactWebMediaPlayer
-        width={400}
-        height={400}
+        width={560}
+        height={560}
         title="Key Notez - Summer"
         titleHref="https://google.com"
         thumbnail={"https://nusid.net/album-cover.jpg"}
         audio="https://nusid.net/audio.mp3"
-        logo={{ img: "https://nusid.net/your-logo.png", href:"https://www.npmjs.com/package/react-web-media-player"}}
+        logo={{ img: "https://nusid.net/your-logo.png", href: "https://www.npmjs.com/package/react-web-media-player" }}
         volume={0.5}
+        id="audio"
+        isTestEnvironment={true}
       />
-       
+
+      <ReactWebMediaPlayer
+        width={560}
+        height={560}
+        title="Key Notez - Summer"
+        titleHref="https://google.com"
+        thumbnail={"https://nusid.net/album-cover.jpg"}
+        vinyl={{ img: "https://nusid.net/album-cover.jpg", rpm: 10 }}
+        audio="https://nusid.net/audio.mp3"
+        logo={{ img: "https://nusid.net/your-logo.png", href: "https://www.npmjs.com/package/react-web-media-player" }}
+        volume={0.5}
+        id="vinyl"
+        isTestEnvironment={true}
+      />
+
       <ReactWebMediaPlayer
         title="My Slideshow Player"
         titleHref="https://google.com"
@@ -68,10 +70,12 @@ class Demo extends Component {
             img: "https://nusid.net/slide7.jpg",
             endTime: 28.0
           }]}
-          logo={{ img: "https://nusid.net/your-logo.png", href:"https://www.npmjs.com/package/react-web-media-player"}}
-          volume={0.5}
+        logo={{ img: "https://nusid.net/your-logo.png", href: "https://www.npmjs.com/package/react-web-media-player" }}
+        volume={0.5}
+        id="slideshow"
+        isTestEnvironment={true}
       />
-      
+
       <ReactWebMediaPlayer
         title="My Slideshow Player with Soundtrack"
         titleHref="https://google.com"
@@ -100,11 +104,11 @@ class Demo extends Component {
             img: "https://nusid.net/slide7.jpg",
             endTime: 600.0
           }]}
-        logo={{ img: "https://nusid.net/your-logo.png", href:"https://www.npmjs.com/package/react-web-media-player"}}
-        autoplay={true}
-        muted={true}
+        logo={{ img: "https://nusid.net/your-logo.png", href: "https://www.npmjs.com/package/react-web-media-player" }}
         volume={0.5}
-        />
+        id="audioslideshow"
+        isTestEnvironment={true}
+      />
 
     </div>
   }

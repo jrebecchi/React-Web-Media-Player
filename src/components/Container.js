@@ -125,6 +125,7 @@ class Container extends Component {
     render = () => {
         const className = ["wmp-container", "fullscreen"];
         const style = {};
+        const id = this.props.id;
         Object.assign(style, this.props.style);
         
         style.width = this.props.width + "px",
@@ -138,7 +139,7 @@ class Container extends Component {
         let thumbnail, largePlayButton, menuBar, titleBar, spinner;
         if (this.props.thumbnail && !this.props.isInitialized && !this.props.autoplay)
             thumbnail = <Thumbnail />;
-        if (this.props.isInitialized && this.props.showMenus) {
+        if (this.props.isInitialized && this.props.showMenus || this.props.isTestEnvironment) {
             menuBar = <MenuBar />
         }
         if (!this.props.isInitialized && !this.props.autoplay) {
@@ -151,7 +152,8 @@ class Container extends Component {
             spinner = <Spinner />
         }
         return (
-            <div 
+            <div
+                id={id}
                 className={className.join(" ")} 
                 style={style} ref={node => (this.node = node)} 
                 onMouseEnter={this.handleMouseEnter} 
@@ -187,7 +189,9 @@ const mapStateToProps = (state) => {
         isLoading: state.isLoading,
         isFullscreenActivated: state.isFullscreenActivated,
         autoplay: state.autoplay,
-        style: state.style
+        style: state.style,
+        id: state.id,
+        isTestEnvironment: state.isTestEnvironment,
     };
 };
 
