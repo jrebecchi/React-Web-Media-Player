@@ -13,7 +13,6 @@ let driver
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 60 * 30
 
 beforeAll(async () => {
-  console.log(Builder)
   driver = await new Builder().forBrowser('chrome').build()
 })
 
