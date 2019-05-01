@@ -14,7 +14,7 @@ before_install:
   - npm install codecov.io coveralls
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
   - npm run build
-  - npm run start
+  - npm run start &
 
 after_success:
   - cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
