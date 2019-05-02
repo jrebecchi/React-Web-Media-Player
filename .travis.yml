@@ -6,13 +6,9 @@ node_js:
 
 dist: trusty
 
-addons:
-  chrome: stable
-
 before_install:
   - npm install
   - npm install codecov.io coveralls selenium-webdriver
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
   - npm run build
   - nwb serve-react-demo &
 
@@ -23,6 +19,11 @@ after_success:
 branches:
   only:
     - master
+
+addons:
+  sauce_connect:
+    username: "JohannC"
+    access_key: "22e26941-27d1-4713-aa3a-cacb0fd80ae7"
 
 
 

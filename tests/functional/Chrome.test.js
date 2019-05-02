@@ -1,4 +1,4 @@
-import { Builder } from 'selenium-webdriver';
+import { Builder, WebDriver } from 'selenium-webdriver';
 require('selenium-webdriver/chrome')
 require('selenium-webdriver/firefox')
 require('chromedriver')
@@ -8,12 +8,19 @@ import 'babel-polyfill';
 import { By, until } from 'selenium-webdriver';
 const waitUntilTime = 80000
 
-const rootURL = 'http://localhost:3000/'
+const username = "JohannC";
+const access_key = "22e26941-27d1-4713-aa3a-cacb0fd80ae7";
+let capabilities = new Array();
+capabilities["tunnel-identifier"] = 5
+const hub_url = username+":"+access_key+"@localhost:3000";
+
+//const rootURL = 'http://localhost:3000/'
 let driver
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 60 * 30
 
 beforeAll(async () => {
-  driver = await new Builder().forBrowser('chrome').build()
+  driver = WebDriver.Remote(capabilities, "http://"+hub_url+"/wd/hub");
+  //driver = await new Builder().forBrowser('chrome').build()
 })
 
 afterAll(async () => driver.quit())
