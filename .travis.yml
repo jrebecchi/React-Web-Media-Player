@@ -13,7 +13,6 @@ before_install:
   - sleep 8
   - curl -i http://localhost:39500
   - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost:39500 &
-  - nwb serve-react-demo &
 
 before_script:
   - sleep 2 # give Web server some time to bind to sockets, etc
