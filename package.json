@@ -16,7 +16,7 @@
     "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run build",
     "start": "nwb serve-react-demo",
-    "test": "jest",
+    "test": "jest --coverage",
     "test:coverage": "jest --watch",
     "test:watch": "jest --coverage --watch",
     "deploy": "gh-pages -d demo/dist"
