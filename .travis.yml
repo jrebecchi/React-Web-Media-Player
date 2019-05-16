@@ -1,29 +1,43 @@
-sudo: false
-
+sudo: required
 language: node_js
 node_js:
-  - 8
+  - 10
 
-dist: trusty
+dist: xenial
 
 before_install:
   - npm install
-  - npm install codecov.io coveralls selenium-webdriver
-  - npm run build
+  - npm install codecov.io coveralls
+  - docker-compose build
+  - docker-compose up -d
+  - sleep 8
+  - curl -i http://localhost:39500
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost:39500 &
   - nwb serve-react-demo &
+
+before_script:
+  - sleep 2 # give Web server some time to bind to sockets, etc
+
+jobs:
+  include:
+    - stage: Deploying demo server & running tests
+      script: npm run build
+      script: xvfb-run --server-args="-screen 0 1024x768x24" make test
+      script: npm run test
+
 
 after_success:
   - cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
-branches:
-  only:
-    - master
-
 addons:
-  sauce_connect:
-    username: "JohannC"
-    access_key: "22e26941-27d1-4713-aa3a-cacb0fd80ae7"
-
-
+  chrome: stable
+services:
+  - docker
+  - xvfb
+cache:
+   directories:
+     - node_modules
+env:
+  - PORT=39500
 
