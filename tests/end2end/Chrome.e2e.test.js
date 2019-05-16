@@ -8,8 +8,9 @@ import 'babel-polyfill';
 import { By, until } from 'selenium-webdriver';
 const waitUntilTime = 80000
 
-const rootURL = 'http://localhost:3000/'
-let driver
+const port = process.env.PORT || 3000
+const rootURL = 'http://localhost:'+port;
+let driver;
 jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 60 * 30
 
 beforeAll(async () => {
