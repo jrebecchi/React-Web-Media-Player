@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/JohannC/React-Web-Media-Player.svg?branch=master)](https://travis-ci.org/JohannC/React-Web-Media-Player)
-[![Coverage Status](https://coveralls.io/repos/github/JohannC/react-web-media-player/badge.svg?branch=master)](https://coveralls.io/github/JohannC/react-web-media-player?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/JohannC/React-Web-Media-Player/badge.svg?branch=master)](https://coveralls.io/github/JohannC/React-Web-Media-Player?branch=master)
 
 [![React Web Media Player Logo](https://nusid.net/banner-title-medium.jpg)](#)
 

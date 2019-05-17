@@ -4,13 +4,13 @@ import { createStore } from 'redux';
 import { getInitState } from './services/StateInitiator';
 import Container from './components/Container';
 
-import thereducer from './reducers/Reducer';
+import reducer from './reducers/Reducer';
 
 class ReactWebMediaPlayer extends Component {
 
   constructor(options) {
     super(options);
-    this.store = createStore(thereducer);
+    this.store = createStore(reducer);
     this.store.dispatch({ type: 'INIT_STATE', payload: { state: getInitState(this.props) } });
   };
 
