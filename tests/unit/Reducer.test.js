@@ -1,4 +1,4 @@
-import reducer from './Reducer'
+import reducer from '../../src/reducers/Reducer'
 
 it('Test action - VINYL_IS_READY ', () => {
     const action = { type: 'VINYL_IS_READY' };
