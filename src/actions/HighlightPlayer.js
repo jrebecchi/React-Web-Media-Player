@@ -1,8 +1,8 @@
-const hightLightPlayer = (state) => {
+const highLightPlayer = (state) => {
     return {
         ...state,
         isPlayerHighlighted: true,
       };
 }
 
-export default hightLightPlayer;
+export default highLightPlayer;

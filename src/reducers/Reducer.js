@@ -11,8 +11,8 @@ import saveActualVolumeAsPastVolume from '../actions/SaveActualVolumeAsPastVolum
 import updateVolumeSliderLeftMargin from '../actions/UpdateVolumeSliderLeftMargin';
 import preventMouseLeaveVolumeSlider from '../actions/PreventMouseLeaveVolumeSlider';
 import allowMouseLeaveVolumeSlider from '../actions/AllowMouseLeaveVolumeSlider';
-import hightLightProgressBar from '../actions/HighlightProgressBar';
-import unhightLightProgressBar from '../actions/UnhighlightProgressBar';
+import highLightProgressBar from '../actions/HighlightProgressBar';
+import unhighLightProgressBar from '../actions/UnhighlightProgressBar';
 import readingNotTerminated from '../actions/ReadingNotTerminated';
 import readingTerminated from '../actions/ReadingTerminated';
 import updateCurrentTime from '../actions/UpdateCurrentTime';
@@ -127,10 +127,10 @@ const reducer = (state, action) => {
             return readingTerminated(state);
         case 'READING_NOT_TERMINATED':
             return readingNotTerminated(state);
-        case 'HIGHTLIGHT_PROGRESS_BAR':
-            return hightLightProgressBar(state);
-        case 'UNHIGHTLIGHT_PROGRESS_BAR':
-            return unhightLightProgressBar(state);
+        case 'HIGHLIGHT_PROGRESS_BAR':
+            return highLightProgressBar(state);
+        case 'UNHIGHLIGHT_PROGRESS_BAR':
+            return unhighLightProgressBar(state);
         case 'ALLOW_MOUSE_LEAVE_VOLUME_SLIDER':
             return allowMouseLeaveVolumeSlider(state);
         case 'PREVENT_MOUSE_LEAVE_VOLUME_SLIDER':

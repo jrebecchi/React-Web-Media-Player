@@ -40,7 +40,7 @@ class ProgressBar extends Component {
         this.props.dispatch({ type: 'USER_ACTIVE' });
         this.updateSizeProgressBarDesired(e.clientX - this.progressBarDesired.getBoundingClientRect().left);
         if (!isInsideElement(this.progressBarWrapper, e))
-            this.props.dispatch({ type: 'UNHIGHTLIGHT_PROGRESS_BAR' });
+            this.props.dispatch({ type: 'UNHIGHLIGHT_PROGRESS_BAR' });
             this.props.dispatch({ type: 'CHANNELS_CONTINUE' });
     };
 
@@ -57,14 +57,14 @@ class ProgressBar extends Component {
 
     handleMouseEnter = (e) => {
         e.stopPropagation();
-        this.props.dispatch({ type: 'HIGHTLIGHT_PROGRESS_BAR' });
+        this.props.dispatch({ type: 'HIGHLIGHT_PROGRESS_BAR' });
         this.updateSizeProgressBarDesired(e.clientX - this.progressBarDesired.getBoundingClientRect().left);
     }
 
     handleMouseLeave = (e) => {
         e.stopPropagation();
         if (this.props.allowUnhighlightProgressBar)
-            this.props.dispatch({ type: 'UNHIGHTLIGHT_PROGRESS_BAR' });
+            this.props.dispatch({ type: 'UNHIGHLIGHT_PROGRESS_BAR' });
         this.updateSizeProgressBarDesired(0);
     }
 

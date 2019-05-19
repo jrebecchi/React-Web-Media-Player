@@ -1,8 +1,8 @@
-const unhightLightPlayer = (state) => {
+const unhighlightPlayer = (state) => {
     return {
         ...state,
         isPlayerHighlighted: false
     };
 }
 
-export default unhightLightPlayer;
+export default unhighlightPlayer;

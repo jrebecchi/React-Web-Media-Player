@@ -1,8 +1,8 @@
-const hightLightProgressBar = (state) => {
+const highLightProgressBar = (state) => {
     return {
         ...state,
         highlightProgressBar: true,
       };
 }
 
-export default hightLightProgressBar;
+export default highLightProgressBar;
