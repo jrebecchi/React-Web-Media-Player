@@ -395,3 +395,11 @@ it('Test action - INIT_STATE ', () => {
     expect(newState.prop1).toBeTruthy();
     expect(newState.prop2).toBeTruthy();
 });
+
+it('Test action - undefined ', () => {
+    const action = undefined;
+    const initState = { prop1: true, prop2: true };
+    const newState = reducer(initState, action);
+    expect(newState.prop1).toBeTruthy();
+    expect(newState.prop2).toBeTruthy();
+});
