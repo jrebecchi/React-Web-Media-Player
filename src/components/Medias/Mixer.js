@@ -112,7 +112,13 @@ class Mixer extends Component {
             this.video.play();
         }
         if (this.props.hasAudio) {
-            this.audio.play();
+            //When the slideshow last longer than the audio track, it prevent to play the audio track when the current time is bigger than the audio duration 
+            if (this.props.hasSlideshow){
+                if (this.props.currentTime < this.audio.getDuration()) this.audio.play();
+
+            } else {
+                this.audio.play();
+            }
         }
         if (this.props.hasSlideshow) {
             this.slideshow.play();
