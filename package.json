@@ -1,6 +1,6 @@
 {
   "name": "react-web-media-player",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A React Player that can play videos, audio tracks, slideshows, with an easily cutomizable design",
   "license": "MIT",
   "main": "lib/ReactWebMediaPlayer.js",
@@ -35,7 +35,6 @@
     "@babel/polyfill": "^7.4.3",
     "@babel/preset-env": "^7.4.2",
     "@babel/preset-react": "^7.0.0",
-    "babel-jest": "^24.5.0",
     "chromedriver": "^2.46.0",
     "geckodriver": "^1.16.2",
     "jest": "^24.5.0",
