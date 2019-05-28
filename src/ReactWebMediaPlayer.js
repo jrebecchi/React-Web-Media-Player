@@ -8,15 +8,15 @@ import reducer from './reducers/Reducer';
 
 class ReactWebMediaPlayer extends Component {
 
-  constructor(options) {
-    super(options);
-    this.store = createStore(reducer);
-    this.store.dispatch({ type: 'INIT_STATE', payload: { state: getInitState(this.props) } });
+  constructor(props) {
+    super(props);
   };
 
   render() {
+    const store = (this.props.store !== undefined) ? this.props.store : createStore(reducer);
+    store.dispatch({ type: 'INIT_STATE', payload: { state: getInitState(this.props) } });
     return (
-      <Provider store={this.store}>
+      <Provider store={store}>
         <Container />
       </Provider>
     );
