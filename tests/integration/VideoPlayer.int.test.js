@@ -3,6 +3,7 @@ import Enzyme, { shallow } from 'enzyme';
 import createTestStore from './Utils';
 import Adapter from 'enzyme-adapter-react-16';
 import ReactWebMediaPlayer from '../../src/ReactWebMediaPlayer';
+import Container from '../../src/components/Container';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('Integration tests - Video Player', () => {
@@ -25,12 +26,12 @@ describe('Integration tests - Video Player', () => {
                 logo={{ img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Arte-Logo.svg/1280px-Arte-Logo.svg.png", href: "http://zrte.fr" }}
                 color="rgb(222, 119, 18)"
                 store={store}
+                id="video-player-id"
             />
         );
 
-        videoPlayer.simulate('click');
         // to test if the an INIT_ACTION has been launched
-        expect(dispatchSpy).toHaveBeenCalled();
+        expect(dispatchSpy).toHaveBeenCalledWith({type:"INIT_STATE", payload: expect.anything()});
 
     });
 
