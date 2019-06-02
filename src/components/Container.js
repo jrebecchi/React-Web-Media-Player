@@ -23,6 +23,9 @@ class Container extends Component {
 
     componentWillUnmount = () => {
         fscreen.removeEventListener("fullscreenchange", this.detectFullScreen.bind(this));
+        if (this.mouseStopTimer) {
+            window.clearTimeout(this.mouseStopTimer);
+        }
     }
 
     componentDidUpdate = (prevProps) => {

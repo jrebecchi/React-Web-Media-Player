@@ -333,6 +333,11 @@ class Mixer extends Component {
         }
     }
 
+    componentWillUnmount = () => {
+        window.clearInterval(this.timer);
+        window.clearInterval(this.bufferTimer);
+    }
+
     render = () => {
         let video, audio, slideshow, vinyl;
         if (this.props.hasVideo) {
