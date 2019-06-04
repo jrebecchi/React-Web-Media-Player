@@ -2,14 +2,7 @@ import React, { Component } from 'react';
 import './Button.css';
 import './LogoButton.css'
 
-class LogoButton extends Component {
-
-    getAltValue = (imagesrc) => {
-        return imagesrc.split('/')
-            .map(part => part.split(".")[0])
-            .reduce((accumulator, currentValue) => currentValue+' '+accumulator);
-    };
-    
+class LogoButton extends Component {  
     render = () => {
         let logo;
         if(this.props.href !== undefined){
