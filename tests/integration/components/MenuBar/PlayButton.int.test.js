@@ -91,31 +91,4 @@ describe('Integration tests - PlayButton', () => {
         expect(dispatchSpy).toHaveBeenCalledWith({ type: "UPDATE_ASKED_TIME", payload: expect.anything() });
 
     });
-/*
-    it('Button href  property', () => {
-        const callBackSpy = jest.fn();
-
-        const testButton = mount(
-            <Provider store={store}>
-                <Button href="test-url" callback={callBackSpy} />
-            </Provider>
-        );
-
-        expect(testButton.html().includes('href="test-url"')).toBeTruthy();
-
-    });
-
-    it('Button callback  property', () => {
-        const callBackSpy = jest.fn();
-
-        const testButton = mount(
-            <Provider store={store}>
-                <Button callback={callBackSpy} />
-            </Provider>
-        );
-
-        testButton.simulate("click");
-        expect(callBackSpy).toHaveBeenCalled();
-    });
-*/
 });
