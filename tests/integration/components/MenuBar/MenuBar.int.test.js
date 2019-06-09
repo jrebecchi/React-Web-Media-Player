@@ -188,4 +188,32 @@ describe('Integration tests - MenuBar', () => {
         const buttons =  menuBar.find("FullscreenButton")
         expect(buttons.length).toBe(0);
     });
+
+    it('MenuBar - block click events', () => {
+
+        const initState = {
+            hasVideo: false,
+            hasAudio: false,
+            hasSlideshow: true,
+            allowMouseLeaveVolumeSlider: true,
+            logo: false,
+            buttons: false,
+            allowFullFrame: false,
+        }
+
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const menuBarProvider = mount(
+            <Provider store={store}>
+                <MenuBar />
+            </Provider>
+        );
+
+        const menuBar = menuBarProvider.find("MenuBar");
+        const menuBarInstance = menuBar.instance();
+        const stopPropagation = jest.fn();
+        menuBarInstance.handleClick({stopPropagation: stopPropagation})
+
+        expect(stopPropagation).toHaveBeenCalled();
+    });
 });
