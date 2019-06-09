@@ -69,7 +69,6 @@ const mapStateToProps = (state) => {
         hasVideo: state.hasVideo,
         hasAudio: state.hasAudio,
         hasSlideshow: state.hasSlideshow,
-        allowMouseLeaveVolumeSlider: state.allowMouseLeaveVolumeSlider,
         logo: state.logo,
         buttons: state.buttons,
         allowFullFrame: state.allowFullFrame,
