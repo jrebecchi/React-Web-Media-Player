@@ -44,7 +44,6 @@ describe('Integration tests - VolumeControl', () => {
         expect(dispatchSpy).toHaveBeenCalledWith({ type: "USER_ACTIVE" });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: "SAVE_ACTUAL_VOLUME_AS_PAST_VOLUME" });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_VOLUME', payload: { volume: 0 } });
-
         expect(volumeController.html().includes('class="volume-off-logo"')).toBeTruthy();
     });
 
@@ -76,7 +75,6 @@ describe('Integration tests - VolumeControl', () => {
         expect(dispatchSpy).toHaveBeenCalledWith({ type: "USER_ACTIVE" });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UNMUTE' });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_VOLUME', payload: { volume: 1 } });
-
         expect(volumeController.html().includes('class="volume-up-logo"')).toBeTruthy();
     });
 
@@ -106,7 +104,6 @@ describe('Integration tests - VolumeControl', () => {
         volumeController.find('[className="wmp-tool-button logo-padding-medium"]').simulate("click");
         expect(dispatchSpy).toHaveBeenCalledWith({ type: "USER_ACTIVE" });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_VOLUME', payload: { volume: 0.4 } });
-
         expect(volumeController.html().includes('class="volume-down-logo"')).toBeTruthy();
     });
 
@@ -135,13 +132,11 @@ describe('Integration tests - VolumeControl', () => {
         //show volume slider
         volumeController.find('[className="wmp-tool-button logo-padding-medium"]').simulate("mouseenter");
         expect(dispatchSpy).toHaveBeenCalledWith({ type: "SHOW_VOLUME_SLIDER" });
-
         expect(volumeController.html().includes('class="wmp-tool-button wmp-volume-slider"')).toBeTruthy();
 
         //hide volume slider
         volumeController.simulate("mouseleave");
         expect(dispatchSpy).toHaveBeenCalledWith({ type: "HIDE_VOLUME_SLIDER" });
-
         expect(volumeController.html().includes('class="wmp-tool-button wmp-volume-slider"')).toBeFalsy();
     });
 
@@ -175,26 +170,52 @@ describe('Integration tests - VolumeControl', () => {
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'PREVENT_MENU_HIDING' });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'PREVENT_MOUSE_LEAVE_VOLUME_SLIDER' })
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_VOLUME', payload: expect.anything() })
-        
+
         document.elementFromPoint = jest.fn();
 
         jest.clearAllMocks();
         const volumeControllerInstance = volumeController.instance();
         volumeControllerInstance.animateVolumeScrubberButton({ clientX: 300, stopPropagation: jest.fn() })
-
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'SAVE_ACTUAL_VOLUME_AS_PAST_VOLUME' });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'PREVENT_MENU_HIDING' });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'PREVENT_MOUSE_LEAVE_VOLUME_SLIDER' })
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_VOLUME', payload: expect.anything() })
+        
+
+        jest.clearAllMocks();
+        volumeControllerInstance.moveVolumeScrubberButton({ clientX: 310, stopPropagation: jest.fn() })
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_VOLUME', payload: expect.anything() })
 
         jest.clearAllMocks();
         volumeControllerInstance.stopVolumeScrubberButton({ clientX: 330, clientY: 300, stopPropagation: jest.fn() })
-
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_VOLUME', payload: expect.anything() })
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'ALLOW_MOUSE_LEAVE_VOLUME_SLIDER' });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'ALLOW_MENU_HIDING' });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'USER_ACTIVE' })
+    });
 
+    it('VolumeControl - calculate left margin on component mount', () => {
+
+        const initState = {
+            volume: 0,
+            isInitialized: true,
+            pastVolume: 0.4,
+            volumeSliderLeftMargin: "calculateMe!",
+            showVolumeSlider: false,
+            allowMouseLeaveVolumeSlider: true,
+            muted: false
+        }
+
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const volumeController = mount(
+            <Provider store={store}>
+                <VolumeControl />
+            </Provider>
+        );
+
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: "UPDATE_VOLUME_SLIDER_LEFT_MARGIN", payload: expect.anything() });
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: "HIDE_VOLUME_SLIDER" });
 
     });
 });
