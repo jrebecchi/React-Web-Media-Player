@@ -11,10 +11,10 @@ class Timer extends Component {
         let seconds = Math.floor((nbSeconds % 3600) % 60);
         if (seconds < 10)
             seconds = "0" + seconds;
-        if (minuts < 10 & hours >= 1)
+        if (minuts < 10 && (hours >= 1 || this.props.duration >= 600))
             minuts = "0" + minuts;
 
-        if (hours >= 1 || this.props.duration > 3600)
+        if (hours >= 1 || this.props.duration >= 3600)
             return hours + ":" + minuts + ":" + seconds;
         else
             return minuts + ":" + seconds;
