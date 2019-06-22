@@ -94,10 +94,13 @@ describe('Integration tests - Mixer', () => {
         expect(playSpy).toHaveBeenCalled();
         jest.clearAllMocks();
 
-        //Start playing 
+        //Unmute
         store.dispatch({ type: 'UNMUTE' });
-        
         expect(videoTrackInstance.video.muted).toBeFalsy();
+
+        //Mute
+        store.dispatch({ type: 'MUTE' });
+        expect(videoTrackInstance.video.muted).toBeTruthy();
     });
 
     it('Mixer - Audio channel autoplay mute & unmute', () => {
@@ -128,10 +131,13 @@ describe('Integration tests - Mixer', () => {
         expect(playSpy).toHaveBeenCalled();
         jest.clearAllMocks();
 
-        //Start playing 
+        //Unmute 
         store.dispatch({ type: 'UNMUTE' });
-    
         expect(audioTrackInstance.audio.muted).toBeFalsy();
+
+        //Mute 
+        store.dispatch({ type: 'MUTE' });
+        expect(audioTrackInstance.audio.muted).toBeTruthy();
     });
 
     
@@ -203,6 +209,60 @@ describe('Integration tests - Mixer', () => {
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'READING_TERMINATED' });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'PAUSE' });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'SHOW_MENUS' });
+        expect(store.getState().isPlaying).toBeFalsy();
+        jest.clearAllMocks();
+
+        //Ask previous image when reading is terminated
+        store.dispatch({ type: 'ASK_PREVIOUS_IMAGE' });
+
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'READING_NOT_TERMINATED' });
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: 24 } });
+        jest.clearAllMocks();
+
+        //Ask previous image
+        store.dispatch({ type: 'ASK_PREVIOUS_IMAGE' });
+
+        expect(dispatchSpy).not.toHaveBeenCalledWith({ type: 'READING_NOT_TERMINATED' });
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: 20 } });
+        jest.clearAllMocks();
+        
+        //Play & ask previous image
+        store.dispatch({ type: 'PLAY' });
+        store.dispatch({ type: 'ASK_PREVIOUS_IMAGE' });
+
+        expect(dispatchSpy).not.toHaveBeenCalledWith({ type: 'READING_NOT_TERMINATED' });
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: 16 } });
+        expect(store.getState().isPlaying).toBeTruthy();
+        jest.clearAllMocks();
+
+        //Ask previous image until beginning
+        store.dispatch({ type: 'ASK_PREVIOUS_IMAGE' });
+        store.dispatch({ type: 'ASK_PREVIOUS_IMAGE' });
+        store.dispatch({ type: 'ASK_PREVIOUS_IMAGE' });
+        store.dispatch({ type: 'ASK_PREVIOUS_IMAGE' });
+
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: 0 } });
+        expect(store.getState().isPlaying).toBeTruthy();
+        jest.clearAllMocks();
+
+        //Ask next image
+        store.dispatch({ type: 'ASK_NEXT_IMAGE' });
+
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: 4 } });
+        expect(store.getState().isPlaying).toBeTruthy();
+        jest.clearAllMocks();
+
+        //Ask next image until reading is terminated
+        store.dispatch({ type: 'ASK_NEXT_IMAGE' });
+        store.dispatch({ type: 'ASK_NEXT_IMAGE' });
+        store.dispatch({ type: 'ASK_NEXT_IMAGE' });
+        store.dispatch({ type: 'ASK_NEXT_IMAGE' });
+        store.dispatch({ type: 'ASK_NEXT_IMAGE' });
+        store.dispatch({ type: 'ASK_NEXT_IMAGE' });
+        store.dispatch({ type: 'ASK_NEXT_IMAGE' });
+
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: 28 } });
+        expect(store.getState().isPlaying).toBeFalsy();
         jest.clearAllMocks();
 
     });
