@@ -25,7 +25,6 @@ class Audio extends Component {
                     // Auto-play was prevented
                 });
             }
-
         }
     };
 
