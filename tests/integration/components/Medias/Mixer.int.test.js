@@ -13,7 +13,6 @@ describe('Integration tests - Mixer', () => {
     const loadSpy = jest.fn();
     const playSpy = jest.fn();
     const pauseSpy = jest.fn();
-    const HTMLMediaElementMock = jest.fn();
 
     window.HTMLMediaElement.prototype.load = loadSpy;
     window.HTMLMediaElement.prototype.play = playSpy;
@@ -27,11 +26,14 @@ describe('Integration tests - Mixer', () => {
 
         store.dispatch({ type: "INIT_STATE", payload: { state: videoInitState() } });
 
-        const mixerContainer = mount(
+        const mixerProvider = mount(
             <Provider store={store}>
                 <Mixer />
             </Provider>
         );
+        const videoTrack = mixerProvider.find("Video");
+        const videoTrackInstance = videoTrack.instance();
+
         //Initialize player & load Video
         store.dispatch({ type: 'INITIALIZE_PLAYER' });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: "LOADING" });
@@ -61,7 +63,16 @@ describe('Integration tests - Mixer', () => {
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'SHOW_MENUS' });
         jest.clearAllMocks();
 
-        //Relaunch player
+        //Relaunch Play
+        store.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: 0} });
+        
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'READING_NOT_TERMINATED'});
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'PLAY'});
+
+        //Change volume
+        store.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: 0.5 } });
+        
+        expect(videoTrackInstance.video.volume).toBe(0.5);
     });
 
     it('Mixer - Video channel autoplay mute & unmute', () => {
@@ -146,11 +157,13 @@ describe('Integration tests - Mixer', () => {
 
         store.dispatch({ type: "INIT_STATE", payload: { state: audioInitState() } });
 
-        const progressBar = mount(
+        const mixerProvider = mount(
             <Provider store={store}>
                 <Mixer />
             </Provider>
         );
+        const audioTrack = mixerProvider.find("Audio");
+        const audioTrackInstance = audioTrack.instance();
         //Initialize player & load Video
         store.dispatch({ type: 'INITIALIZE_PLAYER' });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: "LOADING" });
@@ -179,6 +192,17 @@ describe('Integration tests - Mixer', () => {
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'PAUSE' });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'SHOW_MENUS' });
         jest.clearAllMocks();
+
+        //Relaunch Play
+        store.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: 0} });
+        
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'READING_NOT_TERMINATED'});
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'PLAY'});
+
+        //Change volume
+        store.dispatch({ type: 'UPDATE_VOLUME', payload: { volume: 0.5 } });
+        
+        expect(audioTrackInstance.audio.volume).toBe(0.5);
 
     });
 
@@ -265,6 +289,15 @@ describe('Integration tests - Mixer', () => {
         expect(store.getState().isPlaying).toBeFalsy();
         jest.clearAllMocks();
 
+        //Relaunch Play
+        store.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: 0} });
+
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'READING_NOT_TERMINATED'});
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'PLAY'});
+
+        //Unmute Mute impossible - just for test coverage 
+        store.dispatch({ type: 'UNMUTE' });
+        store.dispatch({ type: 'MUTE' });
     });
 
     it('Mixer - audioSlideshow', () => {
@@ -294,6 +327,59 @@ describe('Integration tests - Mixer', () => {
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'PAUSE' });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'SHOW_MENUS' });
         jest.clearAllMocks();
+
+});
+
+    it('Mixer - audioSlideshow - audio shorter', () => {
+
+        store.dispatch({ type: "INIT_STATE", payload: { state: audioSlideShowInitState() } });
+        const mixerProvider = mount(
+            <Provider store={store}>
+                <Mixer />
+            </Provider>
+        );
+        const audioTrack = mixerProvider.find("Audio");
+        const audioTrackInstance = audioTrack.instance();
+        audioTrackInstance.audio = {
+            play: playSpy,
+            pause: pauseSpy,
+            muted: false,
+            volume: 1,
+            duration: 180
+        }
+
+        //Initialize player & load Video
+        store.dispatch({ type: 'INITIALIZE_PLAYER' });
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: "LOADING" });
+        jest.clearAllMocks();
+
+        //Change time before audio ends
+        store.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: 110 } });
+
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: 110 } });
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: "isTreated" } });
+        jest.clearAllMocks();
+        
+        //Change time after audio ends
+        store.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: 250 } });
+
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_CURRENT_TIME', payload: { currentTime: 250 } });
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: "isTreated" } });
+        jest.clearAllMocks();
+
+        //Terminate reading
+        store.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: 596.427756 } });
+
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'READING_TERMINATED' });
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'PAUSE' });
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'SHOW_MENUS' });
+        jest.clearAllMocks();
+
+        //Relaunch Play
+        store.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: 0} });
+
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'READING_NOT_TERMINATED'});
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'PLAY'});
 
     });
 
