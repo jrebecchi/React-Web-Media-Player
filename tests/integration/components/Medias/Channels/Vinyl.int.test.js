@@ -79,5 +79,34 @@ describe('Integration tests - Vinyl', () => {
         expect(style.width).toBe("100%");   
         expect(style.height).toBe("500px");   
     });
+
+    it('Vinyl - render', () => {
+        const initState = {
+            isInitialized: true,
+            isFullscreenActivated: true,
+            vinyl: "image-link.jpg",
+            isVinylReady: true,
+            currentTime: 0,
+            width: 500,
+            height: 250,
+            rpm: 0,
+        }
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const vinylProvider = mount(
+            <Provider store={store}>
+                <Vinyl />
+            </Provider>
+        );
+        
+        const vinylTrack = vinylProvider.find("Vinyl");
+        const vinylTrackInstance = vinylTrack.instance();
+        vinylTrackInstance.vinyl = {
+            width: 500,
+            height: 250
+        }
+        expect(vinylTrackInstance.render().props.children[1].props.style.width).toBe("100%");
+        expect(vinylTrackInstance.render().props.children[1].props.style.height).toBe("512px");
+    });
 });
 
