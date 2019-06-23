@@ -62,6 +62,142 @@ describe('Integration tests - Audio', () => {
 
     });
 
+    it('audio - load', () => {
+        const initState = {
+            duration: 0,
+            audio: "audio-link",
+            muted: false
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const audioProvider = mount(
+            <Provider store={store}>
+                <Audio />
+            </Provider>
+        );
+        const audioTrack = audioProvider.find("Audio");
+        const audioTrackInstance = audioTrack.instance();
+        audioTrackInstance.audio = {
+            load: loadSpy,
+            paused: true
+        }
+
+        audioTrackInstance.load();
+        expect(loadSpy).toHaveBeenCalled();
+        jest.clearAllMocks();
+    });
+
+    it('audio - Play', () => {
+        const initState = {
+            duration: 0,
+            audio: "audio-link",
+            muted: false
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+        const playedResolvePromise = jest.fn();
+
+        const audioProvider = mount(
+            <Provider store={store}>
+                <Audio />
+            </Provider>
+        );
+        const audioTrack = audioProvider.find("Audio");
+        const audioTrackInstance = audioTrack.instance();
+        audioTrackInstance.audio = {
+            play: playSpy.mockImplementation(() => new Promise((resolve, reject) => {
+                playedResolvePromise()
+                resolve()
+            })),
+            paused: true
+        }
+        audioTrackInstance.play();
+        expect(playSpy).toHaveBeenCalled();
+        expect(playedResolvePromise).toHaveBeenCalled();
+        jest.clearAllMocks();
+
+        audioTrackInstance.audio = {
+            play: playSpy.mockImplementation(() => new Promise((resolve, reject) => {
+                playedResolvePromise()
+                resolve()
+            })),
+            paused: false
+        }
+        audioTrackInstance.play();
+        expect(playSpy).not.toHaveBeenCalled();
+        expect(playedResolvePromise).not.toHaveBeenCalled();
+        jest.clearAllMocks();
+    });
+
+    it('audio - Pause', () => {
+        const initState = {
+            duration: 0,
+            audio: "audio-link",
+            muted: false
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const audioProvider = mount(
+            <Provider store={store}>
+                <Audio />
+            </Provider>
+        );
+        const audioTrack = audioProvider.find("Audio");
+        const audioTrackInstance = audioTrack.instance();
+        audioTrackInstance.audio = {
+            pause: pauseSpy,
+            paused: false
+        }
+        audioTrackInstance.pause();
+        expect(pauseSpy).toHaveBeenCalled();
+        jest.clearAllMocks();
+
+        audioTrackInstance.audio = {
+            pause: pauseSpy,
+            paused: true
+        }
+        audioTrackInstance.pause();
+        expect(pauseSpy).not.toHaveBeenCalled();
+        jest.clearAllMocks();
+    });
+
+    it('audio - Stop', () => {
+        const initState = {
+            duration: 120,
+            audio: "audio-link",
+            muted: false
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const audioProvider = mount(
+            <Provider store={store}>
+                <Audio />
+            </Provider>
+        );
+        const audioTrack = audioProvider.find("Audio");
+        const audioTrackInstance = audioTrack.instance();
+        audioTrackInstance.audio = {
+            pause: pauseSpy,
+            paused: false,
+            duration:120,
+            currentTime:0
+        }
+        audioTrackInstance.stop();
+        expect(pauseSpy).toHaveBeenCalled();
+        expect(audioTrackInstance.audio.currentTime).toBe(120);
+        jest.clearAllMocks();
+
+        audioTrackInstance.audio = {
+            pause: pauseSpy,
+            paused: true,
+            duration:120,
+            currentTime:0
+        }
+        audioTrackInstance.stop();
+        expect(pauseSpy).not.toHaveBeenCalled();
+        expect(audioTrackInstance.audio.currentTime).toBe(120);
+        jest.clearAllMocks();
+    });
+
     it('Audio - events - Internet Explorer', () => {
         const initState = {
             duration: 0,

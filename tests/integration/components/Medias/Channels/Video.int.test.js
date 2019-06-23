@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 import { isIE } from '../../../../../src/services/Utils';
 import Video from '../../../../../src/components/Medias/Channels/Video';
 import { Provider } from 'react-redux';
+import { formatResultsErrors } from 'jest-message-util';
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('Integration tests - Video', () => {
@@ -23,11 +24,147 @@ describe('Integration tests - Video', () => {
         ({ store, dispatchSpy } = createTestStore());
     });
 
-    it('Video - timeRangeBuffered', () => {
-        const initState  = {
+    it('Video - load', () => {
+        const initState = {
+            duration: 0,
+            video: "video-link",
+            muted: false
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const videoProvider = mount(
+            <Provider store={store}>
+                <Video />
+            </Provider>
+        );
+        const videoTrack = videoProvider.find("Video");
+        const videoTrackInstance = videoTrack.instance();
+        videoTrackInstance.video = {
+            load: loadSpy,
+
+            paused: true
+        }
+
+        videoTrackInstance.load();
+        expect(loadSpy).toHaveBeenCalled();
+        jest.clearAllMocks();
+    });
+
+    it('Video - Play', () => {
+        const initState = {
+            duration: 0,
+            video: "video-link",
+            muted: false
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+        const playedResolvePromise = jest.fn();
+
+        const videoProvider = mount(
+            <Provider store={store}>
+                <Video />
+            </Provider>
+        );
+        const videoTrack = videoProvider.find("Video");
+        const videoTrackInstance = videoTrack.instance();
+        videoTrackInstance.video = {
+            play: playSpy.mockImplementation(() => new Promise((resolve, reject) => {
+                playedResolvePromise()
+                resolve()
+            })),
+            paused: true
+        }
+        videoTrackInstance.play();
+        expect(playSpy).toHaveBeenCalled();
+        expect(playedResolvePromise).toHaveBeenCalled();
+        jest.clearAllMocks();
+
+        videoTrackInstance.video = {
+            play: playSpy.mockImplementation(() => new Promise((resolve, reject) => {
+                playedResolvePromise()
+                resolve()
+            })),
+            paused: false
+        }
+        videoTrackInstance.play();
+        expect(playSpy).not.toHaveBeenCalled();
+        expect(playedResolvePromise).not.toHaveBeenCalled();
+        jest.clearAllMocks();
+    });
+
+    it('Video - Pause', () => {
+        const initState = {
+            duration: 0,
+            video: "video-link",
+            muted: false
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const videoProvider = mount(
+            <Provider store={store}>
+                <Video />
+            </Provider>
+        );
+        const videoTrack = videoProvider.find("Video");
+        const videoTrackInstance = videoTrack.instance();
+        videoTrackInstance.video = {
+            pause: pauseSpy,
+            paused: false
+        }
+        videoTrackInstance.pause();
+        expect(pauseSpy).toHaveBeenCalled();
+        jest.clearAllMocks();
+
+        videoTrackInstance.video = {
+            pause: pauseSpy,
+            paused: true
+        }
+        videoTrackInstance.pause();
+        expect(pauseSpy).not.toHaveBeenCalled();
+        jest.clearAllMocks();
+    });
+
+    it('Video - Stop', () => {
+        const initState = {
             duration: 120,
-            audio: "audio-link",
-            hasVinyl: true,
+            video: "video-link",
+            muted: false
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const videoProvider = mount(
+            <Provider store={store}>
+                <Video />
+            </Provider>
+        );
+        const videoTrack = videoProvider.find("Video");
+        const videoTrackInstance = videoTrack.instance();
+        videoTrackInstance.video = {
+            pause: pauseSpy,
+            paused: false,
+            duration:120,
+            currentTime:0
+        }
+        videoTrackInstance.stop();
+        expect(pauseSpy).toHaveBeenCalled();
+        expect(videoTrackInstance.video.currentTime).toBe(120);
+        jest.clearAllMocks();
+
+        videoTrackInstance.video = {
+            pause: pauseSpy,
+            paused: true,
+            duration:120,
+            currentTime:0
+        }
+        videoTrackInstance.stop();
+        expect(pauseSpy).not.toHaveBeenCalled();
+        expect(videoTrackInstance.video.currentTime).toBe(120);
+        jest.clearAllMocks();
+    });
+
+    it('Video - timeRangeBuffered', () => {
+        const initState = {
+            duration: 0,
+            video: "video-link",
             muted: false
         };
         store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
