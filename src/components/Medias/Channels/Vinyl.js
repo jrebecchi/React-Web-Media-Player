@@ -113,7 +113,6 @@ const mapStateToProps = (state) => {
         vinyl: state.vinyl,
         isVinylReady: state.isVinylReady,
         currentTime: state.currentTime,
-        isFullScreenActivated: state.isFullScreenActivated,
         width: state.width,
         height: state.height,
         rpm: state.rpm,
