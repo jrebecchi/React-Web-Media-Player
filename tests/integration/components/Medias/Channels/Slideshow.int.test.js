@@ -167,6 +167,12 @@ describe('Integration tests - Slideshow', () => {
         expect(slideshowTrackInstance.timeRangeBuffered(8)).toBe(14);
         slideshowTrackInstance.addPortionBuffered(8, 20);
         expect(slideshowTrackInstance.timeRangeBuffered(8)).toBe(20);
+        slideshowTrackInstance.addPortionBuffered(24, 27);
+        expect(slideshowTrackInstance.timeRangeBuffered(8)).toBe(20);
+        slideshowTrackInstance.addPortionBuffered(20, 24);
+        expect(slideshowTrackInstance.timeRangeBuffered(8)).toBe(27);
+        slideshowTrackInstance.addPortionBuffered(4, 8);
+        expect(slideshowTrackInstance.timeRangeBuffered(4)).toBe(27);
 
     });
 
@@ -259,6 +265,85 @@ describe('Integration tests - Slideshow', () => {
                 }
             }
         });
+    });
+
+    it('Slideshow - adaptImageToWidth & adaptImageToHeight', () => {
+        const specificInitState = {
+            ...initState,
+            imageDisplayed: {
+                element: {
+                    width: 250,
+                    height: 250
+                }
+            }
+        }
+        store.dispatch({ type: "INIT_STATE", payload: { state: specificInitState } });
+
+        const slideshowProvider = mount(
+            <Provider store={store}>
+                <Slideshow />
+            </Provider>
+        );
+        const slideshowTrack = slideshowProvider.find("Slideshow");
+        const slideshowTrackInstance = slideshowTrack.instance();
+        
+        let style = slideshowTrackInstance.adaptImageToHeight(1000, 500);
+        expect(style.marginLeft).toBe("250px");
+        expect(style.width).toBe("500px");
+        expect(style.height).toBe("100%");
+
+        style = slideshowTrackInstance.adaptImageToWidth(500, 1000)
+        expect(style.marginTop).toBe("250px");
+        expect(style.width).toBe("100%");   
+        expect(style.height).toBe("500px");   
+    });
+
+    it('Slideshow - refresh', () => {
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const slideshowProvider = mount(
+            <Provider store={store}>
+                <Slideshow />
+            </Provider>
+        );
+        const slideshowTrack = slideshowProvider.find("Slideshow");
+        const slideshowTrackInstance = slideshowTrack.instance();
+        slideshowTrackInstance.load(0);
+
+        const e = new Event('load');
+        store.getState().slideshow[0].element.dispatchEvent(e);
+
+        store.getState().slideshow[2].element.dispatchEvent(e);
+        store.getState().slideshow[3].element.dispatchEvent(e);
+        store.getState().slideshow[4].element.dispatchEvent(e);
+        store.getState().slideshow[5].element.dispatchEvent(e);
+        store.getState().slideshow[6].element.dispatchEvent(e);
+        jest.clearAllMocks();
+
+        slideshowTrackInstance.currentTime = 0;
+        slideshowTrackInstance.tempTime = new Date();
+        slideshowTrackInstance.refresh();
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'SLIDESHOW_IS_NOT_READY' });
+        
+        slideshowTrackInstance.currentTime = 10;
+        slideshowTrackInstance.refresh();
+        expect(dispatchSpy).toHaveBeenCalledWith({
+            type: 'UPDATE_IMAGE_DISPLAYED',
+            payload: { 
+                imageDisplayed: {
+                    element: expect.anything(),
+                    endTime: 12, 
+                    img: "https://nusid.net/slide3.jpg"
+                }
+            }
+        });
+
+        slideshowTrackInstance.currentTime = 29;
+        slideshowTrackInstance.tempTime = new Date();
+        slideshowTrackInstance.refresh();
+        expect(slideshowTrackInstance.currentTime).toBe(28);
+
+
     });
 });
 
