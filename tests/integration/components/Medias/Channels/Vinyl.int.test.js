@@ -18,7 +18,7 @@ describe('Integration tests - Vinyl', () => {
     it('Vinyl - load', () => {
         const initState = {
             isInitialized: true,
-            isFullscreenActivated: true,
+            isFullscreenActivated: false,
             vinyl: "image-link.jpg",
             isVinylReady: false,
             currentTime: 0,
@@ -107,6 +107,35 @@ describe('Integration tests - Vinyl', () => {
         }
         expect(vinylTrackInstance.render().props.children[1].props.style.width).toBe("100%");
         expect(vinylTrackInstance.render().props.children[1].props.style.height).toBe("512px");
+    });
+
+    it('Vinyl - render adapt to width', () => {
+        const initState = {
+            isInitialized: true,
+            isFullscreenActivated: true,
+            vinyl: "image-link.jpg",
+            isVinylReady: true,
+            currentTime: 0,
+            width: 250,
+            height: 500,
+            rpm: 0,
+        }
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const vinylProvider = mount(
+            <Provider store={store}>
+                <Vinyl />
+            </Provider>
+        );
+        
+        const vinylTrack = vinylProvider.find("Vinyl");
+        const vinylTrackInstance = vinylTrack.instance();
+        vinylTrackInstance.vinyl = {
+            width: 250,
+            height: 500
+        }
+        expect(vinylTrackInstance.render().props.children[1].props.style.width).toBe("384px");
+        expect(vinylTrackInstance.render().props.children[1].props.style.height).toBe("100%");
     });
 });
 
