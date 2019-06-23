@@ -160,6 +160,28 @@ describe('Integration tests - Audio', () => {
         jest.clearAllMocks();
     });
 
+    it('audio - Change time', () => {
+        const initState = {
+            duration: 120,
+            audio: "audio-link",
+            muted: false
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const audioProvider = mount(
+            <Provider store={store}>
+                <Audio />
+            </Provider>
+        );
+        const audioTrack = audioProvider.find("Audio");
+        const audioTrackInstance = audioTrack.instance();
+        audioTrackInstance.audio = {
+            currentTime: 0,
+        }
+        audioTrackInstance.changeTime(40);
+        expect(audioTrackInstance.audio.currentTime).toBe(40);
+    });
+
     it('audio - Stop', () => {
         const initState = {
             duration: 120,

@@ -161,6 +161,58 @@ describe('Integration tests - Video', () => {
         jest.clearAllMocks();
     });
 
+    it('Video - displayVideo', () => {
+        window.screen.__defineGetter__('width', function(){
+            return 1000;
+        });
+
+        window.screen.__defineGetter__('height', function(){
+            return 1000;
+        });
+
+        let initState = {
+            isFullscreenActivated: false,
+            width:560,
+            height: 315
+        };
+        
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const videoProvider = mount(
+            <Provider store={store}>
+                <Video />
+            </Provider>
+        );
+        const videoTrack = videoProvider.find("Video");
+        const videoTrackInstance = videoTrack.instance();
+        videoTrackInstance.video = {
+            width: 0,
+            heigth: 0
+        }
+
+        videoTrackInstance.displayVideo();
+        expect(videoTrackInstance.video.width).toBe(560);
+        expect(videoTrackInstance.video.height).toBe(315);
+
+        initState = {
+            isFullscreenActivated: true,
+            width:560,
+            height: 315
+        };
+        
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        videoTrackInstance.video = {
+            width: 0,
+            heigth: 0
+        }
+
+        videoTrackInstance.displayVideo();
+        expect(videoTrackInstance.video.width).toBe(1000);
+        expect(videoTrackInstance.video.height).toBe(1000);
+
+    });
+
     it('Video - timeRangeBuffered', () => {
         const initState = {
             duration: 0,
