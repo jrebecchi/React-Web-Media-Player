@@ -161,6 +161,58 @@ describe('Integration tests - Video', () => {
         jest.clearAllMocks();
     });
 
+    it('Video - render - adapt width', () => {
+        let initState = {
+            duration: 120,
+            video: "video-link",
+            isFullscreenActivated: true,
+            videoWidth: 500,
+            videoHeight: 250,
+            fullscreenWidth: 1000,
+            fullscreenHeight: 500
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const videoProvider = mount(
+            <Provider store={store}>
+                <Video />
+            </Provider>
+        );
+        const videoTrack = videoProvider.find('Video');
+        const videoTrackInstance = videoTrack.instance();
+
+        expect(videoTrackInstance.render().props.width).toBe(1024);
+        expect(videoTrackInstance.render().props.height).toBe(512);
+        expect(videoTrackInstance.render().props.style.marginTop).toBe(128);
+        expect(videoTrackInstance.render().props.style.marginLeft).toBe(undefined);
+
+    });
+
+    it('Video - render - adapt height', () => {
+        let initState = {
+            duration: 120,
+            video: "video-link",
+            isFullscreenActivated: true,
+            videoWidth: 250,
+            videoHeight: 500,
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const videoProvider = mount(
+            <Provider store={store}>
+                <Video />
+            </Provider>
+        );
+        const videoTrack = videoProvider.find('Video');
+        const videoTrackInstance = videoTrack.instance();
+
+        expect(videoTrackInstance.render().props.width).toBe(384);
+        expect(videoTrackInstance.render().props.height).toBe(768);
+        expect(videoTrackInstance.render().props.style.marginTop).toBe(undefined);
+        expect(videoTrackInstance.render().props.style.marginLeft).toBe((1024-384)/2);
+
+    });
+
     it('Video - displayVideo', () => {
         window.screen.__defineGetter__('width', function(){
             return 1000;
