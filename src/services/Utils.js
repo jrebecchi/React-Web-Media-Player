@@ -5,11 +5,9 @@ const isInsideElement = (element,event) => {
 
 const isIE = () => !!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g);
 
-const isChrome = () => !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
-
 const isNaN = (value) => {
     // eslint-disable-next-line
     return value !== value;
 }
 
-export {isInsideElement, isIE, isChrome, isNaN}
+export {isInsideElement, isIE, isNaN}
