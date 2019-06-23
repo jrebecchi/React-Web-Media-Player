@@ -304,7 +304,6 @@ const mapStateToProps = (state) => {
         slideshow: state.slideshow,
         duration: state.duration,
         currentTime: state.currentTime,
-        isFullScreenActivated: state.isFullScreenActivated,
         width: state.width,
         height: state.height,
     };
