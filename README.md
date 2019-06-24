@@ -33,13 +33,19 @@ class App extends Component {
 
 To play a video pass the following options:
 
-[![Video mode](https://nusid.net/video-played.jpg)](#)
+<center>
+  <img src="https://nusid.net/video-played.jpg">
+</center>
 
 ```javascript
 <ReactWebMediaPlayer
   title="My own video player"
   video="https://any-link.com/my-video.mp4" 
   thumbnail="https://any-link.com/video-thumbnail.jpg"
+  logo={{ 
+    img: "https://any-link.com/your-logo.png", 
+    href: "https:/redirection-link.com" 
+  }}
 />
 ```
 **Note:** not all the video formats are supported by each browser
@@ -48,7 +54,9 @@ To play a video pass the following options:
 
 To play an audio track, pass the following options:
 
-[![audio mode](https://nusid.net/audio.jpg)](#)
+<center>
+  <img src="https://nusid.net/audio.jpg">
+</center>
 
 ```javascript
 <ReactWebMediaPlayer
@@ -59,7 +67,9 @@ To play an audio track, pass the following options:
 ```
 You can choose a vinyl display, by adding the `vinyl` property with the number of rounds per minut `rpm` and the image `img` to display:
 
-[![audio mode](https://nusid.net/vinyl.jpg)](#)
+<center>
+  <img src="https://nusid.net/vinyl.jpg">
+</center>
 
 ```javascript
 <ReactWebMediaPlayer
@@ -76,7 +86,9 @@ You can choose a vinyl display, by adding the `vinyl` property with the number o
 
 To play a slideshow, pass the following options:
 
-[![slideshow mode](https://nusid.net/slideshow.jpg)](#)
+<center>
+  <img src="https://nusid.net/slideshow.jpg">
+</center>
 
 ```javascript
 <ReactWebMediaPlayer
@@ -114,7 +126,9 @@ You can add an audio track, that will be synchronized with the slideshow by addi
 
 ## Customization
 
-<center><img src="https://react-web-media-player.herokuapp.com//static/media/custom.f8638e76.png" /></center>
+<center>
+  <img src="https://react-web-media-player.herokuapp.com//static/media/custom.f8638e76.png" />
+</center>
 
 - Choose the menu color
 - Choose the player title
