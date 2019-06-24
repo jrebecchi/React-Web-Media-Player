@@ -14,9 +14,11 @@
 
 - `npm test` will run the tests once.
 
-- `npm run test:coverage` will run the tests and produce a coverage report in `coverage/`.
+- `npm run test:coverage` will run the unit and integration tests and produce a coverage report in `coverage/`.
 
-- `npm run test:watch` will run the tests on every change.
+- `npm run test:watch` will run the unit and integration tests on every change.
+
+- `npm run test:end2end` will run the end to end tests performed on Chrome with Selenium. In order to work, you will need to have Chrome installed on your machine and to run the local demo server in another terminal by taping `npm start`.
 
 ## Building
 

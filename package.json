@@ -16,10 +16,10 @@
     "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run build",
     "start": "nwb serve-react-demo",
-    "test": "jest --coverage",
-    "test:coverage": "jest --watch",
-    "test:watch": "jest --coverage --watch",
-    "deploy": "gh-pages -d demo/dist"
+    "test": "jest unit int --coverage",
+    "test:coverage": "jest unit int --coverage",
+    "test:watch": "jest unit int --coverage --watch",
+    "test:end2end": "jest e2e"
   },
   "dependencies": {
     "fscreen": "^1.0.2",
@@ -38,7 +38,6 @@
     "chromedriver": "^2.46.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
-    "geckodriver": "^1.16.2",
     "jest": "^24.5.0",
     "nwb": "0.23.x",
     "react": "^16.8.6",

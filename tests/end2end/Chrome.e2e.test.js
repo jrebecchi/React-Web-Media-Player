@@ -1,8 +1,6 @@
 import { Builder, WebDriver } from 'selenium-webdriver';
 require('selenium-webdriver/chrome')
-require('selenium-webdriver/firefox')
 require('chromedriver')
-require('geckodriver')
 import { querySelector } from './Utils';
 import 'babel-polyfill';
 import { By, until } from 'selenium-webdriver';
