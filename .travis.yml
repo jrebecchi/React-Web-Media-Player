@@ -22,8 +22,10 @@ jobs:
   include:
     - stage: Running unit & integration tests, then end to end tests in Chrome
       script: npm run test:coverage
+    - stage: Running end to end tests in Chrome
       script: xvfb-run --server-args="-screen 0 1024x768x24" make test
       script: npm run test:end2end
+
 
 after_success:
   - cat ./coverage/lcov.info | ./node_modules/codecov.io/bin/codecov.io.js
