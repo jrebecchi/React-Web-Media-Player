@@ -62,13 +62,14 @@ class Slideshow extends Component {
         if (time === undefined || time < 0) {
             time = 0;
         }
+        this.currentTime = time;
         if(!this.hasEnoughBuffered(time)){
             this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
             this.load(time);
         } else {
+            this.updateView();
             this.props.dispatch({ type: 'SLIDESHOW_IS_READY' });
         }
-        this.currentTime = time;
         this.tempTime = new Date();
     };
 
