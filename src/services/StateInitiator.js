@@ -157,7 +157,7 @@ const getInitState = (options) => {
         state.buttons = [];
         for (let i = 0; i < options.buttons.length; ++i) {
             if (!options.buttons[i].hasOwnProperty('img'))
-                throw new Error("You need to specify the img property of the button 1");
+                throw new Error("You need to specify the img property of each button");
             state.buttons.push(options.buttons[i])
         }
     }
