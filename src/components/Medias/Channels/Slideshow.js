@@ -44,7 +44,7 @@ class Slideshow extends Component {
     }
 
     play = () => {
-        if(!this.hasEnoughBuffered(this.currentTime)){
+        if (!this.hasEnoughBuffered(this.currentTime)) {
             this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
             this.load(this.currentTime);
             return;
@@ -63,7 +63,7 @@ class Slideshow extends Component {
             time = 0;
         }
         this.currentTime = time;
-        if(!this.hasEnoughBuffered(time)){
+        if (!this.hasEnoughBuffered(time)) {
             this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
             this.load(time);
         } else {
@@ -193,7 +193,7 @@ class Slideshow extends Component {
     }
 
     refresh = () => {
-        if(!this.hasEnoughBuffered(this.currentTime)){
+        if (!this.hasEnoughBuffered(this.currentTime)) {
             this.props.dispatch({ type: 'SLIDESHOW_IS_NOT_READY' });
             this.load(this.currentTime);
         }
@@ -257,12 +257,15 @@ class Slideshow extends Component {
         this.buffered.push([startTime, endTime]);
         this.updatePortionsBuffered();
     }
+    componentWillUnmount = () => {
+        if (this.timerFunction) window.clearInterval(this.timerFunction);
+    }
 
 
     render = () => {
 
         let width, height, imageSliderStyle, src;
-        if(this.props.imageDisplayed !== null){
+        if (this.props.imageDisplayed !== null) {
             if (this.props.isFullscreenActivated) {
                 width = this.props.fullscreenWidth;
                 height = this.props.fullscreenHeight;
@@ -272,7 +275,7 @@ class Slideshow extends Component {
             }
             let imgWidth = this.props.imageDisplayed.element.width;
             let imgHeight = this.props.imageDisplayed.element.height;
-            
+
             if (imgWidth >= imgHeight) {
                 if (imgHeight / imgWidth * width <= height) {
                     imageSliderStyle = this.adaptImageToWidth(width, height);
@@ -285,10 +288,10 @@ class Slideshow extends Component {
                 } else {
                     imageSliderStyle = this.adaptImageToHeight(width, height);
                 }
-            }            
+            }
             src = this.props.imageDisplayed.img;
         }
-        
+
         return (
             <img style={imageSliderStyle} src={src} ref={imageSlider => (this.imageSlider = imageSlider)} alt=""></img>
         );
@@ -299,7 +302,7 @@ const mapStateToProps = (state) => {
     return {
         fullscreenWidth: window.innerWidth,
         fullscreenHeight: window.innerHeight,
-        imageDisplayed:state.imageDisplayed,
+        imageDisplayed: state.imageDisplayed,
         isFullscreenActivated: state.isFullscreenActivated,
         isSlideshowReady: state.isSlideshowReady,
         slideshow: state.slideshow,
