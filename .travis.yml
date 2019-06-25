@@ -9,20 +9,20 @@ before_install:
   - npm install
   - npm install codecov.io coveralls
   - npm run build
-  - docker-compose build
-  - docker-compose up -d
-  - sleep 8
-  - curl -i http://localhost:39500
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost:39500 &
-
+  
 before_script:
   - sleep 2 # give Web server some time to bind to sockets, etc
 
 jobs:
   include:
-    - stage: Running unit & integration tests, then end to end tests in Chrome
+    - stage: Running unit & integration tests
       script: npm run test:coverage
     - stage: Running end to end tests in Chrome
+      script: docker-compose build
+      script: docker-compose up -d
+      script: sleep 8
+      script: curl -i http://localhost:39500
+      script: google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost:39500 &
       script: xvfb-run --server-args="-screen 0 1024x768x24" make test
       script: npm run test:end2end
 
