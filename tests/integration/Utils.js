@@ -1,6 +1,5 @@
 import { applyMiddleware, createStore } from 'redux';
 import reducer from '../../src/reducers/Reducer';
-import { TIMEOUT } from 'dns';
 
 export default function createTestStore() {
 

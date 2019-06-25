@@ -42,10 +42,6 @@ To play a video pass the following options:
   title="My own video player"
   video="https://any-link.com/my-video.mp4" 
   thumbnail="https://any-link.com/video-thumbnail.jpg"
-  logo={{ 
-    img: "https://any-link.com/your-logo.png", 
-    href: "https:/redirection-link.com" 
-  }}
 />
 ```
 **Note:** not all the video formats are supported by each browser
@@ -94,19 +90,16 @@ To play a slideshow, pass the following options:
 <ReactWebMediaPlayer
   title="My own slideshow player"
   thumbnail="https://any-link.com/slideshow-thumbnail.jpg"
-  slideshow={[{
-      src: "https://any-link.com/slide1.jpg",
-      endTime: 4.0
-  }, {
-      src: "https://any-link.com/slide2.jpg",
-      endTime: 8.0
-  }, {
-      src: "https://any-link.com/slide3.jpg",
-      endTime: 12.0
-  }, {
-      src: "https://any-link.com/slide4.jpg",
-      endTime: 16.0
-  }]}
+  slideshow={[
+    { src: "https://any-link.com/slide1.jpg", endTime: 4.0 },
+    { src: "https://any-link.com/slide2.jpg", endTime: 8.0 },
+    { src: "https://any-link.com/slide3.jpg", endTime: 12.0 },
+    { src: "https://any-link.com/slide4.jpg", endTime: 16.0 }
+  ]}
+  logo={{ 
+    img: "https://any-link.com/your-logo.png", 
+    href: "https:/redirection-link.com" 
+  }}
 />
 
 ```
