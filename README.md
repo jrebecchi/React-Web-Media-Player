@@ -33,9 +33,9 @@ class App extends Component {
 
 To play a video pass the following options:
 
-<center>
+<p align="center">
   <img src="https://nusid.net/video-played.jpg">
-</center>
+</p>
 
 ```javascript
 <ReactWebMediaPlayer
@@ -50,9 +50,9 @@ To play a video pass the following options:
 
 To play an audio track, pass the following options:
 
-<center>
+<p align="center">
   <img src="https://nusid.net/audio.jpg">
-</center>
+</p>
 
 ```javascript
 <ReactWebMediaPlayer
@@ -63,9 +63,9 @@ To play an audio track, pass the following options:
 ```
 You can choose a vinyl display, by adding the `vinyl` property with the number of rounds per minut `rpm` and the image `img` to display:
 
-<center>
+<p align="center">
   <img src="https://nusid.net/vinyl.jpg">
-</center>
+</p>
 
 ```javascript
 <ReactWebMediaPlayer
@@ -82,9 +82,9 @@ You can choose a vinyl display, by adding the `vinyl` property with the number o
 
 To play a slideshow, pass the following options:
 
-<center>
+<p align="center">
   <img src="https://nusid.net/slideshow.jpg">
-</center>
+</p>
 
 ```javascript
 <ReactWebMediaPlayer
@@ -119,9 +119,9 @@ You can add an audio track, that will be synchronized with the slideshow by addi
 
 ## Customization
 
-<center>
+<p align="center">
   <img src="https://react-web-media-player.herokuapp.com//static/media/custom.f8638e76.png" />
-</center>
+</p>
 
 - Choose the menu color
 - Choose the player title
