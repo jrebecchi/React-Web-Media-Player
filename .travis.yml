@@ -38,4 +38,6 @@ services:
   - xvfb
 env:
   - PORT=39500
+cache:
+  npm: false
 
