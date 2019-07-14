@@ -134,6 +134,12 @@ class Video extends Component {
             this.mute();
     }
 
+    shouldComponentUpdate = (nextProps) => {
+        //player props changed
+        if (this.props.initTime !== nextProps.initTime) this.load();
+        return true;
+    }
+
     render = () => {
         let dimensions;
         if (this.props.isFullscreenActivated) {
@@ -190,7 +196,8 @@ const mapStateToProps = (state) => {
         width: state.width,
         height: state.height,
         isReadingTerminated: state.isReadingTerminated,
-        muted: state.muted
+        muted: state.muted,
+        initTime: state.initTime
     };
 };
 

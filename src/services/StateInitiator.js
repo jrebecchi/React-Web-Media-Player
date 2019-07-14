@@ -194,7 +194,7 @@ const getInitState = (options) => {
     if (options.hasOwnProperty("isTestEnvironment")) {
         state.isTestEnvironment = options.isTestEnvironment;
     }
-
+    state.initTime = new Date();
     state.title = options.title;
     state.link = options.titleHref;
     state.isLoading = true;

@@ -12,11 +12,19 @@ class ReactWebMediaPlayer extends Component {
     super(props);
   };
 
+  shouldComponentUpdate = (nextProps) => {
+    this.store.dispatch({ type: 'INIT_STATE', payload: { state: getInitState(nextProps) } });
+    return true;
+  }
+
+  componentWillMount = () => {
+    this.store = (this.props.store !== undefined) ? this.props.store : createStore(reducer);
+    this.store.dispatch({ type: 'INIT_STATE', payload: { state: getInitState(this.props) } });
+  }
+
   render() {
-    const store = (this.props.store !== undefined) ? this.props.store : createStore(reducer);
-    store.dispatch({ type: 'INIT_STATE', payload: { state: getInitState(this.props) } });
     return (
-      <Provider store={store}>
+      <Provider store={this.store}>
         <Container />
       </Provider>
     );

@@ -257,15 +257,25 @@ class Slideshow extends Component {
         this.buffered.push([startTime, endTime]);
         this.updatePortionsBuffered();
     }
+
     componentWillUnmount = () => {
         if (this.timerFunction) window.clearInterval(this.timerFunction);
     }
 
+    shouldComponentUpdate = (nextProps) => {
+        //player props changed
+        if (this.props.initTime !== nextProps.initTime){
+            if (this.timerFunction) window.clearInterval(this.timerFunction);
+            this.stop();
+            this.currentTime = 0;
+        } 
+        return true;
+    }
 
     render = () => {
 
         let width, height, imageSliderStyle, src;
-        if (this.props.imageDisplayed !== null) {
+        if (this.props.imageDisplayed !== null && this.props.imageDisplayed.element !== undefined) {
             if (this.props.isFullscreenActivated) {
                 width = this.props.fullscreenWidth;
                 height = this.props.fullscreenHeight;
@@ -310,6 +320,7 @@ const mapStateToProps = (state) => {
         currentTime: state.currentTime,
         width: state.width,
         height: state.height,
+        initTime: state.initTime
     };
 };
 

@@ -109,10 +109,10 @@ const testNextAndPreviousNavigation = async (id) => {
   const nextButton = await querySelector('div#' + id + ' [class=\'next-logo\']', driver);
   const previousButton = await querySelector('div#' + id + ' [class=\'previous-logo\']', driver);
   const timer = await querySelector('div#' + id + ' [class=\'wmp-tool-button button-time wmp-time-display\']', driver);
-  for (let i = 0; i < 8; ++i)
+  for (let i = 0; i < 6; ++i)
     nextButton.click();
   await querySelector('div#' + id + ' [class=\'replay-logo\']', driver);
-  for (let i = 0; i < 8; ++i)
+  for (let i = 0; i < 6; ++i)
     previousButton.click();
   const playButton = await querySelector('div#' + id + ' [class=\'play-logo\']', driver);
   playButton.click();

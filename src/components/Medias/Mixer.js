@@ -113,7 +113,7 @@ class Mixer extends Component {
         }
         if (this.props.hasAudio) {
             //When the slideshow last longer than the audio track, it prevent to play the audio track when the current time is bigger than the audio duration 
-            if (this.props.hasSlideshow){
+            if (this.props.hasSlideshow) {
                 if (this.props.currentTime < this.audio.getDuration()) this.audio.play();
 
             } else {
@@ -232,6 +232,15 @@ class Mixer extends Component {
         this.setVolume(this.props.volume);
     }
 
+    shouldComponentUpdate = (nextProps) => {
+        //player props changed
+        if (this.props.initTime !== nextProps.initTime) {
+            window.clearInterval(this.timer);
+            window.clearInterval(this.bufferTimer);
+        }
+        return true;
+    }
+
     componentWillMount = () => {
         if (this.props.autoplay) {
             window.addEventListener('load', () => {
@@ -243,6 +252,14 @@ class Mixer extends Component {
     }
 
     componentDidUpdate = (prevprops) => {
+
+        if (prevprops.initTime !== this.props.initTime) {
+            if (this.props.autoplay){
+                this.props.dispatch({ type: 'INITIALIZE_PLAYER' });
+                this.props.dispatch({ type: 'PLAY' });
+                this.props.dispatch({ type: 'USER_ACTIVE' });
+            }
+        }
 
         if (prevprops.isInitialized === false && this.props.isInitialized === true) {
             this.props.dispatch({ type: 'LOADING' });
@@ -271,7 +288,7 @@ class Mixer extends Component {
         }
 
         if (prevprops.muted !== this.props.muted) {
-            if(this.props.muted){
+            if (this.props.muted) {
                 this.mute()
                 this.play();
             } else {
@@ -386,7 +403,8 @@ const mapStateToProps = (state) => {
         isReadingTerminated: state.isReadingTerminated,
         allowUnhighlightProgressBar: state.allowUnhighlightProgressBar,
         autoplay: state.autoplay,
-        muted: state.muted
+        muted: state.muted,
+        initTime: state.initTime
     };
 };
 

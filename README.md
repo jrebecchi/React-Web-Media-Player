@@ -34,7 +34,7 @@ class App extends Component {
 To play a video pass the following options:
 
 <p align="center">
-  <img src="https://nusid.net/video-played.jpg">
+  <img src="https://nusid.net/video.gif">
 </p>
 
 ```javascript
@@ -51,7 +51,7 @@ To play a video pass the following options:
 To play an audio track, pass the following options:
 
 <p align="center">
-  <img src="https://nusid.net/audio.jpg">
+  <img src="https://nusid.net/audio.gif">
 </p>
 
 ```javascript
@@ -64,7 +64,7 @@ To play an audio track, pass the following options:
 You can choose a vinyl display, by adding the `vinyl` property with the number of rounds per minut `rpm` and the image `img` to display:
 
 <p align="center">
-  <img src="https://nusid.net/vinyl.jpg">
+  <img src="https://nusid.net/vinyl.gif">
 </p>
 
 ```javascript
@@ -83,7 +83,7 @@ You can choose a vinyl display, by adding the `vinyl` property with the number o
 To play a slideshow, pass the following options:
 
 <p align="center">
-  <img src="https://nusid.net/slideshow.jpg">
+  <img src="https://nusid.net/slideshow.gif">
 </p>
 
 ```javascript

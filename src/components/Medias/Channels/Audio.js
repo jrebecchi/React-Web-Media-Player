@@ -106,6 +106,12 @@ class Audio extends Component {
             this.mute();
     }
 
+    shouldComponentUpdate = (nextProps) => {
+        //player props changed
+        if (this.props.initTime !== nextProps.initTime) this.load();
+        return true;
+    }
+
     render = () => {
         return (
             <audio
@@ -127,7 +133,8 @@ const mapStateToProps = (state) => {
         duration: state.duration,
         audio: state.audio,
         hasVinyl: state.hasVinyl,
-        muted: state.muted
+        muted: state.muted,
+        initTime: state.initTime
     };
 };
 
