@@ -1,5 +1,5 @@
 import React from 'react';
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme, { shallow, mount } from 'enzyme';
 import createTestStore from './Utils';
 import Adapter from 'enzyme-adapter-react-16';
 import ReactWebMediaPlayer from '../../src/ReactWebMediaPlayer';
@@ -73,7 +73,7 @@ describe('Integration tests - Video Player', () => {
                     video="https://nusid.net/video.mp4"
                     width="560"
                     height="315"
-                    buttons = {[{toto: "tata"}]}
+                    buttons={[{ toto: "tata" }]}
                 />
             )
         } catch (e) {
@@ -87,9 +87,9 @@ describe('Integration tests - Video Player', () => {
                 <ReactWebMediaPlayer
                     title="Video Player"
                     thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg"
-                    slideshow = {
+                    slideshow={
                         [{
-                          img: "https://nusid.net/slide1.jpg",
+                            img: "https://nusid.net/slide1.jpg",
                         }]
                     }
                 />
@@ -103,10 +103,10 @@ describe('Integration tests - Video Player', () => {
         try {
             shallow(
                 <ReactWebMediaPlayer
-                    title="Video Player"
+                    title="Vinyl Player"
                     thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg"
                     audio="https://nusid.net/audio.mp3"
-                    vinyl = {{
+                    vinyl={{
                         toto: "tata"
                     }}
                 />
@@ -114,6 +114,30 @@ describe('Integration tests - Video Player', () => {
         } catch (e) {
             expect(e.message).toBe("Please pass an image link through the img property of the vinyl option");
         }
+    });
+
+    it('Reinitialize player props', () => {
+        const wrapper = mount(
+            <ReactWebMediaPlayer
+                store={store}
+                title="Audio Player"
+                thumbnail="https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg"
+                audio="https://nusid.net/audio.mp3"
+            />
+        );
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'INIT_STATE', payload: expect.anything()});
+        jest.clearAllMocks();
+        
+        wrapper.setProps({ 
+            title: 'Audio Player 2',
+            thumbnail:"https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault2.jpg",
+            audio:"https://nusid.net/audio2.mp3"
+        });
+
+        store.dispatch({ type: 'UPDATE_ASKED_TIME', payload: { askedTime: 596.427756 } });
+
+        expect(dispatchSpy).toHaveBeenCalledWith({ type: 'INIT_STATE', payload: expect.anything()});
+        jest.clearAllMocks();
     });
 
 });

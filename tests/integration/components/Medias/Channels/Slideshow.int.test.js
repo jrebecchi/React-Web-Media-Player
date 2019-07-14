@@ -29,6 +29,7 @@ describe('Integration tests - Slideshow', () => {
         isFullScreenActivated: false,
         width: 500,
         height: 315,
+        initTime: new Date("Tue Jan 12 21:33:28 +0000 2010")
     };
 
     beforeEach(() => {
@@ -203,6 +204,27 @@ describe('Integration tests - Slideshow', () => {
         expect(slideshowTrackInstance.timeRangeBuffered(2)).toBe(12);
         expect(slideshowTrackInstance.timeRangeBuffered(16)).toBe(28);
         expect(slideshowTrackInstance.timeRangeBuffered(29)).toBe(29);
+    });
+
+    it('Slideshow - when reinit player props call load to restart audio state', () => {
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const slideshowProvider = mount(
+            <Provider store={store}>
+                <Slideshow />
+            </Provider>
+        );
+        const slideshowTrack = slideshowProvider.find("Slideshow");
+        const slideshowTrackInstance = slideshowTrack.instance();
+
+        const initState2 = {
+            ...initState,
+            initTime: new Date()
+        }
+        
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState2 } });
+        expect(slideshowTrackInstance.timerFunction).toBeFalsy();
+        expect(slideshowTrackInstance.currentTime).toBe(0);
     });
 
     it('Slideshow - updateView', () => {

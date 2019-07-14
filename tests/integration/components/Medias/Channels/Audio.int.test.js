@@ -182,6 +182,30 @@ describe('Integration tests - Audio', () => {
         expect(audioTrackInstance.audio.currentTime).toBe(40);
     });
 
+    it('audio - when reinit player props call load to restart audio state', () => {
+        const initState = {
+            duration: 120,
+            audio: "audio-link",
+            muted: false,
+            initTime: new Date("Tue Jan 12 21:33:28 +0000 2010")
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const audioProvider = mount(
+            <Provider store={store}>
+                <Audio />
+            </Provider>
+        );
+        const initState2 = {
+            duration: 130,
+            audio: "audio-link2",
+            muted: false,
+            initTime: new Date()
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState2 } });
+        expect(loadSpy).toHaveBeenCalled();
+    });
+
     it('audio - Stop', () => {
         const initState = {
             duration: 120,

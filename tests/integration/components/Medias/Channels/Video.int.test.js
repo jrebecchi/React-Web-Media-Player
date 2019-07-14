@@ -50,6 +50,30 @@ describe('Integration tests - Video', () => {
         jest.clearAllMocks();
     });
 
+    it('Video - when reinit player props call load to restart video state', () => {
+        const initState = {
+            duration: 50,
+            video: "video-link",
+            muted: false,
+            initTime: new Date("Tue Jan 12 21:33:28 +0000 2010")
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState } });
+
+        const videoProvider = mount(
+            <Provider store={store}>
+                <Video />
+            </Provider>
+        );
+        const initState2 = {
+            duration: 100,
+            video: "video-link2",
+            muted: false,
+            initTime: new Date()
+        };
+        store.dispatch({ type: "INIT_STATE", payload: { state: initState2 } });
+        expect(loadSpy).toHaveBeenCalled();
+    });
+
     it('Video - Play', () => {
         const initState = {
             duration: 0,
