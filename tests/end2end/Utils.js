@@ -10,6 +10,15 @@ async function querySelector(selector, driver) {
   return await driver.wait(until.elementIsVisible(el), waitUntilTime)
 }
 
+async function xpathSelector(selector, driver) {
+  const el = await driver.wait(
+    until.elementLocated(By.xpath(selector)),
+    waitUntilTime
+  )
+  return await driver.wait(until.elementIsVisible(el), waitUntilTime)
+}
+
 module.exports = {
-  querySelector
+  querySelector,
+  xpathSelector
 }

@@ -1,7 +1,7 @@
 import { Builder, WebDriver } from 'selenium-webdriver';
 require('selenium-webdriver/chrome')
 require('chromedriver')
-import { querySelector } from './Utils';
+import { querySelector, xpathSelector } from './Utils';
 import 'babel-polyfill';
 import { By, until } from 'selenium-webdriver';
 const waitUntilTime = 80000
@@ -21,31 +21,41 @@ it('initialises the context', async () => {
   await driver.get(rootURL)
 })
 
-it('test the video player', async () => {
-  await testBasicPlayerFunctions("video");
+it('Test - Video player', async () => {
+  await testPlayer("video");
+})
+
+it('Test - Audio player', async () => {
+  await testPlayer("audio");
 
 })
 
-it('test the audio player', async () => {
-  await testBasicPlayerFunctions("audio");
-
+it('Test - Vinyl player', async () => {
+  await testPlayer("vinyl");
 })
 
-it('test the vinyl player', async () => {
-  await testBasicPlayerFunctions("vinyl");
-})
-
-it('test the slideshow player', async () => {
+it('Test - Slideshow player', async () => {
   const isSlideshow = true;
-  await testBasicPlayerFunctions("slideshow", isSlideshow);
+  await testPlayer("slideshow", isSlideshow);
 })
 
-it('test the audioslideshow player', async () => {
-  await testBasicPlayerFunctions("audioslideshow");
+it('Test - Audioslideshow player', async () => {
+  await testPlayer("audioslideshow");
 })
 
-const testBasicPlayerFunctions = async (id, isSlideshow = false) => {
-  await testLaunchPlayer(id);
+const testPlayer = async (id, isSlideshow) => {
+  await testBasicPlayerFunctions(id, false, isSlideshow);
+  await reinitComponentProps(id);    
+  await testBasicPlayerFunctions(id, false, isSlideshow);
+  await reinitComponentProps(id);
+  await testBasicPlayerFunctions(id, true, isSlideshow);
+  await reinitComponentProps(id);
+}
+
+const testBasicPlayerFunctions = async (id, autoplay = false, isSlideshow = false) => {
+  if(!autoplay) {
+    await testLaunchPlayer(id);
+  }
   await testReadingTerminated(id);
   await testRelaunchPlayer(id);
   await testEnterFullScreen(id);
@@ -57,6 +67,11 @@ const testBasicPlayerFunctions = async (id, isSlideshow = false) => {
     await testUnmute(id);
   }
   await testPausePlayer(id);
+}
+
+const reinitComponentProps = async (id, restart) => {
+  const reinitComponentPropsButton = await xpathSelector('//button[text()[contains(., \'Change '+id+' props\')]]', driver);
+  reinitComponentPropsButton.click();
 }
 
 const testLaunchPlayer = async (id) => {

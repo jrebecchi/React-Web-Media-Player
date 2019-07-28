@@ -84,7 +84,7 @@ class Demo extends Component {
       ...this.state,
       audio: {
         reinitTimes: reinitTimes,
-        audio: "https://nusid.net/audio.mp3",
+        audio: "https://nusid.net/audio2.mp3",
         title: 'Audio player - reinit '+reinitTimes,
         autoplay: reinitTimes === 2
       }
@@ -98,7 +98,7 @@ class Demo extends Component {
       ...this.state,
       vinyl: {
         reinitTimes: reinitTimes,
-        audio: "https://nusid.net/audio.mp3",
+        audio: "https://nusid.net/audio2.mp3",
         title: 'Vinyl Player - reinit '+reinitTimes,
         autoplay: reinitTimes === 2,
         vinyl: { img: "https://nusid.net/slide6.jpg", rpm: 15 }
