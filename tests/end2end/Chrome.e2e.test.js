@@ -92,7 +92,7 @@ const testRelaunchPlayer = async (id) => {
   const replayButton = await querySelector('div#' + id + ' [class=\'replay-logo\']', driver);
   const timer = await querySelector('div#' + id + ' [class=\'wmp-tool-button button-time wmp-time-display\']', driver);
   const actions = driver.actions();
-  await actions.mouseMove(replayButton, { x: 0, y: 5 }).click().perform();
+  await actions.mouseMove(replayButton, { x: 0, y: 10 }).click().perform();
   await driver.wait(until.elementTextContains(timer, "0:01"), waitUntilTime);
 }
 
