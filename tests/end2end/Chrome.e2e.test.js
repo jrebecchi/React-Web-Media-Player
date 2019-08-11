@@ -21,27 +21,26 @@ it('initialises the context', async () => {
   await driver.get(rootURL)
 })
 
-// it('Test - Video player', async () => {
-//   await testPlayer("video");
-// })
-
-it('Test - Audio player', async () => {
-  await testPlayer("audio");
-
+it('Test - Video player', async () => {
+  await testPlayer("video");
 })
 
-// it('Test - Vinyl player', async () => {
-//   await testPlayer("vinyl");
+// it('Test - Audio player', async () => {
+//   await testPlayer("audio");
 // })
 
-// it('Test - Slideshow player', async () => {
-//   const isSlideshow = true;
-//   await testPlayer("slideshow", isSlideshow);
-// })
+it('Test - Vinyl player', async () => {
+  await testPlayer("vinyl");
+})
 
-// it('Test - Audioslideshow player', async () => {
-//   await testPlayer("audioslideshow");
-// })
+it('Test - Slideshow player', async () => {
+  const isSlideshow = true;
+  await testPlayer("slideshow", isSlideshow);
+})
+
+it('Test - Audioslideshow player', async () => {
+  await testPlayer("audioslideshow");
+})
 
 const testPlayer = async (id, isSlideshow) => {
   await testBasicPlayerFunctions(id, false, isSlideshow);
@@ -91,9 +90,9 @@ const testReadingTerminated = async (id) => {
 const testRelaunchPlayer = async (id) => {
   const replayButton = await querySelector('div#' + id + ' [class=\'replay-logo\']', driver);
   const timer = await querySelector('div#' + id + ' [class=\'wmp-tool-button button-time wmp-time-display\']', driver);
-  const actions = driver.actions();
-  //replayButton.click();
-  await actions.mouseMove(replayButton).click().perform();
+  replayButton.click();
+//   const actions = driver.actions();
+//   await actions.mouseMove(replayButton).click().perform();
   await driver.wait(until.elementTextContains(timer, "0:01"), waitUntilTime);
 }
 

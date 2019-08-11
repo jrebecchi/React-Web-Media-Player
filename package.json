@@ -35,7 +35,7 @@
     "@babel/polyfill": "^7.4.3",
     "@babel/preset-env": "^7.4.2",
     "@babel/preset-react": "^7.0.0",
-    "chromedriver": "^74.0.0",
+    "chromedriver": "^76.0.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
     "jest": "^24.5.0",
