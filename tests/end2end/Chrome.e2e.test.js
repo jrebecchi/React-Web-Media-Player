@@ -13,6 +13,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 60 * 30
 
 beforeAll(async () => {
   driver = await new Builder().forBrowser('chrome').build()
+  driver.manage().window().maximize();
 })
 
 afterAll(async () => driver.quit())
@@ -25,9 +26,9 @@ it('Test - Video player', async () => {
   await testPlayer("video");
 })
 
-// it('Test - Audio player', async () => {
-//   await testPlayer("audio");
-// })
+it('Test - Audio player', async () => {
+  await testPlayer("audio");
+})
 
 it('Test - Vinyl player', async () => {
   await testPlayer("vinyl");
