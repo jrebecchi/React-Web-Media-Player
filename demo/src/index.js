@@ -146,7 +146,8 @@ class Demo extends Component {
 
   render() {
     return <div style={{ textAlign: "" }}>
-
+        
+        
       <ReactWebMediaPlayer
         title={this.state.video.title}
         titleHref="http://google.com"
@@ -156,11 +157,9 @@ class Demo extends Component {
         autoplay={this.state.video.autoplay}
         isTestEnvironment={true}
       />
-      <button onClick={() => this.handleUpdateVideoState()}>Change video props</button>
-
+      <button style={{marginBottom: "100px"}} onClick={() => this.handleUpdateVideoState()}>Change video props</button>
+    
       <ReactWebMediaPlayer
-        width={560}
-        height={560}
         title={this.state.audio.title}
         titleHref="https://google.com"
         thumbnail={"https://nusid.net/album-cover.jpg"}
@@ -174,8 +173,6 @@ class Demo extends Component {
       <button onClick={() => this.handleUpdateaudioState()}>Change audio props</button>
 
       <ReactWebMediaPlayer
-        width={560}
-        height={560}
         title={this.state.vinyl.title}
         titleHref="https://google.com"
         thumbnail={"https://nusid.net/album-cover.jpg"}
