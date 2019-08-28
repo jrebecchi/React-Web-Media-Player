@@ -24,7 +24,7 @@ jobs:
         - docker-compose build
         - docker-compose up -d
         - sleep 8
-        - curl -i http://localhost:39500git
+        - curl -i http://localhost:39500
         - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost:39500 &
         - npm run test:end2end
 
