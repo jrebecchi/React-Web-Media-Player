@@ -157,7 +157,7 @@ class Demo extends Component {
         autoplay={this.state.video.autoplay}
         isTestEnvironment={true}
       />
-      <button style={{marginBottom: "100px"}} onClick={() => this.handleUpdateVideoState()}>Change video props</button>
+      <button onClick={() => this.handleUpdateVideoState()}>Change video props</button>
     
       <ReactWebMediaPlayer
         title={this.state.audio.title}

@@ -26,9 +26,9 @@ it('Test - Video player', async () => {
     await testPlayer("video");
 })
 
-it('Test - Audio player', async () => {
-    await testPlayer("audio");
-})
+// it('Test - Audio player', async () => {
+//     await testPlayer("audio");
+// })
 
 it('Test - Vinyl player', async () => {
     await testPlayer("vinyl");
