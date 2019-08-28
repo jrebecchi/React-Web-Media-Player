@@ -8,7 +8,6 @@ dist: xenial
 before_install:
   - npm install
   - npm install codecov.io coveralls
-  - xvfb-run --server-args="-screen 0 1600x1200x24+32" make test
 
 before_script:
   - sleep 2 # give Web server some time to bind to sockets, etc
