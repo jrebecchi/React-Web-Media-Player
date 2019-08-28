@@ -26,20 +26,24 @@ it('Test - Video player', async () => {
     await testPlayer("video");
 })
 
-// it('Test - Audio player', async () => {
-//     await testPlayer("audio");
-// })
+it('Test - Audio player', async () => {
+    driver.executeScript("window.scrollBy(0,325)");
+    await testPlayer("audio");
+})
 
 it('Test - Vinyl player', async () => {
+    driver.executeScript("window.scrollBy(0,320)");
     await testPlayer("vinyl");
 })
 
 it('Test - Slideshow player', async () => {
+    driver.executeScript("window.scrollBy(0,325)");
     const isSlideshow = true;
     await testPlayer("slideshow", isSlideshow);
 })
 
 it('Test - Audioslideshow player', async () => {
+    driver.executeScript("window.scrollBy(0,325)");
     await testPlayer("audioslideshow");
 })
 
@@ -91,8 +95,6 @@ const testReadingTerminated = async (id) => {
 const testRelaunchPlayer = async (id) => {
     const replayButton = await querySelector('div#' + id + ' [class=\'replay-logo\']', driver);
     const timer = await querySelector('div#' + id + ' [class=\'wmp-tool-button button-time wmp-time-display\']', driver);
-    const actions = driver.actions({ bridge: true });
-    await actions.mouseMove({ x: -500, y: 300 }).click().perform();
     replayButton.click();
     //   const actions = driver.actions();
     //   await actions.mouseMove(replayButton).click().perform();

@@ -8,6 +8,7 @@ dist: xenial
 before_install:
   - npm install
   - npm install codecov.io coveralls
+  - xvfb-run --server-args="-screen 0 1600x1200x24+32" make test
 
 before_script:
   - sleep 2 # give Web server some time to bind to sockets, etc
@@ -23,9 +24,8 @@ jobs:
         - docker-compose build
         - docker-compose up -d
         - sleep 8
-        - curl -i http://localhost:39500
+        - curl -i http://localhost:39500git
         - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost:39500 &
-        - xvfb-run --server-args="-screen 0 1600x1200x24+32" make test
         - npm run test:end2end
 
 
