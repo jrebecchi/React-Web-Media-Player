@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/jrebecchi/React-Web-Media-Player.svg?branch=master)](https://travis-ci.org/jrebecchi/React-Web-Media-Player)
-[![Coverage Status](https://coveralls.io/repos/github/jrebecchi/React-Web-Media-Player/badge.svg?branch=master)](https://coveralls.io/github/jrebecchi/React-Web-Media-Player?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/JohannC/React-Web-Media-Player/badge.svg?branch=master)](https://coveralls.io/github/JohannC/React-Web-Media-Player?branch=master)
 [![Package Quality](https://npm.packagequality.com/shield/react-web-media-player.svg)](https://packagequality.com/#?package=react-web-media-player)
 
 [![React Web Media Player Logo](https://nusid.net/banner-title-medium.jpg)](#)
