@@ -16,7 +16,7 @@ class NextButton extends Component {
   
   render = () => {
     return (
-      <div onClick={this.handleClick} className="wmp-tool-button logo-padding-small">
+      <div onClick={this.handleClick} className="wmp-tool-button">
         {nextLogo}
       </div>
     );

@@ -49,7 +49,7 @@ class PlayButton extends Component {
             action = replayLogo;
         }
         return (
-            <div className="wmp-tool-button logo-padding-small" onClick={this.handleClick}>
+            <div className="wmp-tool-button" onClick={this.handleClick}>
                 {action}
             </div >
         );

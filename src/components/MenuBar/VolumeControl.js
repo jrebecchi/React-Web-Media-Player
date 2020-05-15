@@ -5,7 +5,7 @@ import './Button.css';
 import { isInsideElement } from '../../services/Utils';
 
 const volumeDownLogo =
-    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" className="volume-down-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" className="volume-down-logo" style={{paddingRight:"4px"}}>
         <path className="wmp-tool-button-logo" fill="#e4e5e8" d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z" />
         <path d="M0 0h24v24H0z" fill="none" />
     </svg>
@@ -148,13 +148,13 @@ class VolumeControl extends Component {
         }
 
         return (
-            <span onMouseLeave={this.handleMouseLeave} ref={node => (this.spanContainer = node)}>
-                <div className="wmp-tool-button logo-padding-medium" onMouseEnter={this.handleMouseEnter} onClick={this.handleClick}>
+            <div onMouseLeave={this.handleMouseLeave} ref={node => (this.spanContainer = node)}>
+                <div className="wmp-tool-button" onMouseEnter={this.handleMouseEnter} onClick={this.handleClick}>
                     {icon}
                 </div>
                 {volumeSlider}
 
-            </span>
+            </div>
         );
     }
 }
