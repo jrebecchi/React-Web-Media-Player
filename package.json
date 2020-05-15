@@ -40,7 +40,7 @@
     "chromedriver": "^81.0.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
-    "jest": "^26.0.1",
+    "jest": "^24.5.0",
     "nwb": "^0.24.6",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
