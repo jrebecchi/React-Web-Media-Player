@@ -1,9 +1,8 @@
-import { Builder, WebDriver } from 'selenium-webdriver';
-require('selenium-webdriver/chrome')
+import { Builder } from 'selenium-webdriver';
 require('chromedriver')
 import { querySelector, xpathSelector } from './Utils';
-import 'babel-polyfill';
-import { By, until } from 'selenium-webdriver';
+import '@babel/polyfill';
+import { until } from 'selenium-webdriver';
 const waitUntilTime = 80000
 
 const port = process.env.PORT || 3000
