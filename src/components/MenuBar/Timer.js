@@ -23,7 +23,7 @@ class Timer extends Component {
     render = () => {
         return (
             <div className="wmp-tool-button button-time wmp-time-display">
-                <div>
+                <div className="wmp-time-positionning">
                     <span className="wmp-time">{this.intToStingTime(this.props.currentTime)}</span>
                     <span className="wmp-time"> / </span>
                     <span className="wmp-time">{this.intToStingTime(this.props.duration)}</span>

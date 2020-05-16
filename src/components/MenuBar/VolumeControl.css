@@ -5,6 +5,7 @@
 .wmp-volume-slider-total-bar{
     height: 3px;
     width: 52px;
+    margin-top: -1px;
     max-width: 52px;
     display: block;
     position: absolute;

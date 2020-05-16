@@ -16,3 +16,7 @@
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     vertical-align: middle;
 }
+
+.wmp-time-positionning{
+    padding-top: 2px;
+}
