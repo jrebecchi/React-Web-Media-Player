@@ -7,18 +7,6 @@
     padding-right: 4px;
 }
 
-.logo-padding-small { 
-    padding-bottom: 1px;
-}
-
-.logo-padding-medium { 
-    padding-bottom: 2px;
-}
-
-.logo-padding-big { 
-    padding-top: 5px; 
-}
-
 svg:hover .wmp-tool-button-logo{
     fill: white;
 }

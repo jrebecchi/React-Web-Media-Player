@@ -16,7 +16,7 @@ class PreviousButton extends Component {
   
   render = () => {
     return (
-      <div className="wmp-tool-button logo-padding-small" onClick={this.handleClick}>
+      <div className="wmp-tool-button" onClick={this.handleClick}>
         {previousLogo}
       </div>
     );

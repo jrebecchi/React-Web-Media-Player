@@ -1,9 +1,9 @@
-import { Builder, WebDriver } from 'selenium-webdriver';
-require('selenium-webdriver/chrome')
+import { Builder } from 'selenium-webdriver';
 require('chromedriver')
 import { querySelector, xpathSelector } from './Utils';
-import 'babel-polyfill';
-import { By, until } from 'selenium-webdriver';
+import { Origin } from 'selenium-webdriver/lib/input';
+import '@babel/polyfill';
+import { until } from 'selenium-webdriver';
 const waitUntilTime = 80000
 
 const port = process.env.PORT || 3000
@@ -89,15 +89,13 @@ const testReadingTerminated = async (id) => {
     const progressBar = await querySelector('div#' + id + ' [class=\'wmp-progress-bar-wrapper\']', driver);
     progressBar.click();
     const actions = driver.actions();
-    await actions.mouseMove({ x: 265, y: 0 }).click().perform();
+    await actions.move({ x: 265, y: 0, origin: progressBar}).click().perform();
 }
 
 const testRelaunchPlayer = async (id) => {
     const replayButton = await querySelector('div#' + id + ' [class=\'replay-logo\']', driver);
     const timer = await querySelector('div#' + id + ' [class=\'wmp-tool-button button-time wmp-time-display\']', driver);
     replayButton.click();
-    //   const actions = driver.actions();
-    //   await actions.mouseMove(replayButton).click().perform();
     await driver.wait(until.elementTextContains(timer, "0:01"), waitUntilTime);
 }
 

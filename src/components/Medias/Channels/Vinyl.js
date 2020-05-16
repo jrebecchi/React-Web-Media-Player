@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import './Vinyl.css';
 
 class Vinyl extends Component {
 
@@ -74,10 +75,15 @@ class Vinyl extends Component {
             }
         }
         if (this.props.rpm !== 0) {
-            let angle = this.props.rpm * 360 / 60 * this.props.currentTime;
-            imageSliderStyle.transform = `rotate(${angle}deg)`;
+            let time = Math.round(60 / this.props.rpm);
+            imageSliderStyle.animation = `vinyl-spin ${time}s linear infinite`;
             imageSliderStyle.borderRadius = "100%";
             imageSliderStyle.overflow = "hidden";
+            if (this.props.isPlaying){
+                imageSliderStyle.animationPlayState = "running";
+            } else {
+                imageSliderStyle.animationPlayState = "paused";
+            }
             blackHole = (
                 <div style={{
                     marginLeft: "-" + blackHoleSize / 20 + "px",
@@ -90,7 +96,7 @@ class Vinyl extends Component {
                     left: "50%",
                     top: "50%",
                     zIndex: "10"
-                }}/>
+                }} />
             );
         }
 
@@ -116,6 +122,7 @@ const mapStateToProps = (state) => {
         width: state.width,
         height: state.height,
         rpm: state.rpm,
+        isPlaying: state.isPlaying,
     };
 };
 

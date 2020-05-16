@@ -40,7 +40,7 @@ describe('Integration tests - VolumeControl', () => {
         expect(volumeController.html().includes('class="volume-up-logo"')).toBeTruthy();
 
 
-        volumeController.find('[className="wmp-tool-button logo-padding-medium"]').simulate("click");
+        volumeController.find('[className="wmp-tool-button"]').simulate("click");
         expect(dispatchSpy).toHaveBeenCalledWith({ type: "USER_ACTIVE" });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: "SAVE_ACTUAL_VOLUME_AS_PAST_VOLUME" });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_VOLUME', payload: { volume: 0 } });
@@ -71,7 +71,7 @@ describe('Integration tests - VolumeControl', () => {
         expect(volumeController.html().includes('class="volume-off-logo"')).toBeTruthy();
 
 
-        volumeController.find('[className="wmp-tool-button logo-padding-medium"]').simulate("click");
+        volumeController.find('[className="wmp-tool-button"]').simulate("click");
         expect(dispatchSpy).toHaveBeenCalledWith({ type: "USER_ACTIVE" });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UNMUTE' });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_VOLUME', payload: { volume: 1 } });
@@ -101,7 +101,7 @@ describe('Integration tests - VolumeControl', () => {
 
         expect(volumeController.html().includes('class="volume-off-logo"')).toBeTruthy();
 
-        volumeController.find('[className="wmp-tool-button logo-padding-medium"]').simulate("click");
+        volumeController.find('[className="wmp-tool-button"]').simulate("click");
         expect(dispatchSpy).toHaveBeenCalledWith({ type: "USER_ACTIVE" });
         expect(dispatchSpy).toHaveBeenCalledWith({ type: 'UPDATE_VOLUME', payload: { volume: 0.4 } });
         expect(volumeController.html().includes('class="volume-down-logo"')).toBeTruthy();
@@ -130,7 +130,7 @@ describe('Integration tests - VolumeControl', () => {
 
         expect(volumeController.html().includes('class="wmp-tool-button wmp-volume-slider"')).toBeFalsy();
         //show volume slider
-        volumeController.find('[className="wmp-tool-button logo-padding-medium"]').simulate("mouseenter");
+        volumeController.find('[className="wmp-tool-button"]').simulate("mouseenter");
         expect(dispatchSpy).toHaveBeenCalledWith({ type: "SHOW_VOLUME_SLIDER" });
         expect(volumeController.html().includes('class="wmp-tool-button wmp-volume-slider"')).toBeTruthy();
 
