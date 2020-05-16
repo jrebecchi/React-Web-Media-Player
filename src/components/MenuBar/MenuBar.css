@@ -51,7 +51,6 @@
     display: table;
     position: absolute;
     padding-left: 3px;
-    padding-top: 1px;
 }
 
 .wmp-tool-constainer-right{
@@ -60,5 +59,4 @@
     display: table;
     position: absolute;
     right: 0px;
-    padding-top: 1px;
 }
