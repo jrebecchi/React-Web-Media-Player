@@ -121,7 +121,7 @@ You can add an audio track, that will be synchronized with the slideshow by addi
 ## Customization
 
 <p align="center">
-  <img src="https://react-web-media-player.herokuapp.com//static/media/custom.f8638e76.png" />
+  <img src="https://github.com/jrebecchi/img/blob/master/custom.png?raw=true" />
 </p>
 
 - Choose the menu color
