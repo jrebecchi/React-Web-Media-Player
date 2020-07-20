@@ -124,10 +124,10 @@ You can add an audio track, that will be synchronized with the slideshow by addi
   <img src="https://github.com/jrebecchi/img/blob/master/custom.png?raw=true" />
 </p>
 
-1 Choose the menu color
-2 Choose the player title
-3 Choose the thumbnail
-4 Add your custom buttons
-5 Add your logo
+1. Choose the menu color
+2. Choose the player title
+3. Choose the thumbnail
+4. Add your custom buttons
+5. Add your logo
 
 To find how, look at the component properties explained [here](https://react-web-media-player.herokuapp.com/docs).
