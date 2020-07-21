@@ -125,8 +125,8 @@ You can add an audio track, that will be synchronized with the slideshow by addi
 </p>
 
 1. Choose the menu color
-2. Choose the player title
-3. Choose the thumbnail
+2. Choose the thumbnail
+3. Choose the player title 
 4. Add your custom buttons
 5. Add your logo
 
