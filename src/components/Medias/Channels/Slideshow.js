@@ -170,7 +170,7 @@ class Slideshow extends Component {
     adaptImageToHeight = (width, height) => {
         let imgWidth = this.props.imageDisplayed.element.width;
         let imgHeight = this.props.imageDisplayed.element.height;
-        let margin = (width - imgWidth / imgHeight * height) / 2;
+        let margin = ((width - imgWidth) / (imgHeight * height)) / 2;
         return {
             marginLeft: margin + "px",
             height: "100%",
