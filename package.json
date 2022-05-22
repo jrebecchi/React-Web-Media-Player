@@ -1,10 +1,11 @@
 {
   "name": "react-web-media-player",
-  "version": "1.1.6",
+  "version": "1.2.0",
   "description": "A React Player that can play videos, audio tracks, slideshows, with an easily cutomizable design",
   "license": "MIT",
-  "main": "lib/ReactWebMediaPlayer.js",
-  "module": "es/ReactWebMediaPlayer.js",
+  "main": "./lib/cjs/ReactWebMediaPlayer.js",
+  "module": "./lib/esm/ReactWebMediaPlayer.js",
+  "types": "./lib/esm/ReactWebMediaPlayer.d.ts",
   "files": [
     "css",
     "es",
@@ -12,10 +13,10 @@
     "umd"
   ],
   "scripts": {
-    "build": "nwb build-react-component --copy-files",
-    "clean": "nwb clean-module && nwb clean-demo",
+    "build": "npm run build:esm && npm run build build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir lib/cjs",
     "prepublishOnly": "npm run build && npm run test && npm run test:end2end",
-    "start": "nwb serve-react-demo",
     "test": "jest unit int --coverage",
     "test:coverage": "jest unit int --coverage",
     "test:watch": "jest unit int --coverage --watch",
@@ -30,13 +31,17 @@
     "redux": "^4.0.5"
   },
   "peerDependencies": {
-    "react": "16.x"
+    "react": ">=16",
+    "react-dom": ">=16"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/polyfill": "^7.8.7",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-react": "^7.9.4",
+    "@types/react": "^16.13.1",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-redux": "^7.1.24",
     "chromedriver": "^84.0.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
@@ -45,11 +50,13 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-test-renderer": "^16.13.1",
-    "selenium-webdriver": "^4.0.0-alpha.7"
+    "selenium-webdriver": "^4.0.0-alpha.7",
+    "typescript": "^4.6.3",
+    "xpath-helper": "^0.1.2"
   },
   "author": {
     "name": "Johann Rebecchi",
-    "email": "johann.corcuff@gmail.com"
+    "email": "jrebecchi@protonmail.com"
   },
   "bugs": {
     "url": "https://github.com/JohannC/React-Web-Media-Player/issues"
