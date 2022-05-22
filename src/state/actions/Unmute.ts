@@ -1,6 +1,8 @@
 import { IState } from "../types/IState";
 
-export const unmute = () => ({type: 'UNMUTE'})
+export const UNMUTE = 'UNMUTE';
+
+export const unmute = () => ({type: UNMUTE});
 
 const unmuteReducer = (state: IState) => {
     return {

@@ -2,7 +2,9 @@ import { IAction } from "../types/IAction";
 import { ISlide } from "../types/ISlide";
 import { IState } from "../types/IState";
 
-export const addImage = (index: number, image: ISlide ) => ({ type: 'ADD_IMAGE', payload: { index, image  } });
+export const ADD_IMAGE = 'ADD_IMAGE';
+
+export const addImage = (index: number, image: ISlide ) => ({ type: ADD_IMAGE, payload: { index, image  } });
 
 
 const addImageReducer = (state: IState, action: IAction) => {

@@ -1,6 +1,8 @@
 import { IState } from "../types/IState";
 
-export const showVolumeSlider = () => ({type: 'SHOW_VOLUME_SLIDER'});
+export const SHOW_VOLUME_SLIDER = 'SHOW_VOLUME_SLIDER';
+
+export const showVolumeSlider = () => ({type: SHOW_VOLUME_SLIDER});
 
 
 const showVolumeSliderReducer = (state: IState) => {

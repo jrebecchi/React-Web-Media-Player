@@ -1,9 +1,11 @@
 import { IAction } from "../types/IAction";
 import { IState } from "../types/IState";
 
-export const updateVideoWidth = (volume: number) => ({ type: 'UPDATE_VOLUME', payload: { volume } });
+export const UPDATE_VOLUME = 'UPDATE_VOLUME';
 
-const updateVolume = (state: IState, action: IAction) => {
+export const updateVolume = (volume: number) => ({ type: UPDATE_VOLUME, payload: { volume } });
+
+const updateVolumeReducer = (state: IState, action: IAction) => {
 
   return {
     ...state,
@@ -11,4 +13,4 @@ const updateVolume = (state: IState, action: IAction) => {
   };
 }
 
-export default updateVolume;
+export default updateVolumeReducer;

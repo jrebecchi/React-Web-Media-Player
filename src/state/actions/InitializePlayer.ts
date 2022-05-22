@@ -1,6 +1,8 @@
 import { IState } from "../types/IState";
 
-export const initializePlayer = () => ({type: 'INITIALIZE_PLAYER'});
+export const INITIALIZE_PLAYER = 'INITIALIZE_PLAYER';
+
+export const initializePlayer = () => ({type: INITIALIZE_PLAYER});
 
 const initializePlayerReducer = (state: IState) => {
     return {

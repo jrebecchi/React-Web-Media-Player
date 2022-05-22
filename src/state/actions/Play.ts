@@ -1,6 +1,8 @@
 import { IState } from "../types/IState";
 
-export const play = () => ({type: 'PLAY'});
+export const PLAY = 'PLAY';
+
+export const play = () => ({type: PLAY});
 
 const playReducer = (state: IState) => {
     return {

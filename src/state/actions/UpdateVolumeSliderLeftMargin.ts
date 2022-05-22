@@ -1,7 +1,9 @@
 import { IAction } from "../types/IAction";
 import { IState } from "../types/IState";
 
-export const updateVolumeSliderLeftMargin = (volumeSliderLeftMargin: string) => ({type: 'UPDATE_VOLUME_SLIDER_LEFT_MARGIN', payload: { volumeSliderLeftMargin } });
+export const UPDATE_VOLUME_SLIDER_LEFT_MARGIN = 'UPDATE_VOLUME_SLIDER_LEFT_MARGIN';
+
+export const updateVolumeSliderLeftMargin = (volumeSliderLeftMargin: string) => ({type: UPDATE_VOLUME_SLIDER_LEFT_MARGIN, payload: { volumeSliderLeftMargin } });
 
 const updateVolumeSliderLeftMarginReducer = (state: IState, action: IAction) => {
     

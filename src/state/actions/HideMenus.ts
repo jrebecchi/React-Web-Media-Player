@@ -1,6 +1,8 @@
 import { IState } from "../types/IState";
 
-export const showMenus = () => ({type: 'SHOW_MENUS'});
+export const HIDE_MENUS = 'HIDE_MENUS';
+
+export const showMenus = () => ({type: HIDE_MENUS});
 
 const hideMenus = (state: IState) => {
     return {

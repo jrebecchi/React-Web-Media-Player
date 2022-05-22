@@ -1,6 +1,8 @@
 import { IState } from "../types/IState";
 
-export const askPreviousImage = () => ({ type: 'ASK_PREVIOUS_IMAGE' });
+export const ASK_PREVIOUS_IMAGE = 'ASK_PREVIOUS_IMAGE';
+
+export const askPreviousImage = () => ({ type: ASK_PREVIOUS_IMAGE });
 
 
 const askPreviousImageReducer = (state: IState) => {
