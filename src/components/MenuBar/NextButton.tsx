@@ -23,7 +23,7 @@ class NextButton extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState) => {
   return {
   };
 };

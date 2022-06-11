@@ -37,7 +37,7 @@ class FullscreenButton extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState) => {
     return {
         isFullscreen: state.isFullscreen
     };

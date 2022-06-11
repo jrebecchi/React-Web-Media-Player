@@ -17,7 +17,7 @@ class Thumbnail extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState) => {
     return {
         thumbnail: state.thumbnail,
     };

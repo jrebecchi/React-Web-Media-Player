@@ -128,7 +128,7 @@ class Audio extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState) => {
     return {
         duration: state.duration,
         audio: state.audio,

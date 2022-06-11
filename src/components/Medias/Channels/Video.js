@@ -183,7 +183,7 @@ class Video extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState) => {
     return {
         isPlaying: state.isPlaying,
         fullscreenWidth: window.innerWidth,

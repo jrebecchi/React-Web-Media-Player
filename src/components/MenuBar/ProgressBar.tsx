@@ -118,7 +118,7 @@ class ProgressBar extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState) => {
     return {
         timeRangeBuffered: state.timeRangeBuffered,
         highlightProgressBar: state.highlightProgressBar,

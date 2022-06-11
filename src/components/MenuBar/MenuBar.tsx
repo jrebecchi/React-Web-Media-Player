@@ -64,7 +64,7 @@ class MenuBar extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState) => {
     return {
         hasVideo: state.hasVideo,
         hasAudio: state.hasAudio,

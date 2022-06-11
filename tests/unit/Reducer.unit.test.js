@@ -8,14 +8,14 @@ it('Test action - VINYL_IS_READY ', () => {
 });
 
 it('Test action - FULL_SCREEN_ENABLED ', () => {
-    const action = { type: 'FULL_SCREEN_ENABLED' };
+    const action = adaptPlayerToFullscreen();
     const initState = { isFullscreenActivated: false };
     const newState = reducer(initState, action);
     expect(newState.isFullscreenActivated).toBeTruthy();
 });
 
 it('Test action - FULL_SCREEN_DISABLED', () => {
-    const action = { type: 'FULL_SCREEN_DISABLED' };
+    const action = adaptPlayerToNonFullscreen();
     const initState = { isFullscreenActivated: true };
     const newState = reducer(initState, action);
     expect(newState.isFullscreenActivated).toBeFalsy();
@@ -107,7 +107,7 @@ it('Test action - HIDE_CURSOR ', () => {
 });
 
 it('Test action - HIDE_MENUS ', () => {
-    const action = { type: 'HIDE_MENUS' };
+    const action = hideMenus();
     const initState = { showMenus: true };
     const newState = reducer(initState, action);
     expect(newState.showMenus).toBeFalsy();
@@ -121,7 +121,7 @@ it('Test action - HIDE_VOLUME_SLIDER ', () => {
 });
 
 it('Test action - HIGHLIGHT_PLAYER ', () => {
-    const action = { type: 'HIGHLIGHT_PLAYER' };
+    const action = highLightPlayer();
     const initState = { isPlayerHighlighted: false };
     const newState = reducer(initState, action);
     expect(newState.isPlayerHighlighted).toBeTruthy();
@@ -264,7 +264,7 @@ it('Test action - SWITCH_FULLSCREEN_STATE ', () => {
 });
 
 it('Test action - UNHIGHLIGHT_PLAYER ', () => {
-    const action = { type: 'UNHIGHLIGHT_PLAYER' };
+    const action = unhighlightPlayer();
     const initState = { isPlayerHighlighted: true };
     const newState = reducer(initState, action);
     expect(newState.isPlayerHighlighted).toBeFalsy();

@@ -308,7 +308,7 @@ class Slideshow extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState) => {
     return {
         fullscreenWidth: window.innerWidth,
         fullscreenHeight: window.innerHeight,

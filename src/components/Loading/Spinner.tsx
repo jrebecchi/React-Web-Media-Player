@@ -23,7 +23,7 @@ class Spinner extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState) => {
     return {
         isLoading: state.isLoading
     };

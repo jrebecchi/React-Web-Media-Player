@@ -56,7 +56,7 @@ class PlayButton extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState) => {
     return {
         isPlaying: state.isPlaying,
         isReadingTerminated: state.isReadingTerminated

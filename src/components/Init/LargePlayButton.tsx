@@ -27,7 +27,7 @@ class LargePlayButton extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState) => {
     return {
         isPlayerHighlighted: state.isPlayerHighlighted,
         color: state.color

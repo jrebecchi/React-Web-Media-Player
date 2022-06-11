@@ -110,7 +110,7 @@ class Vinyl extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState) => {
     return {
         isInitialized: state.isInitialized,
         fullscreenWidth: window.innerWidth,

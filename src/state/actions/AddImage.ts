@@ -7,7 +7,7 @@ export const ADD_IMAGE = 'ADD_IMAGE';
 export const addImage = (index: number, image: ISlide ) => ({ type: ADD_IMAGE, payload: { index, image  } });
 
 
-const addImageReducer = (state: IState, action: IAction) => {
+const addImageReducer = (state: IState, action: IAction<{index: number, image: ISlide}>) => {
     if (state.slideshow === undefined) {
         return state;
     }

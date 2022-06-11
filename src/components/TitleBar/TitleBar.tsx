@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { IState } from '../../state/types/IState';
 import './TitleBar.css';
 
-class TitleBar extends Component {
-    handleClick = (e) => {
+interface TitleBarProps {
+    title?: string;
+    link?: string;
+}
+
+class TitleBar extends Component<TitleBarProps> {
+    handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
     }
 
@@ -15,27 +21,21 @@ class TitleBar extends Component {
             title = <span className="wmp-title light-grey-to-white">{this.props.title}</span>;
 
         }
-        /*
-        <div class="salefi-player-title-container">
-            <a class="salefi-player-title light-grey-to-white" href="#" target="_blank">Product name - Store name</a>
-            <div class="salefi-player-top-shading"></div>
-            </div>
-        */
         return (
             <div className="wmp-title-container" onClick={this.handleClick}>
                 {title}
                 <div className="wmp-top-shading"></div>
             </div>
-            
+
         );
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState): TitleBarProps => {
     return {
         title: state.title,
-        link: state.link
+        link: state.link,
     };
 };
 
-export default connect(mapStateToProps)(TitleBar);
+export default connect<TitleBarProps>(mapStateToProps)(TitleBar);

@@ -20,7 +20,7 @@ import allowUnhighlightProgressBarReducer, { ALLOW_UNHIGHLIGHT_PROGRESS_BAR } fr
 import playReducer, { PLAY } from '../actions/Play';
 import pauseReducer, { PAUSE } from '../actions/Pause';
 import showMenusReducer, { SHOW_MENUS } from '../actions/ShowMenus';
-import hideMenus, { HIDE_MENUS } from '../actions/HideMenus';
+import hideMenusReducer, { HIDE_MENUS } from '../actions/HideMenus';
 import updateTimeLastUserActionReducer, { USER_ACTIVE } from '../actions/UpdateTimeLastUserAction';
 import showCursorReducer, { SHOW_CURSOR } from '../actions/ShowCursor';
 import hideCursorReducer, { HIDE_CURSOR } from '../actions/HideCursor';
@@ -53,7 +53,7 @@ import channelsWaitReducer, { CHANNELS_WAIT } from '../actions/ChannelsWait';
 import highLightPlayerReducer, { HIGHLIGHT_PLAYER } from '../actions/HighlightPlayer';
 import { INIT_STATE } from '../actions/Initstate';
 
-const reducer = (state: IState, action: IAction) => {
+const reducer = (state: IState, action: IAction<IState>) => {
     if (state === undefined) {
         return null;
     }
@@ -118,7 +118,7 @@ const reducer = (state: IState, action: IAction) => {
         case SHOW_MENUS:
             return showMenusReducer(state);
         case HIDE_MENUS:
-            return hideMenus(state);
+            return hideMenusReducer(state);
         case USER_ACTIVE:
             return updateTimeLastUserActionReducer(state);
         case PLAY:

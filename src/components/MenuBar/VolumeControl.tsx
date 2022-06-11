@@ -159,7 +159,7 @@ class VolumeControl extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: IState) => {
     return {
         volume: state.volume,
         isInitialized: state.isInitialized,

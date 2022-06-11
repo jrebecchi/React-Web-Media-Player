@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, CSSProperties, MouseEvent } from 'react';
 import { connect } from 'react-redux';
 import './Container.css';
 import fscreen from "fscreen";
@@ -8,11 +8,44 @@ import Spinner from "./Loading/Spinner"
 import Thumbnail from "./Init/Thumbnail"
 import Mixer from "./Medias/Mixer";
 import LargePlayButton from "./Init/LargePlayButton";
+import { IState } from '../state/types/IState';
+import { Dispatch } from 'redux';
+import { IAction } from '../state/types/IAction';
+import { highLightPlayer } from '../state/actions/HighlightPlayer';
+import { unhighlightPlayer } from '../state/actions/UnhighlightPlayer';
+import { hideMenus } from '../state/actions/HideMenus';
+import { adaptPlayerToFullscreen } from '../state/actions/AdaptPlayerToFullscreen';
+import { adaptPlayerToNonFullscreen } from '../state/actions/AdaptPlayerToNonFullscreen';
 
 const TIME_TO_HIDE_MENU_IN_MILLISECONDS = 3000;
 
-class Container extends Component {
-    constructor(props) {
+interface ContainerProps {
+    timeLastUserAction: Date;
+    width: number;
+    height: number;
+    thumbnail: string | undefined;
+    hasVideo: boolean;
+    hasAudio: boolean;
+    hasSlideshow: boolean;
+    isInitialized: boolean;
+    isFullscreen: boolean;
+    showMenus: boolean;
+    isPlaying: boolean;
+    allowMenuHiding: boolean;
+    isLoading: boolean;
+    isFullscreenActivated: boolean;
+    autoplay: boolean;
+    style: Record<string, string>;
+    id: string | undefined;
+    isTestEnvironment: boolean;
+    dispatch: Dispatch<IAction>;
+}
+
+class Container extends Component<ContainerProps> {
+    private node: HTMLDivElement | null;
+    private mouseStopTimer: number;
+
+    constructor(props: ContainerProps) {
         super(props);
         this.fscreen = fscreen;
     }
@@ -28,7 +61,7 @@ class Container extends Component {
         }
     }
 
-    componentDidUpdate = (prevProps) => {
+    componentDidUpdate = (prevProps: ContainerProps) => {
         if (prevProps.isFullscreen !== this.props.isFullscreen) {
             this.handlePropsChanges(this.props);
         }
@@ -38,7 +71,7 @@ class Container extends Component {
         }
     }
 
-    handlePropsChanges = (props) => {
+    handlePropsChanges = (props: ContainerProps) => {
         const enabled = fscreen.fullscreenElement;
         if (enabled && !props.isFullscreen) {
             this.leaveFullScreen();
@@ -52,9 +85,9 @@ class Container extends Component {
             if (this.props.isFullscreen) {
                 this.props.dispatch({ type: 'SWITCH_FULLSCREEN_STATE' });
             }
-            this.props.dispatch({ type: 'FULL_SCREEN_DISABLED' });
+            this.props.dispatch(adaptPlayerToNonFullscreen());
         } else {
-            this.props.dispatch({ type: 'FULL_SCREEN_ENABLED' });
+            this.props.dispatch(adaptPlayerToFullscreen());
         }
     }
 
@@ -70,31 +103,31 @@ class Container extends Component {
         }
     }
 
-    handleMouseEnter = (e) => {
+    handleMouseEnter = (e: MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
         if (!this.props.isInitialized) {
-            this.props.dispatch({ type: 'HIGHLIGHT_PLAYER' });
+            this.props.dispatch(highLightPlayer());
         } else if (this.props.isPlaying) {
             //this.props.dispatch({ type: 'SHOW_MENUS' });
         }
     }
 
-    handleMouseLeave = (e) => {
+    handleMouseLeave = (e: MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
         if (!this.props.isInitialized) {
-            this.props.dispatch({ type: 'UNHIGHLIGHT_PLAYER' });
+            this.props.dispatch(unhighlightPlayer());
         } else if (this.props.allowMenuHiding && this.props.isPlaying) {
-            this.props.dispatch({ type: 'HIDE_MENUS' });
+            this.props.dispatch(hideMenus());
         }
     }
 
-    handleMouseMove = (e) => {
+    handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
         if (this.props.isInitialized) {
             this.props.dispatch({ type: 'USER_ACTIVE' });
         }
     }
 
-    handleClick = (e) => {
+    handleClick = (e: MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
         this.props.dispatch({ type: 'USER_ACTIVE' });
         if (!this.props.isInitialized) {
@@ -113,13 +146,14 @@ class Container extends Component {
 
     waitUserToBeInactive = () => {
         this.props.dispatch({ type: 'SHOW_MENUS' });
+        if (this.node === null) return;
         this.node.style.cursor = "";
         if (this.mouseStopTimer) {
             window.clearTimeout(this.mouseStopTimer);
         }
         this.mouseStopTimer = window.setTimeout(() => {
-            if (this.props.allowMenuHiding && this.props.isPlaying) {
-                this.props.dispatch({ type: 'HIDE_MENUS' });
+            if (this.props.allowMenuHiding && this.props.isPlaying && this.node) {
+                this.props.dispatch(hideMenus());
                 this.node.style.cursor = "none";
             }
         }, TIME_TO_HIDE_MENU_IN_MILLISECONDS);
@@ -127,12 +161,12 @@ class Container extends Component {
 
     render = () => {
         const className = ["wmp-container", "fullscreen"];
-        const style = {};
+        const style: CSSProperties = {};
         const id = this.props.id;
         Object.assign(style, this.props.style);
-        
+
         style.width = this.props.width + "px",
-        style.height = this.props.height + "px"
+            style.height = this.props.height + "px"
         if (this.props.isFullscreenActivated) {
             className.push("fullscreen-enabled");
             style.width = "100%";
@@ -157,11 +191,11 @@ class Container extends Component {
         return (
             <div
                 id={id}
-                className={className.join(" ")} 
-                style={style} ref={node => (this.node = node)} 
-                onMouseEnter={this.handleMouseEnter} 
-                onMouseLeave={this.handleMouseLeave} 
-                onMouseMoveCapture={this.handleMouseMove} 
+                className={className.join(" ")}
+                style={style} ref={node => (this.node = node)}
+                onMouseEnter={this.handleMouseEnter}
+                onMouseLeave={this.handleMouseLeave}
+                onMouseMoveCapture={this.handleMouseMove}
                 onClick={this.handleClick}
             >
                 {spinner}
@@ -175,27 +209,25 @@ class Container extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        timeLastUserAction: state.timeLastUserAction,
-        width: state.width,
-        height: state.height,
-        thumbnail: state.thumbnail,
-        hasVideo: state.hasVideo,
-        hasAudio: state.hasAudio,
-        hasSlideshow: state.hasSlideshow,
-        isInitialized: state.isInitialized,
-        isFullscreen: state.isFullscreen,
-        showMenus: state.showMenus,
-        isPlaying: state.isPlaying,
-        allowMenuHiding: state.allowMenuHiding,
-        isLoading: state.isLoading,
-        isFullscreenActivated: state.isFullscreenActivated,
-        autoplay: state.autoplay,
-        style: state.style,
-        id: state.id,
-        isTestEnvironment: state.isTestEnvironment,
-    };
-};
+const mapStateToProps = (state: IState) => ({
+    timeLastUserAction: state.timeLastUserAction,
+    width: state.width,
+    height: state.height,
+    thumbnail: state.thumbnail,
+    hasVideo: state.hasVideo,
+    hasAudio: state.hasAudio,
+    hasSlideshow: state.hasSlideshow,
+    isInitialized: state.isInitialized,
+    isFullscreen: state.isFullscreen,
+    showMenus: state.showMenus,
+    isPlaying: state.isPlaying,
+    allowMenuHiding: state.allowMenuHiding,
+    isLoading: state.isLoading,
+    isFullscreenActivated: state.isFullscreenActivated,
+    autoplay: state.autoplay,
+    style: state.style,
+    id: state.id,
+    isTestEnvironment: state.isTestEnvironment,
+});
 
 export default connect(mapStateToProps)(Container);
