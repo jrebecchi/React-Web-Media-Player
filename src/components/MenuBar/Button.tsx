@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { IState } from '../../state/types/IState';
 import './Button.css';
 
 class Button extends Component {

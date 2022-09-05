@@ -1,11 +1,7 @@
-import { IAction } from "../types/IAction";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { IState } from "../types/IState";
 
-export const UPDATE_VOLUME_SLIDER_LEFT_MARGIN = 'UPDATE_VOLUME_SLIDER_LEFT_MARGIN';
-
-export const updateVolumeSliderLeftMargin = (volumeSliderLeftMargin: string) => ({type: UPDATE_VOLUME_SLIDER_LEFT_MARGIN, payload: { volumeSliderLeftMargin } });
-
-const updateVolumeSliderLeftMarginReducer = (state: IState, action: IAction) => {
+const updateVolumeSliderLeftMarginReducer = (state: IState, action: PayloadAction<{volumeSliderLeftMargin: string}>) => {
     
     return {
         ...state,

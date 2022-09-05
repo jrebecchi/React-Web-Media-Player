@@ -1,12 +1,13 @@
 import React from 'react';
 import { Component } from 'react';
-import { createStore, Store } from 'redux';
 import { getInitState } from './services/StateInitiator';
 import Container from './components/Container'
-import reducer from './state/reducers/Reducer';
 import { IButton } from './state/types/IButton';
 import { ISlide } from './state/types/ISlide';
 import { Provider } from 'react-redux';
+import { store } from './state/store';
+import { Store } from '@reduxjs/toolkit';
+import { actions } from './state/reducers/Reducer';
 
 namespace ReactWebMediaPlayer {
   export interface Props {
@@ -42,13 +43,13 @@ class ReactWebMediaPlayer extends Component<ReactWebMediaPlayer.Props> {
   };
 
   shouldComponentUpdate = (nextProps: ReactWebMediaPlayer.Props) => {
-    this.store.dispatch({ type: 'INIT_STATE', payload: { state: getInitState(nextProps) } });
+    this.store.dispatch(actions.initializeState(getInitState(nextProps)));
     return true;
   }
 
   componentWillMount = () => {
-    this.store = (this.props.store !== undefined) ? this.props.store : createStore(reducer);
-    this.store.dispatch({ type: 'INIT_STATE', payload: { state: getInitState(this.props) } });
+    this.store = (this.props.store !== undefined) ? this.props.store : store;
+    this.store.dispatch(actions.initializeState(getInitState(this.props)));
   }
 
   render() {

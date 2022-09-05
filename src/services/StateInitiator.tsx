@@ -22,7 +22,7 @@ const initSlideshowPlayerState = (options: ReactWebMediaPlayer.Props) => {
         hasVideo: false,
         hasVinyl: false,
         isSlideshowReady: false,
-        imageDisplayed: null,
+        imageDisplayed: undefined,
         duration: options.slideshow.slice(-1)[0].endTime,
         slideshow: options.slideshow
     }
@@ -45,7 +45,7 @@ const initAudioSlideshowPlayerState = (options: ReactWebMediaPlayer.Props) => {
         hasVinyl: false,
         isSlideshowReady: false,
         isAudioReady: false,
-        imageDisplayed: null,
+        imageDisplayed: undefined,
         duration: options.slideshow.slice(-1)[0].endTime,
         slideshow: options.slideshow,
         audio: options.audio,
@@ -150,10 +150,10 @@ const getInitState = (options: ReactWebMediaPlayer.Props) => {
         showCursor: true,
         timeLastUserAction: new Date(),
         askTime: 0,
-        askNextImage: null,
-        askPreviousImage: null,
-        videoHeight: null,
-        videoWidth: null,
+        askNextImage: undefined,
+        askPreviousImage: undefined,
+        videoHeight: undefined,
+        videoWidth: undefined,
         timeRangeBuffered: 0,
         channelsWait: false,
     }

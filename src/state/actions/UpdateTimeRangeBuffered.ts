@@ -1,11 +1,7 @@
-import { IAction } from "../types/IAction";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { IState } from "../types/IState";
 
-export const UPDATE_TIME_RANGE_BUFFERED = 'UPDATE_TIME_RANGE_BUFFERED';
-
-export const updateTimeRangeBuffered = (timeRangeBuffered: number[][]) => ({type: UPDATE_TIME_RANGE_BUFFERED, payload: { timeRangeBuffered }});
-
-const updateTimeRangeBufferedReducer = (state: IState, action: IAction) => {
+const updateTimeRangeBufferedReducer = (state: IState, action: PayloadAction<{timeRangeBuffered: number }>): IState => {
     return {
         ...state,
         timeRangeBuffered: action.payload.timeRangeBuffered,

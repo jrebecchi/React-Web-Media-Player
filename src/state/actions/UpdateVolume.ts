@@ -1,12 +1,7 @@
-import { IAction } from "../types/IAction";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { IState } from "../types/IState";
 
-export const UPDATE_VOLUME = 'UPDATE_VOLUME';
-
-export const updateVolume = (volume: number) => ({ type: UPDATE_VOLUME, payload: { volume } });
-
-const updateVolumeReducer = (state: IState, action: IAction) => {
-
+const updateVolumeReducer = (state: IState, action: PayloadAction<{volume: number}>): IState => {
   return {
     ...state,
     volume: action.payload.volume,

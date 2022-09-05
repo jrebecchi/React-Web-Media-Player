@@ -1,13 +1,9 @@
-import { IAction } from "../types/IAction";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { ISlide } from "../types/ISlide";
 import { IState } from "../types/IState";
 
-export const ADD_IMAGE = 'ADD_IMAGE';
 
-export const addImage = (index: number, image: ISlide ) => ({ type: ADD_IMAGE, payload: { index, image  } });
-
-
-const addImageReducer = (state: IState, action: IAction<{index: number, image: ISlide}>) => {
+const addImageReducer = (state: IState, action: PayloadAction<{index: number, image: ISlide}>) => {
     if (state.slideshow === undefined) {
         return state;
     }

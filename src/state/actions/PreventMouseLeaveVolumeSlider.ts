@@ -1,9 +1,5 @@
 import { IState } from "../types/IState";
 
-export const PREVENT_MOUSE_LEAVE_VOLUME_SLIDER = 'PREVENT_MOUSE_LEAVE_VOLUME_SLIDER';
-
-export const preventMouseLeaveVolumeSlider = () => ({type: PREVENT_MOUSE_LEAVE_VOLUME_SLIDER});
-
 const preventMouseLeaveVolumeSliderReducer = (state: IState) => {
   return {
     ...state,

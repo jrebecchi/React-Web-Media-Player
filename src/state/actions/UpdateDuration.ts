@@ -1,11 +1,7 @@
-import { IAction } from "../types/IAction";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { IState } from "../types/IState";
 
-export const UPDATE_DURATION = 'UPDATE_DURATION';
-
-export const updateDuration = (duration: number) => ({ type: UPDATE_DURATION, payload: { duration } });
-
-const updateDurationReducer = (state: IState, action: IAction) => {
+const updateDurationReducer = (state: IState, action: PayloadAction<{duration: number}>) => {
 
   return {
     ...state,

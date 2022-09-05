@@ -5,7 +5,7 @@ export const isInsideElement = (element: HTMLElement,event: MouseEvent): boolean
 
 export const isIE = () => !!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g);
 
-export const isNaN = (value) => {
+export const isNaN = (value: unknown): boolean => {
     // eslint-disable-next-line
     return value !== value;
 }

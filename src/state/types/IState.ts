@@ -7,7 +7,7 @@ export interface IState {
   hasVideo: boolean;
   hasVinyl: boolean;
   isSlideshowReady?: boolean;
-  imageDisplayed?: null;
+  imageDisplayed?: ISlide;
   duration: number;
   slideshow?: ISlide[];
   isAudioReady?: boolean;
@@ -51,10 +51,10 @@ export interface IState {
   showCursor: boolean;
   timeLastUserAction: Date;
   askTime: number;
-  askNextImage: null;
-  askPreviousImage: null;
-  videoHeight: null;
-  videoWidth: null;
+  askNextImage?: Date;
+  askPreviousImage?: Date;
+  videoHeight?: number;
+  videoWidth?: number;
   timeRangeBuffered: number;
   channelsWait: boolean;
 }
